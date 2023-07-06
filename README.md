@@ -40,9 +40,9 @@ trace -p <port> -cp <package-pattern> -m <method-pattern> -ti <traceignore-file>
 ```
 
 Optional subcommands:   
--l: the log will be displayed on Shell instead of writing on a file.
--ti: if you want to ignore specific classes, you can use traceignore file which accepts Wildcard Pattern Matching
--tt: if you want to use a specific trace file, instead of the default one
+-l: the log will be displayed on Shell instead of writing on a file.   
+-ti: if you want to ignore specific classes, you can use traceignore file which accepts Wildcard Pattern Matching.    
+-tt: if you want to use a specific trace file, instead of the default one.   
 
 If you want to use ```XML``` serialization type (default is JSON), you need to set ```SERIALIZE_TYPE = "xml"``` in callTrace.java. Also, if you want to change the trace script, it is possible by changing this file.  
 In addition, it is possible to use ```execution-trace.sh``` instead of the trace command.
@@ -115,7 +115,8 @@ We record E2E tests for each folder in the ```recorded-E2E-tests``` folder.
 
 ### Results
 In our research questions, first, we consider feasibility. For RQ2 and RQ3, we compared the carved tests with the EvoSuite-generated tests and manually-written tests.
-The results of RQ2 and RQ3 can be found in the ``survey-RQ2-RQ3`` folder. ``SCAM Survey Results`` is the results of the questionnaire. Comments pdfs showing the analysis of pariticapnts' comments in the criteria-based questions. Also, the chart of the criteria-based is located in ``SCAM-data-analysis``.
+
+The results of RQ2 and RQ3 can be found in the ``survey-RQ2-RQ3`` folder. ``SCAM Survey Results`` is the results of the questionnaire. Comments pdfs showing the analysis of participants' comments in the criteria-based questions. Also, the chart of the criteria-based is located in ``SCAM-data-analysis``.
 
 You can find the results in the following directories:
 ```
