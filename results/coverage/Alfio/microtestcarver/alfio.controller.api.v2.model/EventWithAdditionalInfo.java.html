@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EventWithAdditionalInfo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.controller.api.v2.model</a> &gt; <span class="el_source">EventWithAdditionalInfo.java</span></div><h1>EventWithAdditionalInfo.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.controller.api.v2.model;
+
+import alfio.model.Event;
+import alfio.model.Event.EventFormat;
+import alfio.model.PurchaseContext;
+import alfio.model.user.Organization;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.util.List;
+import java.util.Map;
+
+@AllArgsConstructor
+public class EventWithAdditionalInfo implements DateValidity, ApiPurchaseContext {
+    private final Event event;
+    private final String mapUrl;
+    private final Organization.OrganizationContact organization;
+    private final Map&lt;String, String&gt; description;
+
+    //payment related information
+    private final String bankAccount;
+    private final List&lt;String&gt; bankAccountOwner;
+    //
+
+    //date related information
+    private final Map&lt;String, String&gt; formattedBeginDate; // day, month, year
+    private final Map&lt;String, String&gt; formattedBeginTime; //the hour/minute component
+    private final Map&lt;String, String&gt; formattedEndDate;
+    private final Map&lt;String, String&gt; formattedEndTime;
+    //
+
+    //
+    private final InvoicingConfiguration invoicingConfiguration;
+    //
+
+    //
+    private final CaptchaConfiguration captchaConfiguration;
+    //
+
+    //
+    private final AssignmentConfiguration assignmentConfiguration;
+    //
+
+    //
+    private final PromotionsConfiguration promotionsConfiguration;
+    //
+
+    private final AnalyticsConfiguration analyticsConfiguration;
+
+    private final Map&lt;String, Map&lt;String, String&gt;&gt; i18nOverride;
+
+    private final Integer availableTicketsCount;
+
+    private final String customCss;
+
+    private final boolean canApplySubscriptions;
+
+    public String getShortName() {
+<span class="nc" id="L76">        return event.getShortName();</span>
+    }
+
+    public String getDisplayName() {
+<span class="nc" id="L80">        return event.getDisplayName();</span>
+    }
+
+    public String getFileBlobId() {
+<span class="nc" id="L84">        return event.getFileBlobId();</span>
+    }
+
+    public String getWebsiteUrl() {
+<span class="nc" id="L88">        return event.getWebsiteUrl();</span>
+    }
+
+    public Integer getAvailableTicketsCount() {
+<span class="nc" id="L92">        return availableTicketsCount;</span>
+    }
+
+    public String getMapUrl() {
+<span class="nc" id="L96">        return mapUrl;</span>
+    }
+
+    @Override
+    public String getOrganizationName() {
+<span class="nc" id="L101">        return organization.getName();</span>
+    }
+
+    @Override
+    public String getOrganizationEmail() {
+<span class="nc" id="L106">        return organization.getEmail();</span>
+    }
+
+    public String getLocation() {
+<span class="nc" id="L110">        return event.getLocation();</span>
+    }
+
+    @Override
+    public Map&lt;String, String&gt; getDescription() {
+<span class="nc" id="L115">        return description;</span>
+    }
+
+    @Override
+    public String getPrivacyPolicyUrl() {
+<span class="nc" id="L120">        return event.getPrivacyPolicyLinkOrNull();</span>
+    }
+
+    @Override
+    public String getTermsAndConditionsUrl() {
+<span class="nc" id="L125">        return event.getTermsAndConditionsUrl();</span>
+    }
+
+    @Override
+    public String getCurrency() {
+<span class="nc" id="L130">        return event.getCurrency();</span>
+    }
+
+    @Override
+    public boolean isVatIncluded() {
+<span class="nc" id="L135">        return event.isVatIncluded();</span>
+    }
+
+    @Override
+    public String getVat() {
+<span class="nc" id="L140">        return event.getVat().toString();</span>
+    }
+
+    @Override
+    public boolean isFree() {
+<span class="nc" id="L145">        return event.getFree();</span>
+    }
+
+    @Override
+    public String getBankAccount() {
+<span class="nc" id="L150">        return bankAccount;</span>
+    }
+
+    @Override
+    public List&lt;String&gt; getBankAccountOwner() {
+<span class="nc" id="L155">        return bankAccountOwner;</span>
+    }
+
+
+    // date related fields
+    @Override
+    public boolean isSameDay() {
+<span class="nc" id="L162">        return event.getSameDay();</span>
+    }
+
+    @Override
+    public Map&lt;String, String&gt; getFormattedBeginDate() {
+<span class="nc" id="L167">        return formattedBeginDate;</span>
+    }
+
+    @Override
+    public Map&lt;String, String&gt; getFormattedBeginTime() {
+<span class="nc" id="L172">        return formattedBeginTime;</span>
+    }
+
+    @Override
+    public Map&lt;String, String&gt; getFormattedEndDate() {
+<span class="nc" id="L177">        return formattedEndDate;</span>
+    }
+
+    @Override
+    public Map&lt;String, String&gt; getFormattedEndTime() {
+<span class="nc" id="L182">        return formattedEndTime;</span>
+    }
+
+    @Override
+    public String getTimeZone() {
+<span class="nc" id="L187">        return event.getTimeZone();</span>
+    }
+
+    @Override
+    public DatesWithTimeZoneOffset getDatesWithOffset() {
+<span class="nc" id="L192">        return DatesWithTimeZoneOffset.fromEvent(event);</span>
+    }
+
+    //
+
+
+    @Override
+    public InvoicingConfiguration getInvoicingConfiguration() {
+<span class="nc" id="L200">        return invoicingConfiguration;</span>
+    }
+
+    @Override
+    public CaptchaConfiguration getCaptchaConfiguration() {
+<span class="nc" id="L205">        return captchaConfiguration;</span>
+    }
+
+    @Override
+    public AssignmentConfiguration getAssignmentConfiguration() {
+<span class="nc" id="L210">        return assignmentConfiguration;</span>
+    }
+
+    public PromotionsConfiguration getPromotionsConfiguration() {
+<span class="nc" id="L214">        return promotionsConfiguration;</span>
+    }
+
+    @Override
+    public AnalyticsConfiguration getAnalyticsConfiguration() {
+<span class="nc" id="L219">        return analyticsConfiguration;</span>
+    }
+
+    public Map&lt;String, Map&lt;String, String&gt;&gt; getI18nOverride() {
+<span class="nc" id="L223">        return i18nOverride;</span>
+    }
+
+    public EventFormat getFormat() {
+<span class="nc" id="L227">        return event.getFormat();</span>
+    }
+
+    public String getCustomCss() {
+<span class="nc" id="L231">        return customCss;</span>
+    }
+
+    @Override
+    public Map&lt;String, String&gt; getTitle() {
+<span class="nc" id="L236">        return event.getTitle();</span>
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class CaptchaConfiguration {
+        private final boolean captchaForTicketSelection;
+        private final boolean captchaForOfflinePaymentAndFree;
+        private final String recaptchaApiKey;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class AssignmentConfiguration {
+        private final boolean forceAssignment;
+        private final boolean enableAttendeeAutocomplete;
+        private final boolean enableTicketTransfer;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class PromotionsConfiguration {
+        private final boolean hasAccessPromotions;
+        private final boolean usePartnerCode;
+    }
+
+    @JsonIgnore
+    @Override
+    public PurchaseContext purchaseContext() {
+<span class="nc" id="L265">        return event;</span>
+    }
+
+    @Override
+    public boolean isCanApplySubscriptions() {
+<span class="nc" id="L270">        return canApplySubscriptions;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,44 @@
+<org.springframework.validation.support.BindingAwareModelMap serialization="custom">
+  <unserializable-parents/>
+  <map>
+    <default>
+      <loadFactor>0.75</loadFactor>
+      <threshold>12</threshold>
+    </default>
+    <int>16</int>
+    <int>2</int>
+    <string>owner</string>
+    <org.springframework.samples.petclinic.owner.Owner>
+      <lastName></lastName>
+      <pets/>
+    </org.springframework.samples.petclinic.owner.Owner>
+    <string>org.springframework.validation.BindingResult.owner</string>
+    <org.springframework.validation.BeanPropertyBindingResult>
+      <nestedPath></nestedPath>
+      <nestedPathStack class="java.util.ArrayDeque" serialization="custom">
+        <unserializable-parents/>
+        <java.util.ArrayDeque>
+          <default/>
+          <int>0</int>
+        </java.util.ArrayDeque>
+      </nestedPathStack>
+      <objectName>owner</objectName>
+      <messageCodesResolver class="org.springframework.validation.DefaultMessageCodesResolver">
+        <prefix></prefix>
+        <formatter class="org.springframework.validation.DefaultMessageCodesResolver$Format">PREFIX_ERROR_CODE</formatter>
+      </messageCodesResolver>
+      <errors/>
+      <fieldTypes/>
+      <fieldValues/>
+      <suppressedFields/>
+      <target class="org.springframework.samples.petclinic.owner.Owner" reference="../../org.springframework.samples.petclinic.owner.Owner"/>
+      <autoGrowNestedPaths>true</autoGrowNestedPaths>
+      <autoGrowCollectionLimit>256</autoGrowCollectionLimit>
+    </org.springframework.validation.BeanPropertyBindingResult>
+  </map>
+  <linked-hash-map>
+    <default>
+      <accessOrder>false</accessOrder>
+    </default>
+  </linked-hash-map>
+</org.springframework.validation.support.BindingAwareModelMap>

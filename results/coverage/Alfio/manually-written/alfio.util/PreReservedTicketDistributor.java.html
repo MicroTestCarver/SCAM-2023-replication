@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PreReservedTicketDistributor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.util</a> &gt; <span class="el_source">PreReservedTicketDistributor.java</span></div><h1>PreReservedTicketDistributor.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.util;
+
+import alfio.model.TicketCategoryStatisticView;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BiConsumer;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
+
+public final class PreReservedTicketDistributor implements Collector&lt;Pair&lt;Integer, TicketCategoryStatisticView&gt;, List&lt;Pair&lt;Integer, TicketCategoryStatisticView&gt;&gt;, List&lt;Pair&lt;Integer, TicketCategoryStatisticView&gt;&gt;&gt; {
+
+    private final AtomicInteger requestedTickets;
+
+<span class="fc" id="L37">    public PreReservedTicketDistributor(int requestedTickets) {</span>
+<span class="fc" id="L38">        this.requestedTickets = new AtomicInteger(requestedTickets);</span>
+<span class="fc" id="L39">    }</span>
+
+    @Override
+    public Supplier&lt;List&lt;Pair&lt;Integer, TicketCategoryStatisticView&gt;&gt;&gt; supplier() {
+<span class="fc" id="L43">        return ArrayList::new;</span>
+    }
+
+    @Override
+    public BiConsumer&lt;List&lt;Pair&lt;Integer, TicketCategoryStatisticView&gt;&gt;, Pair&lt;Integer, TicketCategoryStatisticView&gt;&gt; accumulator() {
+<span class="fc" id="L48">        return (accumulator, candidate) -&gt; {</span>
+<span class="fc" id="L49">            int requested = requestedTickets.get();</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">            if (requested &gt; 0) {</span>
+<span class="fc" id="L51">                int capacity = Math.min(requested, candidate.getKey());</span>
+<span class="fc" id="L52">                accumulator.add(Pair.of(capacity, candidate.getValue()));</span>
+<span class="fc" id="L53">                requestedTickets.addAndGet(-capacity);</span>
+            }
+<span class="fc" id="L55">        };</span>
+    }
+
+    /**
+     * This collector is not designed run in parallel. Thus the combiner here doesn't do nothing
+     * @return the first parameter
+     */
+    @Override
+    public BinaryOperator&lt;List&lt;Pair&lt;Integer, TicketCategoryStatisticView&gt;&gt;&gt; combiner() {
+<span class="pc" id="L64">        return (a, b) -&gt; a;</span>
+    }
+
+    @Override
+    public Function&lt;List&lt;Pair&lt;Integer, TicketCategoryStatisticView&gt;&gt;, List&lt;Pair&lt;Integer, TicketCategoryStatisticView&gt;&gt;&gt; finisher() {
+<span class="nc" id="L69">        return Function.identity();</span>
+    }
+
+
+    @Override
+    public Set&lt;Characteristics&gt; characteristics() {
+<span class="fc" id="L75">        return EnumSet.of(Characteristics.IDENTITY_FINISH);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

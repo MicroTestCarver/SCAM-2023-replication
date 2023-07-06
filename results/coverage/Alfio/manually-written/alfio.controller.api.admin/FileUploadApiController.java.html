@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileUploadApiController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.controller.api.admin</a> &gt; <span class="el_source">FileUploadApiController.java</span></div><h1>FileUploadApiController.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.controller.api.admin;
+
+import alfio.manager.FileUploadManager;
+import alfio.model.modification.UploadBase64FileModification;
+import lombok.extern.log4j.Log4j2;
+
+import org.imgscalr.Scalr;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.MimeType;
+import org.springframework.util.MimeTypeUtils;
+import org.springframework.web.bind.annotation.*;
+
+import javax.imageio.ImageIO;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+@RestController
+@RequestMapping(&quot;/admin/api&quot;)
+<span class="fc" id="L39">@Log4j2</span>
+public class FileUploadApiController {
+
+    private static final int IMAGE_THUMB_MAX_WIDTH_PX = 500;
+    private static final int IMAGE_THUMB_MAX_HEIGHT_PX = 500;
+
+    private final FileUploadManager fileUploadManager;
+
+    @Autowired
+<span class="fc" id="L48">    public FileUploadApiController(FileUploadManager fileUploadManager) {</span>
+<span class="fc" id="L49">        this.fileUploadManager = fileUploadManager;</span>
+<span class="fc" id="L50">    }</span>
+
+    @PostMapping(&quot;/file/upload&quot;)
+    public ResponseEntity&lt;String&gt; uploadFile(@RequestParam(required = false, value = &quot;resizeImage&quot;, defaultValue = &quot;false&quot;) Boolean resizeImage,
+                                             @RequestBody UploadBase64FileModification upload) {
+
+        try {
+<span class="nc" id="L57">            final var mimeType = MimeTypeUtils.parseMimeType(upload.getType());</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">            if (Boolean.TRUE.equals(resizeImage)) {</span>
+<span class="nc" id="L59">                upload = resize(upload, mimeType);</span>
+            }
+<span class="nc" id="L61">            return ResponseEntity.ok(fileUploadManager.insertFile(upload));</span>
+<span class="nc" id="L62">        } catch (Exception e) {</span>
+<span class="nc" id="L63">            log.error(&quot;error while uploading image&quot;, e);</span>
+<span class="nc" id="L64">            return ResponseEntity.badRequest().build();</span>
+        }
+    }
+
+    private UploadBase64FileModification resize(UploadBase64FileModification upload, MimeType mimeType) throws IOException {
+<span class="nc" id="L69">        BufferedImage image = ImageIO.read(new ByteArrayInputStream(upload.getFile()));</span>
+        //resize only if the image is bigger than 500px on one of the side
+<span class="nc bnc" id="L71" title="All 4 branches missed.">        if (image.getWidth() &gt; IMAGE_THUMB_MAX_WIDTH_PX || image.getHeight() &gt; IMAGE_THUMB_MAX_HEIGHT_PX) {</span>
+<span class="nc" id="L72">            UploadBase64FileModification resized = new UploadBase64FileModification();</span>
+<span class="nc" id="L73">            BufferedImage thumbImg = Scalr.resize(image, Scalr.Method.QUALITY, Scalr.Mode.AUTOMATIC, IMAGE_THUMB_MAX_WIDTH_PX, IMAGE_THUMB_MAX_HEIGHT_PX, Scalr.OP_ANTIALIAS);</span>
+<span class="nc" id="L74">            try (final var baos = new ByteArrayOutputStream()) {</span>
+<span class="nc" id="L75">                ImageIO.write(thumbImg, mimeType.getSubtype(), baos);</span>
+<span class="nc" id="L76">                resized.setFile(baos.toByteArray());</span>
+            }
+<span class="nc" id="L78">            resized.setAttributes(upload.getAttributes());</span>
+<span class="nc" id="L79">            resized.setName(upload.getName());</span>
+<span class="nc" id="L80">            resized.setType(upload.getType());</span>
+<span class="nc" id="L81">            return resized;</span>
+        }
+<span class="nc" id="L83">        return upload;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

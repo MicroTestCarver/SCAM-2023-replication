@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicketWithMetadataAttributes.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">TicketWithMetadataAttributes.java</span></div><h1>TicketWithMetadataAttributes.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import alfio.model.metadata.TicketMetadataContainer;
+import alfio.model.support.Array;
+import alfio.model.support.JSONData;
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.time.ZonedDateTime;
+import java.util.*;
+
+public class TicketWithMetadataAttributes {
+
+    private final Ticket ticket;
+    private final TicketMetadataContainer ticketMetadataContainer;
+
+    public TicketWithMetadataAttributes(@Column(&quot;id&quot;) int id,
+                                        @Column(&quot;uuid&quot;) String uuid,
+                                        @Column(&quot;creation&quot;) ZonedDateTime creation,
+                                        @Column(&quot;category_id&quot;) Integer categoryId,
+                                        @Column(&quot;status&quot;) String status,
+                                        @Column(&quot;event_id&quot;) int eventId,
+                                        @Column(&quot;tickets_reservation_id&quot;) String ticketsReservationId,
+                                        @Column(&quot;full_name&quot;) String fullName,
+                                        @Column(&quot;first_name&quot;) String firstName,
+                                        @Column(&quot;last_name&quot;) String lastName,
+                                        @Column(&quot;email_address&quot;) String email,
+                                        @Column(&quot;locked_assignment&quot;) boolean lockedAssignment,
+                                        @Column(&quot;user_language&quot;) String userLanguage,
+                                        @Column(&quot;src_price_cts&quot;) int srcPriceCts,
+                                        @Column(&quot;final_price_cts&quot;) int finalPriceCts,
+                                        @Column(&quot;vat_cts&quot;) int vatCts,
+                                        @Column(&quot;discount_cts&quot;) int discountCts,
+                                        @Column(&quot;ext_reference&quot;) String extReference,
+                                        @Column(&quot;currency_code&quot;) String currencyCode,
+                                        @Column(&quot;tags&quot;) @Array List&lt;String&gt; tags,
+                                        @Column(&quot;subscription_id_fk&quot;) UUID subscriptionId,
+                                        @Column(&quot;vat_status&quot;) PriceContainer.VatStatus vatStatus,
+                                        @Column(&quot;metadata&quot;) @JSONData TicketMetadataContainer ticketMetadataContainer) {
+<span class="fc" id="L56">        this(new Ticket(id, uuid, creation, categoryId, status, eventId, ticketsReservationId, fullName, firstName, lastName, email, lockedAssignment, userLanguage, srcPriceCts, finalPriceCts, vatCts, discountCts, extReference, currencyCode, tags, subscriptionId, vatStatus),</span>
+            ticketMetadataContainer);
+<span class="fc" id="L58">    }</span>
+
+<span class="fc" id="L60">    private TicketWithMetadataAttributes(Ticket ticket, TicketMetadataContainer ticketMetadataContainer) {</span>
+<span class="fc" id="L61">        this.ticket = ticket;</span>
+<span class="fc" id="L62">        this.ticketMetadataContainer = Objects.requireNonNullElseGet(ticketMetadataContainer, TicketMetadataContainer::empty);</span>
+<span class="fc" id="L63">    }</span>
+
+    public Map&lt;String, String&gt; getAttributes() {
+<span class="fc" id="L66">        return ticketMetadataContainer</span>
+<span class="fc" id="L67">            .getMetadataForKey(TicketMetadataContainer.GENERAL)</span>
+<span class="pc" id="L68">            .flatMap(tm -&gt; Optional.ofNullable(tm.getAttributes()))</span>
+<span class="fc" id="L69">            .orElse(Map.of());</span>
+    }
+
+    public Ticket getTicket() {
+<span class="fc" id="L73">        return ticket;</span>
+    }
+
+    @JsonIgnore
+    public TicketMetadataContainer getMetadata() {
+<span class="fc" id="L78">        return ticketMetadataContainer;</span>
+    }
+
+    public static TicketWithMetadataAttributes build(Ticket ticket, TicketMetadataContainer ticketMetadataContainer) {
+<span class="fc" id="L82">        return new TicketWithMetadataAttributes(ticket, ticketMetadataContainer);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

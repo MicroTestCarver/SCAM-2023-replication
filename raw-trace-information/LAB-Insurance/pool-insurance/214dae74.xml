@@ -1,0 +1,29 @@
+<pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand>
+  <productCode>FAI</productCode>
+  <policyFrom>2023-05-19</policyFrom>
+  <policyTo>2023-05-31</policyTo>
+  <selectedCovers>
+    <string>C1</string>
+    <string>C2</string>
+    <string>C3</string>
+    <string>C4</string>
+  </selectedCovers>
+  <answers>
+    <pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>
+      <questionCode>TYP</questionCode>
+      <answer class="string">KW</answer>
+    </pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>
+    <pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>
+      <questionCode>AREA</questionCode>
+      <answer class="int">5000</answer>
+    </pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>
+    <pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>
+      <questionCode>NUM_OF_CLAIM</questionCode>
+      <answer class="int">5</answer>
+    </pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>
+    <pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>
+      <questionCode>FLOOD</questionCode>
+      <answer class="string">YES</answer>
+    </pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>
+  </answers>
+</pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Tariff.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pricing-service</a> &gt; <a href="index.source.html" class="el_package">pl.altkom.asc.lab.micronaut.poc.pricing.domain</a> &gt; <span class="el_source">Tariff.java</span></div><h1>Tariff.java</h1><pre class="source lang-java linenums">package pl.altkom.asc.lab.micronaut.poc.pricing.domain;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = &quot;tariff&quot;)
+<span class="fc" id="L12">@NoArgsConstructor</span>
+@Getter
+public class Tariff {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+<span class="nc" id="L18">    private Long id;</span>
+
+    @Column(name = &quot;code&quot;)
+<span class="fc" id="L21">    private String code;</span>
+
+    @ElementCollection
+    @CollectionTable(name = &quot;base_price_rules&quot;, joinColumns = @JoinColumn(name = &quot;tariff_id&quot;))
+<span class="nc" id="L25">    private List&lt;BasePremiumCalculationRule&gt; basePriceCalculationRules;</span>
+
+    @OneToMany(mappedBy = &quot;tariff&quot;, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+<span class="nc" id="L28">    private List&lt;DiscountMarkupRule&gt; discountMarkupRules;</span>
+    
+<span class="fc" id="L30">    public Tariff( String code) {</span>
+<span class="fc" id="L31">        this.code = code;</span>
+<span class="fc" id="L32">        this.basePriceCalculationRules = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L33">        this.discountMarkupRules = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L34">    }</span>
+
+    public BasePremiumCalculationRuleList rules() {
+<span class="fc" id="L37">        return new BasePremiumCalculationRuleList(basePriceCalculationRules);</span>
+    }
+
+    public DiscountMarkupRuleList discountMarkupRules() {
+<span class="fc" id="L41">        return new DiscountMarkupRuleList(this, discountMarkupRules);</span>
+    }
+
+    public Calculation calculatePrice(Calculation calculation) {
+<span class="fc" id="L45">        calcBasePrices(calculation);</span>
+<span class="fc" id="L46">        applyDiscounts(calculation);</span>
+<span class="fc" id="L47">        buildResponse(calculation);</span>
+
+<span class="fc" id="L49">        return calculation;</span>
+    }
+
+    private void calcBasePrices(Calculation calculation) {
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        for (Cover c : calculation.getCovers().values()) {</span>
+<span class="fc" id="L54">            c.setPrice(rules().calculateBasePriceFor(c, calculation));</span>
+<span class="fc" id="L55">        }</span>
+<span class="fc" id="L56">    }</span>
+
+    private void applyDiscounts(Calculation calculation) {
+<span class="fc" id="L59">        discountMarkupRules().apply(calculation);</span>
+<span class="fc" id="L60">    }</span>
+
+    private void buildResponse(Calculation calculation) {
+<span class="fc" id="L63">        calculation.updateTotal();</span>
+<span class="fc" id="L64">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

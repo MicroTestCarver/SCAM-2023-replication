@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicketReservationWithEventIdentifier.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">TicketReservationWithEventIdentifier.java</span></div><h1>TicketReservationWithEventIdentifier.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import alfio.model.transaction.PaymentProxy;
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import lombok.experimental.Delegate;
+
+import java.math.BigDecimal;
+import java.time.ZonedDateTime;
+import java.util.Date;
+
+public class TicketReservationWithEventIdentifier {
+    @Delegate
+    private final TicketReservation reservation;
+    private final String eventPublicIdentifier;
+
+    public TicketReservationWithEventIdentifier(
+        @Column(&quot;id&quot;) String id,
+        @Column(&quot;validity&quot;) Date validity,
+        @Column(&quot;status&quot;) TicketReservation.TicketReservationStatus status,
+        @Column(&quot;full_name&quot;) String fullName,
+        @Column(&quot;first_name&quot;) String firstName,
+        @Column(&quot;last_name&quot;) String lastName,
+        @Column(&quot;email_address&quot;) String email,
+        @Column(&quot;billing_address&quot;) String billingAddress,
+        @Column(&quot;confirmation_ts&quot;) ZonedDateTime confirmationTimestamp,
+        @Column(&quot;latest_reminder_ts&quot;) ZonedDateTime latestReminder,
+        @Column(&quot;payment_method&quot;) PaymentProxy paymentMethod,
+        @Column(&quot;offline_payment_reminder_sent&quot;) Boolean reminderSent,
+        @Column(&quot;promo_code_id_fk&quot;) Integer promoCodeDiscountId,
+        @Column(&quot;automatic&quot;) boolean automatic,
+        @Column(&quot;user_language&quot;) String userLanguage,
+        @Column(&quot;direct_assignment&quot;) boolean directAssignmentRequested,
+        @Column(&quot;invoice_number&quot;) String invoiceNumber,
+        @Column(&quot;invoice_model&quot;) String invoiceModel,
+        @Column(&quot;vat_status&quot;) PriceContainer.VatStatus vatStatus,
+        @Column(&quot;vat_nr&quot;) String vatNr,
+        @Column(&quot;vat_country&quot;) String vatCountryCode,
+        @Column(&quot;invoice_requested&quot;) boolean invoiceRequested,
+        @Column(&quot;used_vat_percent&quot;) BigDecimal usedVatPercent,
+        @Column(&quot;vat_included&quot;) Boolean vatIncluded,
+        @Column(&quot;creation_ts&quot;) ZonedDateTime creationTimestamp,
+        @Column(&quot;customer_reference&quot;) String customerReference,
+        @Column(&quot;registration_ts&quot;) ZonedDateTime registrationTimestamp,
+        @Column(&quot;src_price_cts&quot;) Integer srcPriceCts,
+        @Column(&quot;final_price_cts&quot;) Integer finalPriceCts,
+        @Column(&quot;vat_cts&quot;) Integer vatCts,
+        @Column(&quot;discount_cts&quot;) Integer discountCts,
+        @Column(&quot;currency_code&quot;) String currencyCode,
+<span class="nc" id="L65">        @Column(&quot;short_name&quot;) String eventPublicIdentifier) {</span>
+
+<span class="nc" id="L67">        this.eventPublicIdentifier = eventPublicIdentifier;</span>
+<span class="nc" id="L68">        this.reservation = new TicketReservation(id,</span>
+            validity,
+            status,
+            fullName,
+            firstName,
+            lastName,
+            email,
+            billingAddress,
+            confirmationTimestamp,
+            latestReminder,
+            paymentMethod,
+            reminderSent,
+            promoCodeDiscountId,
+            automatic,
+            userLanguage,
+            directAssignmentRequested,
+            invoiceNumber,
+            invoiceModel,
+            vatStatus,
+            vatNr,
+            vatCountryCode,
+            invoiceRequested,
+            usedVatPercent,
+            vatIncluded,
+            creationTimestamp,
+            customerReference,
+            registrationTimestamp,
+            srcPriceCts,
+            finalPriceCts,
+            vatCts,
+            discountCts,
+            currencyCode);
+<span class="nc" id="L100">    }</span>
+
+    public String getEventPublicIdentifier() {
+<span class="nc" id="L103">        return eventPublicIdentifier;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

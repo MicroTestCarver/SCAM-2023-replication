@@ -1,0 +1,10 @@
+<list>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+    <code>ZB</code>
+    <label>Crop</label>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+    <code>KW</code>
+    <label>Vegetable</label>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+</list>

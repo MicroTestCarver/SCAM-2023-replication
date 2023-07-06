@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicketReservation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">TicketReservation.java</span></div><h1>TicketReservation.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import alfio.model.transaction.PaymentProxy;
+import alfio.util.MonetaryUtil;
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.With;
+import org.apache.commons.lang3.StringUtils;
+
+import java.math.BigDecimal;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.*;
+
+@Getter
+public class TicketReservation implements PriceContainer {
+
+<span class="fc" id="L35">    public enum TicketReservationStatus {</span>
+<span class="fc" id="L36">        PENDING,</span>
+<span class="fc" id="L37">        IN_PAYMENT,</span>
+<span class="fc" id="L38">        EXTERNAL_PROCESSING_PAYMENT,</span>
+<span class="fc" id="L39">        WAITING_EXTERNAL_CONFIRMATION,</span>
+<span class="fc" id="L40">        OFFLINE_PAYMENT,</span>
+<span class="fc" id="L41">        DEFERRED_OFFLINE_PAYMENT,</span>
+<span class="fc" id="L42">        COMPLETE,</span>
+<span class="fc" id="L43">        STUCK,</span>
+<span class="fc" id="L44">        CANCELLED,</span>
+<span class="fc" id="L45">        CREDIT_NOTE_ISSUED</span>
+    }
+
+    private final String id;
+    private final Date validity;
+    private final TicketReservationStatus status;
+    private final String fullName;
+    private final String firstName;
+    private final String lastName;
+    private final String email;
+    private final String billingAddress;
+    private final ZonedDateTime confirmationTimestamp;
+    private final ZonedDateTime latestReminder;
+    private final PaymentProxy paymentMethod;
+    private final Boolean reminderSent;
+    private final Integer promoCodeDiscountId;
+    private final boolean automatic;
+    private final String userLanguage;
+    private final boolean directAssignmentRequested;
+    private final String invoiceNumber;
+    @JsonIgnore
+    private final String invoiceModel;
+    @With
+    private final PriceContainer.VatStatus vatStatus;
+    private final String vatNr;
+    private final String vatCountryCode;
+    private final boolean invoiceRequested;
+    private final BigDecimal usedVatPercent;
+    private final Boolean vatIncluded;
+    private final ZonedDateTime creationTimestamp;
+    private final String customerReference;
+    private final ZonedDateTime registrationTimestamp;
+
+
+    private final int srcPriceCts;
+    private final int finalPriceCts;
+    private final int vatCts;
+    private final int discountCts;
+    private final String currencyCode;
+
+
+    public TicketReservation(@Column(&quot;id&quot;) String id,
+                             @Column(&quot;validity&quot;) Date validity,
+                             @Column(&quot;status&quot;) TicketReservationStatus status,
+                             @Column(&quot;full_name&quot;) String fullName,
+                             @Column(&quot;first_name&quot;) String firstName,
+                             @Column(&quot;last_name&quot;) String lastName,
+                             @Column(&quot;email_address&quot;) String email,
+                             @Column(&quot;billing_address&quot;) String billingAddress,
+                             @Column(&quot;confirmation_ts&quot;) ZonedDateTime confirmationTimestamp,
+                             @Column(&quot;latest_reminder_ts&quot;) ZonedDateTime latestReminder,
+                             @Column(&quot;payment_method&quot;) PaymentProxy paymentMethod,
+                             @Column(&quot;offline_payment_reminder_sent&quot;) Boolean reminderSent,
+                             @Column(&quot;promo_code_id_fk&quot;) Integer promoCodeDiscountId,
+                             @Column(&quot;automatic&quot;) boolean automatic,
+                             @Column(&quot;user_language&quot;) String userLanguage,
+                             @Column(&quot;direct_assignment&quot;) boolean directAssignmentRequested,
+                             @Column(&quot;invoice_number&quot;) String invoiceNumber,
+                             @Column(&quot;invoice_model&quot;) String invoiceModel,
+                             @Column(&quot;vat_status&quot;) PriceContainer.VatStatus vatStatus,
+                             @Column(&quot;vat_nr&quot;) String vatNr,
+                             @Column(&quot;vat_country&quot;) String vatCountryCode,
+                             @Column(&quot;invoice_requested&quot;) boolean invoiceRequested,
+                             @Column(&quot;used_vat_percent&quot;) BigDecimal usedVatPercent,
+                             @Column(&quot;vat_included&quot;) Boolean vatIncluded,
+                             @Column(&quot;creation_ts&quot;) ZonedDateTime creationTimestamp,
+                             @Column(&quot;customer_reference&quot;) String customerReference,
+                             @Column(&quot;registration_ts&quot;) ZonedDateTime registrationTimestamp,
+                             @Column(&quot;src_price_cts&quot;) Integer srcPriceCts,
+                             @Column(&quot;final_price_cts&quot;) Integer finalPriceCts,
+                             @Column(&quot;vat_cts&quot;) Integer vatCts,
+                             @Column(&quot;discount_cts&quot;) Integer discountCts,
+<span class="nc" id="L117">                             @Column(&quot;currency_code&quot;) String currencyCode) {</span>
+<span class="nc" id="L118">        this.id = id;</span>
+<span class="nc" id="L119">        this.validity = validity;</span>
+<span class="nc" id="L120">        this.status = status;</span>
+<span class="nc" id="L121">        this.fullName = fullName;</span>
+<span class="nc" id="L122">        this.firstName = firstName;</span>
+<span class="nc" id="L123">        this.lastName = lastName;</span>
+<span class="nc" id="L124">        this.email = email;</span>
+<span class="nc" id="L125">        this.billingAddress = billingAddress;</span>
+<span class="nc" id="L126">        this.confirmationTimestamp = confirmationTimestamp;</span>
+<span class="nc" id="L127">        this.latestReminder = latestReminder;</span>
+<span class="nc" id="L128">        this.paymentMethod = paymentMethod;</span>
+<span class="nc" id="L129">        this.reminderSent = reminderSent;</span>
+<span class="nc" id="L130">        this.promoCodeDiscountId = promoCodeDiscountId;</span>
+<span class="nc" id="L131">        this.automatic = automatic;</span>
+<span class="nc" id="L132">        this.userLanguage = userLanguage;</span>
+<span class="nc" id="L133">        this.directAssignmentRequested = directAssignmentRequested;</span>
+<span class="nc" id="L134">        this.invoiceNumber = invoiceNumber;</span>
+<span class="nc" id="L135">        this.invoiceModel = invoiceModel;</span>
+<span class="nc" id="L136">        this.vatStatus = vatStatus;</span>
+<span class="nc" id="L137">        this.vatNr = vatNr;</span>
+<span class="nc" id="L138">        this.vatCountryCode = vatCountryCode;</span>
+<span class="nc" id="L139">        this.invoiceRequested = invoiceRequested;</span>
+<span class="nc" id="L140">        this.usedVatPercent = usedVatPercent;</span>
+<span class="nc" id="L141">        this.vatIncluded = vatIncluded;</span>
+<span class="nc" id="L142">        this.creationTimestamp = creationTimestamp;</span>
+<span class="nc" id="L143">        this.registrationTimestamp = registrationTimestamp;</span>
+<span class="nc" id="L144">        this.customerReference = customerReference;</span>
+
+<span class="nc" id="L146">        this.srcPriceCts = Optional.ofNullable(srcPriceCts).orElse(0);</span>
+<span class="nc" id="L147">        this.finalPriceCts = Optional.ofNullable(finalPriceCts).orElse(0);</span>
+<span class="nc" id="L148">        this.vatCts = Optional.ofNullable(vatCts).orElse(0);</span>
+<span class="nc" id="L149">        this.discountCts = Optional.ofNullable(discountCts).orElse(0);</span>
+<span class="nc" id="L150">        this.currencyCode = currencyCode;</span>
+<span class="nc" id="L151">    }</span>
+
+    public boolean isStuck() {
+<span class="nc bnc" id="L154" title="All 2 branches missed.">        return status == TicketReservationStatus.STUCK;</span>
+    }
+
+    public boolean isReminderSent() {
+<span class="nc" id="L158">        return Optional.ofNullable(reminderSent).orElse(false);</span>
+    }
+
+    public boolean getHasBillingAddress() {
+<span class="nc" id="L162">        return StringUtils.isNotBlank(billingAddress);</span>
+    }
+
+    public Optional&lt;ZonedDateTime&gt; latestNotificationTimestamp(ZoneId zoneId) {
+<span class="nc" id="L166">        return Optional.ofNullable(latestReminder).map(d -&gt; d.withZoneSameInstant(zoneId));</span>
+    }
+
+    public String getFullName() {
+<span class="nc bnc" id="L170" title="All 4 branches missed.">        return (firstName != null &amp;&amp; lastName != null) ? (firstName + &quot; &quot; + lastName) : fullName;</span>
+    }
+
+    public boolean getHasInvoiceNumber() {
+<span class="nc bnc" id="L174" title="All 2 branches missed.">        return invoiceNumber != null;</span>
+    }
+
+    public boolean getHasInvoiceOrReceiptDocument() {
+<span class="nc bnc" id="L178" title="All 2 branches missed.">        return invoiceModel != null;</span>
+    }
+
+    public boolean getHasBeenPaid() {
+<span class="nc bnc" id="L182" title="All 4 branches missed.">        return status == TicketReservationStatus.COMPLETE &amp;&amp; !EnumSet.of(PaymentProxy.NONE, PaymentProxy.ADMIN).contains(paymentMethod);</span>
+    }
+
+    public boolean getHasVatNumber() {
+<span class="nc" id="L186">        return StringUtils.isNotEmpty(vatNr);</span>
+    }
+
+    public List&lt;String&gt; getLineSplittedBillingAddress() {
+<span class="nc bnc" id="L190" title="All 2 branches missed.">        if(billingAddress == null) {</span>
+<span class="nc" id="L191">            return Collections.emptyList();</span>
+        }
+<span class="nc" id="L193">        return Arrays.asList(StringUtils.split(billingAddress, '\n'));</span>
+    }
+
+    public boolean isCancelled() {
+<span class="nc bnc" id="L197" title="All 2 branches missed.">        return status == TicketReservationStatus.CANCELLED;</span>
+    }
+
+    public String getPaidAmount() {
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        if(finalPriceCts &gt; 0) {</span>
+<span class="nc" id="L202">            return MonetaryUtil.formatCents(finalPriceCts, currencyCode);</span>
+        }
+<span class="nc" id="L204">        return null;</span>
+    }
+
+    @Override
+    public Optional&lt;BigDecimal&gt; getOptionalVatPercentage() {
+<span class="nc" id="L209">        return Optional.ofNullable(usedVatPercent);</span>
+    }
+
+    public boolean isPendingOfflinePayment() {
+<span class="nc bnc" id="L213" title="All 4 branches missed.">        return status == TicketReservationStatus.OFFLINE_PAYMENT</span>
+            || status == TicketReservationStatus.DEFERRED_OFFLINE_PAYMENT;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

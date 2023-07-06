@@ -1,0 +1,435 @@
+plugins {
+    id 'java'
+    id 'signing'
+    id 'maven-publish'
+    alias(libs.plugins.shadow)
+    alias(libs.plugins.ospackage)
+    alias(libs.plugins.sdkman.vendors)
+}
+
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.gradle.internal.os.OperatingSystem
+
+repositories {
+    mavenCentral()
+}
+
+def distBase = "${project.buildDir}/resources/main"
+def distTarget = "${distBase}/v${project.version}"
+def libsDir = new File("${distTarget}/libs")
+
+configurations {
+    artifact.extendsFrom implementation
+}
+
+dependencies {
+    implementation project(':btrace-agent')
+    implementation project(':btrace-client')
+    implementation project(':btrace-compiler')
+}
+
+jar {
+    onlyIf { false }
+}
+
+sourcesJar {
+    onlyIf { false }
+}
+
+sourceSets {
+    main {
+        output.resourcesDir = file("${distTarget}")
+    }
+}
+artifacts {
+    archives file("${distTarget}/libs/btrace-agent.jar")
+}
+
+task agentJar(type: ShadowJar) {
+    group 'Build'
+    archiveBaseName.set('btrace-agent')
+    archiveVersion.set('')
+    archiveClassifier.set('')
+    destinationDirectory = libsDir
+
+    manifest {
+        attributes(
+                "Premain-Class": "org.openjdk.btrace.agent.Main",
+                "Agent-Class": "org.openjdk.btrace.agent.Main",
+                "Can-Redefine-Classes": true,
+                "Can-Retransform-Classes": true,
+                "Boot-Class-Path": "btrace-boot.jar"
+        )
+    }
+
+    include {
+        if (it.directory) {
+            return true
+        }
+        if (it.path.endsWith('.jar')) {
+            return true
+        }
+        if (it.path.startsWith('com/thoughtworks/xstream')){
+            return true;
+        }
+        if ( it.path.startsWith('org/codehaus/jettison')){
+            return true;
+        }
+        if (it.path.startsWith('org/jctools/')) {
+            if (it.path.startsWith('org/jctools/map/')) {
+                return false
+            }
+            return true
+        }
+        if (it.path.startsWith('org/objectweb/asm/')) {
+            if (it.path.startsWith('org/objectweb/asm/commons/') ||
+                    it.path.startsWith('org/objectweb/asm/util/') ||
+                    it.path.startsWith('org/objectweb/asm/xml/')) {
+                return false
+            }
+            return true
+        }
+        return it.path.startsWith('org/openjdk/btrace/agent/') ||
+               it.path.startsWith('org/openjdk/btrace/instr/') ||
+               it.path.startsWith('org/openjdk/btrace/runtime/') ||
+               it.path.startsWith("org/slf4j/") ||
+               // include the messages resource bundle and class in the agent jar (bootstrap can't load resources)
+               it.path.startsWith('org/openjdk/btrace/core/') ||
+               it.path.startsWith('org/openjdk/btrace/services/')
+    }
+
+    configurations = [project.configurations.artifact]
+    relocate 'com.thoughtworks.xstream', 'org.openjdk.btrace.libs.com.thoughtworks.xstream'
+    relocate 'org.codehaus.jettison', 'org.openjdk.btrace.libs.org.codehaus.jettison'
+    relocate 'org.jctools', 'org.openjdk.btrace.libs.org.jctools'
+    relocate 'org.objectweb.asm', 'org.openjdk.btrace.libs.org.objectweb.asm'
+    relocate 'org.slf4j', 'org.openjdk.btrace.libs.org.slf4j'
+}
+
+task bootJar(type: ShadowJar) {
+    group 'Build'
+    archiveBaseName.set('btrace-boot')
+    archiveVersion.set('')
+    archiveClassifier.set('')
+    destinationDirectory = libsDir
+
+
+    include {
+        if (it.directory) {
+            return true
+        }
+        if (it.path.endsWith('.jar')) {
+            return true
+        }
+        if (it.path.startsWith('org/openjdk/btrace/core/')) {
+            if (it.path == 'org/openjdk/btrace/core/Messages.class' || it.path == 'org/openjdk/btrace/core/messages.properties') {
+                // messages resource bundle&class are hoisted to agent and client jars
+                return false
+            }
+            return true
+        }
+        if (it.path.startsWith('org/jctools/')) {
+            if (it.path.startsWith('org/jctools/map/')) {
+                return false
+            }
+            return true
+        }
+        if (it.path.startsWith('org/objectweb/asm/')) {
+            if (it.path.startsWith('org/objectweb/asm/commons/') ||
+                it.path.startsWith('org/objectweb/asm/util/') ||
+                it.path.startsWith('org/objectweb/asm/xml/')) {
+                return false
+            }
+            return true
+        }
+        if (it.path.startsWith('com/thoughtworks/xstream')){
+            return true;
+        }
+        if ( it.path.startsWith('org/codehaus/jettison')){
+            return true;
+        }
+        return it.path.startsWith("org/slf4j/") || it.path.startsWith('org/openjdk/btrace/runtime/') ||
+                it.path.startsWith('org/openjdk/btrace/services/') ||
+                it.path.startsWith('org/openjdk/btrace/statsd/')
+    }
+
+    configurations = [project.configurations.artifact]
+    relocate 'com.thoughtworks.xstream', 'org.openjdk.btrace.libs.com.thoughtworks.xstream'
+    relocate 'org.codehaus.jettison', 'org.openjdk.btrace.libs.org.codehaus.jettison'
+    relocate 'org.jctools', 'org.openjdk.btrace.libs.org.jctools'
+    relocate 'org.objectweb.asm', 'org.openjdk.btrace.libs.org.objectweb.asm'
+    relocate 'org.slf4j', 'org.openjdk.btrace.libs.org.slf4j'
+}
+
+task clientJar(type: ShadowJar) {
+    group 'Build'
+    archiveBaseName.set('btrace-client')
+    archiveVersion.set('')
+    archiveClassifier.set('')
+    destinationDirectory = libsDir
+
+    exclude 'afu/**'
+    exclude 'javax/**'
+//    exclude 'com/**'
+    exclude 'sun/**'
+    exclude 'org/relaxng/**'
+    exclude 'org/checkerframework/**'
+//    exclude 'org/codehaus/**'
+
+    exclude 'org/jctools/maps/**'
+    exclude 'org/jctools/util/**'
+    exclude 'META-INF/services/com.sun.*'
+    exclude 'META-INF/services/javax.annotation.*'
+
+    exclude 'org/objectweb/asm/xml/**'
+
+    exclude 'org/openjdk/btrace/agent/**'
+
+
+    configurations = [project.configurations.artifact]
+    relocate 'com.thoughtworks.xstream', 'org.openjdk.btrace.libs.com.thoughtworks.xstream'
+    relocate 'org.codehaus.jettison', 'org.openjdk.btrace.libs.org.codehaus.jettison'
+    relocate 'org.jctools', 'org.openjdk.btrace.libs.org.jctools'
+    relocate 'org.objectweb.asm', 'org.openjdk.btrace.libs.org.objectweb.asm'
+    relocate 'org.slf4j', 'org.openjdk.btrace.libs.org.slf4j'
+}
+
+task fixPermissions(type: Exec) {
+    onlyIf {
+        !OperatingSystem.current().isWindows()
+    }
+    commandLine 'chmod', '500', "${distTarget}/bin/btrace"
+    commandLine 'chmod', '500', "${distTarget}/bin/btracec"
+    commandLine 'chmod', '500', "${distTarget}/bin/btracer"
+}
+
+task copyDtraceLib(type: Copy) {
+    from "${projectDir}/../btrace-dtrace/build/dtrace/libs"
+    into "${distTarget}/libs/"
+}
+
+task buildZip(type: Zip) {
+    from "${distTarget}"
+    include "**/*"
+
+    archiveBaseName.set('btrace')
+    archiveVersion.set("v${project.version}")
+    archiveClassifier.set("bin")
+    destinationDirectory = new File(project.buildDir, "distributions")
+}
+
+task buildSdkmanZip(type: Zip) {
+    from "${distBase}"
+    include "**/*"
+
+    archiveBaseName.set('btrace')
+    archiveVersion.set("v${project.version}")
+    archiveClassifier.set("sdkman-bin")
+    destinationDirectory = new File(project.buildDir, "distributions")
+}
+
+task buildTgz(type: Tar) {
+    into ('/'){
+        from "${distTarget}"
+        include '**/*'
+    }
+
+    archiveBaseName.set('btrace')
+    archiveVersion.set("v${project.version}")
+    archiveClassifier.set("bin")
+    destinationDirectory = new File(project.buildDir, "distributions")
+    archiveExtension.set('tar.gz')
+    compression = Compression.GZIP
+}
+
+ospackage {
+    packageName = 'btrace'
+    release = 1
+    os = LINUX
+
+    into '/opt/btrace'
+
+    from("${distTarget}/bin") {
+        into 'bin'
+        fileMode 0550
+    }
+
+    from("${distTarget}/libs") {
+        into 'libs'
+    }
+
+    from("${distTarget}/docs") {
+        into 'docs'
+    }
+
+    from("${distTarget}/samples") {
+        into 'samples'
+    }
+
+    link('/usr/local/bin/btrace', '/opt/btrace/bin/btrace')
+    link('/usr/local/bin/btracer', '/opt/btrace/bin/btracer')
+    link('/usr/local/bin/btracec', '/opt/btrace/bin/btracec')
+}
+
+buildDeb {
+    requires('openjdk-8-jdk')
+}
+
+copyDtraceLib.dependsOn project(':btrace-dtrace').build
+shadowJar.dependsOn agentJar, bootJar, clientJar, copyDtraceLib
+buildTgz.dependsOn agentJar, bootJar, clientJar, fixPermissions, copyDtraceLib, processResources
+buildZip.dependsOn agentJar, bootJar, clientJar, fixPermissions, copyDtraceLib, processResources
+buildSdkmanZip.dependsOn agentJar, bootJar, clientJar, fixPermissions, copyDtraceLib, processResources
+buildDeb.dependsOn agentJar, bootJar, clientJar, fixPermissions, copyDtraceLib, processResources
+buildRpm.dependsOn agentJar, bootJar, clientJar, fixPermissions, copyDtraceLib, processResources
+build.dependsOn buildSdkmanZip, buildZip, buildTgz, buildDeb, buildRpm
+
+test {
+    doLast {
+        project(':btrace-instr').tasks.test.execute()
+    }
+}
+
+['agent', 'boot', 'client'].each { name ->
+    tasks.create(name: "${name}SourcesJar", type: Jar) {
+        group 'Documentation'
+        description "Build the btrace-${name} sources jar."
+
+        archiveAppendix = "${name}"
+        archiveClassifier = "sources"
+        from sourceSets.main.allSource
+        exclude excludes["${name}"]
+    }
+
+
+    tasks.create(name: "${name}Javadoc", type: Javadoc) {
+        group 'Documentation'
+        description "Generates Javadoc API documentation for the btrace-${name}."
+
+        title = "btrace-${name}"
+        source = sourceSets.main.allJava
+        destinationDir = file("${project.docsDir}/${name}/javadoc")
+        classpath = files(compileJava.destinationDirectory) + configurations.artifact.asFileTree
+        exclude excludes["${name}"]
+        options.addStringOption('Xdoclint:all,-missing', '-quiet')
+        failOnError false
+    }
+
+
+    tasks.create(name: "${name}JavadocJar", type: Jar) {
+        group 'Documentation'
+        description "Build the btrace-${name} javadoc jar."
+
+        archiveAppendix = "${name}"
+        archiveClassifier = "javadoc"
+        from tasks["${name}Javadoc"].getOutputs()
+    }
+}
+
+sdkman {
+    consumerKey = project.hasProperty("sdkman.key") ? project.property("sdkman.key") : System.getenv('SDKMAN_API_KEY')
+    consumerToken = project.hasProperty("sdkman.token") ? project.property("sdkman.token") : System.getenv('SDKMAN_API_TOKEN')
+    candidate = "btrace"
+    version = "${project.version}"
+    url = "https://github.com/btraceio/btrace/releases/download/v${project.version}/btrace-v${project.version}-sdkman-bin.zip"
+    hashtag = "btrace"
+}
+
+["sdkReleaseVersion", "sdkAnnounceVersion"].forEach {
+    tasks[it].onlyIf {
+        !project.version.toString().endsWith("-SNAPSHOT")
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+            credentials {
+                username = project.hasProperty("sonatype.user") ? project.property("sonatype.user") : System.getenv('BTRACE_SONATYPE_USER')
+                password = project.hasProperty("sonatype.password") ? project.property("sonatype.password") : System.getenv('BTRACE_SONATYPE_PWD')
+            }
+        }
+    }
+
+    publications {
+        agent(MavenPublication) {
+            artifactId 'btrace-agent'
+            groupId 'io.btrace'
+            artifact agentJar
+            artifact agentSourcesJar {
+                archiveClassifier = "sources"
+            }
+            artifact agentJavadocJar {
+                archiveClassifier = "javadoc"
+            }
+            pom.withXml {
+                addPomDetails(asNode(), 'btrace-agent')
+            }
+        }
+
+        client(MavenPublication) {
+            artifactId 'btrace-client'
+            groupId 'io.btrace'
+            artifact clientJar
+            artifact clientSourcesJar {
+                archiveClassifier = "sources"
+            }
+            artifact clientJavadocJar {
+                archiveClassifier = "javadoc"
+            }
+            pom.withXml {
+                addPomDetails(asNode(), 'btrace-client')
+            }
+        }
+
+        boot(MavenPublication) {
+            artifactId 'btrace-boot'
+            groupId 'io.btrace'
+            artifact bootJar
+            artifact bootSourcesJar {
+                archiveClassifier = "sources"
+            }
+            artifact bootJavadocJar {
+                archiveClassifier = "javadoc"
+            }
+            pom.withXml {
+                addPomDetails(asNode(), 'btrace-boot')
+            }
+        }
+    }
+}
+
+def addPomDetails(node, name) {
+    node.appendNode('name', name)
+    node.appendNode('url', 'https://github.com/btraceio/btrace')
+    node.appendNode('description', 'BTrace: A safe, dynamic tracing tool for the Java platform')
+    def scmNode = node.appendNode('scm')
+    scmNode.appendNode('url', 'https://github.com/btraceio/btrace')
+    scmNode.appendNode('connection', 'scm:git:https://github.com/btraceio/btrace.git')
+    scmNode.appendNode('developerConnection', 'scm:git:https://github.com/btraceio/btrace.git')
+
+    def licenseNode = node.appendNode('licenses').appendNode('license')
+    licenseNode.appendNode('name', 'GNU General Public License, version 2, with the Classpath Exception')
+    licenseNode.appendNode('url', 'http://openjdk.java.net/legal/gplv2+ce.html')
+
+    def developerNode = node.appendNode('developers').appendNode('developer')
+    developerNode.appendNode('id', 'jbachorik')
+    developerNode.appendNode('name', 'Jaroslav Bachorik')
+    developerNode.appendNode('email', 'j.bachorik@btrace.io')
+}
+
+signing {
+    def signingKey = project.hasProperty('gpg.signing.key') ? project.property('gpg.signing.key') : System.getenv("GPG_SIGNING_KEY")
+    def signingPwd = project.hasProperty('gpg.signing.pwd') ? project.property('gpg.signing.pwd') : System.getenv("GPG_SIGNING_PWD")
+
+    if (signingKey != null && signingPwd != null) {
+        useInMemoryPgpKeys(signingKey, signingPwd)
+    }
+    sign publishing.publications.agent
+    sign publishing.publications.boot
+    sign publishing.publications.client
+}

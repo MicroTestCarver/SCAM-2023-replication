@@ -1,0 +1,337 @@
+<alfio.model.EmailMessage>
+  <id>4</id>
+  <eventId>2</eventId>
+  <status>WAITING</status>
+  <recipient>info@acm.org</recipient>
+  <subject>Reservation complete 85156A82</subject>
+  <message>Amir jackson&lt;a.jackson@tudelft.nl&gt; has completed the reservation 85156A82 for AST 2023
+
+Category: Early Bird, Quantity: 2, Subtotal: 0 , Payment Method: NONE
+
+
+
+Total: 0  
+
+
+
+Reservation id: 85156a82-2413-44d1-b515-e594fa6c5577.
+
+
+Ticket identifier:
+ - 74ff0712-b77c-469e-957f-682e7675c0ff
+ - b83b28e8-dc8f-4e03-b781-e5cdba4c92ee
+</message>
+  <htmlMessage>&lt;!doctype html&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns:v=&quot;urn:schemas-microsoft-com:vml&quot; xmlns:o=&quot;urn:schemas-microsoft-com:office:office&quot;&gt;
+
+&lt;head&gt;
+  &lt;title&gt;
+  &lt;/title&gt;
+  &lt;!--[if !mso]&gt;&lt;!--&gt;
+  &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+  &lt;!--&lt;![endif]--&gt;
+  &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;style type=&quot;text/css&quot;&gt;
+    #outlook a {
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    table,
+    td {
+      border-collapse: collapse;
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+
+    img {
+      border: 0;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+      -ms-interpolation-mode: bicubic;
+    }
+
+    p {
+      display: block;
+      margin: 13px 0;
+    }
+  &lt;/style&gt;
+  &lt;!--[if mso]&gt;
+        &lt;noscript&gt;
+        &lt;xml&gt;
+        &lt;o:OfficeDocumentSettings&gt;
+          &lt;o:AllowPNG/&gt;
+          &lt;o:PixelsPerInch&gt;96&lt;/o:PixelsPerInch&gt;
+        &lt;/o:OfficeDocumentSettings&gt;
+        &lt;/xml&gt;
+        &lt;/noscript&gt;
+        &lt;![endif]--&gt;
+  &lt;!--[if lte mso 11]&gt;
+        &lt;style type=&quot;text/css&quot;&gt;
+          .mj-outlook-group-fix { width:100% !important; }
+        &lt;/style&gt;
+        &lt;![endif]--&gt;
+  &lt;!--[if !mso]&gt;&lt;!--&gt;
+  &lt;link href=&quot;https://fonts.googleapis.com/css?family=Source+Sans+Pro&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;
+  &lt;style type=&quot;text/css&quot;&gt;
+    @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro);
+  &lt;/style&gt;
+  &lt;!--&lt;![endif]--&gt;
+  &lt;style type=&quot;text/css&quot;&gt;
+    @media only screen and (min-width:480px) {
+      .mj-column-per-100 {
+        width: 100% !important;
+        max-width: 100%;
+      }
+
+      .mj-column-px-130 {
+        width: 130px !important;
+        max-width: 130px;
+      }
+
+      .mj-column-px-350 {
+        width: 350px !important;
+        max-width: 350px;
+      }
+    }
+  &lt;/style&gt;
+  &lt;style media=&quot;screen and (min-width:480px)&quot;&gt;
+    .moz-text-html .mj-column-per-100 {
+      width: 100% !important;
+      max-width: 100%;
+    }
+
+    .moz-text-html .mj-column-px-130 {
+      width: 130px !important;
+      max-width: 130px;
+    }
+
+    .moz-text-html .mj-column-px-350 {
+      width: 350px !important;
+      max-width: 350px;
+    }
+  &lt;/style&gt;
+  &lt;style type=&quot;text/css&quot;&gt;
+    @media only screen and (max-width:480px) {
+      table.mj-full-width-mobile {
+        width: 100% !important;
+      }
+
+      td.mj-full-width-mobile {
+        width: auto !important;
+      }
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body style=&quot;word-spacing:normal;background-color:#e5e5e5;&quot;&gt;
+  &lt;div style=&quot;background-color:#e5e5e5;&quot;&gt;
+    &lt;!--[if mso | IE]&gt;&lt;table align=&quot;center&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; class=&quot;&quot; role=&quot;presentation&quot; style=&quot;width:600px;&quot; width=&quot;600&quot; bgcolor=&quot;white&quot; &gt;&lt;tr&gt;&lt;td style=&quot;line-height:0px;font-size:0px;mso-line-height-rule:exactly;&quot;&gt;&lt;![endif]--&gt;
+    &lt;div style=&quot;background:white;background-color:white;margin:0px auto;max-width:600px;&quot;&gt;
+      &lt;table align=&quot;center&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; role=&quot;presentation&quot; style=&quot;background:white;background-color:white;width:100%;&quot;&gt;
+        &lt;tbody&gt;
+          &lt;tr&gt;
+            &lt;td style=&quot;direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;text-align:center;&quot;&gt;
+              &lt;!--[if mso | IE]&gt;&lt;table role=&quot;presentation&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;&quot; style=&quot;vertical-align:top;width:600px;&quot; &gt;&lt;![endif]--&gt;
+              &lt;div class=&quot;mj-column-per-100 mj-outlook-group-fix&quot; style=&quot;font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;&quot;&gt;
+                &lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; role=&quot;presentation&quot; style=&quot;vertical-align:top;&quot; width=&quot;100%&quot;&gt;
+                  &lt;tbody&gt;
+                    &lt;tr&gt;
+                      &lt;td align=&quot;center&quot; style=&quot;font-size:0px;padding:10px 25px;padding-top:20px;padding-right:0px;padding-bottom:0px;padding-left:0px;word-break:break-word;&quot;&gt;
+                        &lt;p style=&quot;border-top:solid 1px #f4f4f4;font-size:1px;margin:0px auto;width:100%;&quot;&gt;
+                        &lt;/p&gt;
+                        &lt;!--[if mso | IE]&gt;&lt;table align=&quot;center&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;border-top:solid 1px #f4f4f4;font-size:1px;margin:0px auto;width:600px;&quot; role=&quot;presentation&quot; width=&quot;600px&quot; &gt;&lt;tr&gt;&lt;td style=&quot;height:0;line-height:0;&quot;&gt; &amp;nbsp;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;![endif]--&gt;
+                      &lt;/td&gt;
+                    &lt;/tr&gt;
+                  &lt;/tbody&gt;
+                &lt;/table&gt;
+              &lt;/div&gt;
+              &lt;!--[if mso | IE]&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;![endif]--&gt;
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+    &lt;!--[if mso | IE]&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;table align=&quot;center&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; class=&quot;&quot; role=&quot;presentation&quot; style=&quot;width:600px;&quot; width=&quot;600&quot; bgcolor=&quot;#f8f8f8&quot; &gt;&lt;tr&gt;&lt;td style=&quot;line-height:0px;font-size:0px;mso-line-height-rule:exactly;&quot;&gt;&lt;![endif]--&gt;
+    &lt;div style=&quot;background:#f8f8f8;background-color:#f8f8f8;margin:0px auto;max-width:600px;&quot;&gt;
+      &lt;table align=&quot;center&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; role=&quot;presentation&quot; style=&quot;background:#f8f8f8;background-color:#f8f8f8;width:100%;&quot;&gt;
+        &lt;tbody&gt;
+          &lt;tr&gt;
+            &lt;td style=&quot;direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;text-align:center;&quot;&gt;
+              &lt;!--[if mso | IE]&gt;&lt;table role=&quot;presentation&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;&quot; style=&quot;vertical-align:top;width:600px;&quot; &gt;&lt;![endif]--&gt;
+              &lt;div class=&quot;mj-column-per-100 mj-outlook-group-fix&quot; style=&quot;font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;&quot;&gt;
+                &lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; role=&quot;presentation&quot; style=&quot;vertical-align:top;&quot; width=&quot;100%&quot;&gt;
+                  &lt;tbody&gt;
+                    &lt;tr&gt;
+                      &lt;td align=&quot;center&quot; style=&quot;font-size:0px;padding:10px 25px;word-break:break-word;&quot;&gt;
+                        &lt;div style=&quot;font-family:Helvetica Neue;font-size:20px;font-weight:200;line-height:1;text-align:center;color:grey;&quot;&gt;Good news!&lt;/div&gt;
+                      &lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                      &lt;td align=&quot;center&quot; style=&quot;font-size:0px;padding:10px 25px;padding-top:20px;padding-right:0px;padding-bottom:0px;padding-left:0px;word-break:break-word;&quot;&gt;
+                        &lt;p style=&quot;border-top:solid 1px #f4f4f4;font-size:1px;margin:0px auto;width:100%;&quot;&gt;
+                        &lt;/p&gt;
+                        &lt;!--[if mso | IE]&gt;&lt;table align=&quot;center&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;border-top:solid 1px #f4f4f4;font-size:1px;margin:0px auto;width:600px;&quot; role=&quot;presentation&quot; width=&quot;600px&quot; &gt;&lt;tr&gt;&lt;td style=&quot;height:0;line-height:0;&quot;&gt; &amp;nbsp;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;![endif]--&gt;
+                      &lt;/td&gt;
+                    &lt;/tr&gt;
+                  &lt;/tbody&gt;
+                &lt;/table&gt;
+              &lt;/div&gt;
+              &lt;!--[if mso | IE]&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;![endif]--&gt;
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+    &lt;!--[if mso | IE]&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;table align=&quot;center&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; class=&quot;&quot; role=&quot;presentation&quot; style=&quot;width:600px;&quot; width=&quot;600&quot; bgcolor=&quot;white&quot; &gt;&lt;tr&gt;&lt;td style=&quot;line-height:0px;font-size:0px;mso-line-height-rule:exactly;&quot;&gt;&lt;![endif]--&gt;
+    &lt;div style=&quot;background:white;background-color:white;margin:0px auto;max-width:600px;&quot;&gt;
+      &lt;table align=&quot;center&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; role=&quot;presentation&quot; style=&quot;background:white;background-color:white;width:100%;&quot;&gt;
+        &lt;tbody&gt;
+          &lt;tr&gt;
+            &lt;td style=&quot;direction:ltr;font-size:0px;padding:20px 0;text-align:center;&quot;&gt;
+              &lt;!--[if mso | IE]&gt;&lt;table role=&quot;presentation&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;&quot; style=&quot;vertical-align:top;width:600px;&quot; &gt;&lt;![endif]--&gt;
+              &lt;div class=&quot;mj-column-per-100 mj-outlook-group-fix&quot; style=&quot;font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;&quot;&gt;
+                &lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; role=&quot;presentation&quot; style=&quot;vertical-align:top;&quot; width=&quot;100%&quot;&gt;
+                  &lt;tbody&gt;
+                    &lt;tr&gt;
+                      &lt;td align=&quot;center&quot; style=&quot;font-size:0px;padding:30px;word-break:break-word;&quot;&gt;
+                        &lt;div style=&quot;font-family:Source Sans Pro, Helvetica;font-size:15px;line-height:1;text-align:center;color:#000000;&quot;&gt;Amir jackson
+                          &lt;a.jackson@tudelft.nl&gt; has completed the reservation 85156A82 for AST 2023
+                        &lt;/div&gt;
+                      &lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                      &lt;td align=&quot;left&quot; style=&quot;font-size:0px;padding:0 15px;word-break:break-word;&quot;&gt;
+                        &lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; border=&quot;0&quot; style=&quot;color:#000000;font-family:Source Sans Pro, Helvetica;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;&quot;&gt;
+                          &lt;tr style=&quot;border-bottom:1px solid #ecedee;text-align:center;&quot;&gt;
+                            &lt;th&gt;Category&lt;/th&gt;
+                            &lt;th&gt;Quantity&lt;/th&gt;
+                            &lt;th&gt;Payment Method&lt;/th&gt;
+                            &lt;th style=&quot;text-align:right&quot;&gt;Subtotal&lt;/th&gt;
+                          &lt;/tr&gt;
+                            &lt;tr style=&quot;text-align:center; &quot;&gt;
+                              &lt;td&gt;Early Bird&lt;/td&gt;
+                              &lt;td&gt;2&lt;/td&gt;
+                              &lt;td&gt;NONE&lt;/td&gt;
+                              &lt;td style=&quot;text-align:right&quot;&gt;0 &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;tr&gt;
+                            &lt;td colspan=&quot;4&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                          &lt;/tr&gt;
+                          
+                          &lt;tr style=&quot;border-top:1px solid #ecedee;text-align:right;padding: 0 15px;&quot;&gt;
+                            &lt;td style=&quot;font-weight: bold;text-align:right;&quot; colspan=&quot;3&quot;&gt;Total &lt;/td&gt;
+                            &lt;td&gt;0 
+                              
+                            &lt;/td&gt;
+                          &lt;/tr&gt;
+                          
+                        &lt;/table&gt;
+                      &lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                      &lt;td align=&quot;center&quot; style=&quot;font-size:0px;padding:10px 25px;word-break:break-word;&quot;&gt;
+                        &lt;div style=&quot;font-family:Source Sans Pro, Helvetica;font-size:13px;line-height:1;text-align:center;color:#000000;&quot;&gt;Reservation id: 85156a82-2413-44d1-b515-e594fa6c5577.&lt;/div&gt;
+                      &lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                      &lt;td align=&quot;left&quot; style=&quot;font-size:0px;padding:10px 25px;word-break:break-word;&quot;&gt;
+                        &lt;div style=&quot;font-family:Source Sans Pro, Helvetica;font-size:13px;line-height:1;text-align:left;color:#000000;&quot;&gt;&lt;/div&gt;
+                      &lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                      &lt;td align=&quot;center&quot; vertical-align=&quot;middle&quot; style=&quot;font-size:0px;padding:10px 25px;word-break:break-word;&quot;&gt;
+                        &lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; role=&quot;presentation&quot; style=&quot;border-collapse:separate;line-height:100%;&quot;&gt;
+                          &lt;tbody&gt;
+                            &lt;tr&gt;
+                              &lt;td align=&quot;center&quot; bgcolor=&quot;#28a745&quot; role=&quot;presentation&quot; style=&quot;border:none;border-radius:3px;cursor:auto;mso-padding-alt:10px 25px;background:#28a745;&quot; valign=&quot;middle&quot;&gt;
+                                &lt;a href=&quot;localhost:8080/event/ast-2023/reservation/85156a82-2413-44d1-b515-e594fa6c5577?lang&amp;#x3D;en&quot; rel=&quot;notrack&quot; style=&quot;display:inline-block;background:#28a745;color:#ffffff;font-family:Source Sans Pro, Helvetica;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;&quot; target=&quot;_blank&quot;&gt; View reservation &lt;/a&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/tbody&gt;
+                        &lt;/table&gt;
+                      &lt;/td&gt;
+                    &lt;/tr&gt;
+                  &lt;/tbody&gt;
+                &lt;/table&gt;
+              &lt;/div&gt;
+              &lt;!--[if mso | IE]&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;![endif]--&gt;
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+    &lt;!--[if mso | IE]&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;table align=&quot;center&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; class=&quot;&quot; role=&quot;presentation&quot; style=&quot;width:600px;&quot; width=&quot;600&quot; bgcolor=&quot;white&quot; &gt;&lt;tr&gt;&lt;td style=&quot;line-height:0px;font-size:0px;mso-line-height-rule:exactly;&quot;&gt;&lt;![endif]--&gt;
+    &lt;div style=&quot;background:white;background-color:white;margin:0px auto;max-width:600px;&quot;&gt;
+      &lt;table align=&quot;center&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; role=&quot;presentation&quot; style=&quot;background:white;background-color:white;width:100%;&quot;&gt;
+        &lt;tbody&gt;
+          &lt;tr&gt;
+            &lt;td style=&quot;direction:ltr;font-size:0px;padding:20px 0;text-align:center;&quot;&gt;
+              &lt;!--[if mso | IE]&gt;&lt;table role=&quot;presentation&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;&quot; style=&quot;vertical-align:top;width:130px;&quot; &gt;&lt;![endif]--&gt;
+              &lt;div class=&quot;mj-column-px-130 mj-outlook-group-fix&quot; style=&quot;font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;&quot;&gt;
+                &lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; role=&quot;presentation&quot; style=&quot;vertical-align:top;&quot; width=&quot;100%&quot;&gt;
+                  &lt;tbody&gt;
+                    &lt;tr&gt;
+                      &lt;td align=&quot;center&quot; style=&quot;font-size:0px;padding:10px 25px;word-break:break-word;&quot;&gt;
+                        &lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; role=&quot;presentation&quot; style=&quot;border-collapse:collapse;border-spacing:0px;&quot;&gt;
+                          &lt;tbody&gt;
+                            &lt;tr&gt;
+                              &lt;td style=&quot;width:80px;&quot;&gt;
+                                &lt;img alt=&quot;Tickets&quot; height=&quot;auto&quot; src=&quot;localhost:8080/resources/images/email/icon_ticket.png&quot; style=&quot;border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;&quot; width=&quot;80&quot; /&gt;
+                              &lt;/td&gt;
+                            &lt;/tr&gt;
+                          &lt;/tbody&gt;
+                        &lt;/table&gt;
+                      &lt;/td&gt;
+                    &lt;/tr&gt;
+                  &lt;/tbody&gt;
+                &lt;/table&gt;
+              &lt;/div&gt;
+              &lt;!--[if mso | IE]&gt;&lt;/td&gt;&lt;td class=&quot;&quot; style=&quot;vertical-align:top;width:350px;&quot; &gt;&lt;![endif]--&gt;
+              &lt;div class=&quot;mj-column-px-350 mj-outlook-group-fix&quot; style=&quot;font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;&quot;&gt;
+                &lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; role=&quot;presentation&quot; style=&quot;vertical-align:top;&quot; width=&quot;100%&quot;&gt;
+                  &lt;tbody&gt;
+                    &lt;tr&gt;
+                      &lt;td align=&quot;center&quot; style=&quot;font-size:0px;padding:10px 25px;word-break:break-word;&quot;&gt;
+                        &lt;div style=&quot;font-family:Source Sans Pro, Helvetica;font-size:20px;line-height:1;text-align:center;color:#212529;&quot;&gt;Tickets in reservation&lt;/div&gt;
+                      &lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                      &lt;td align=&quot;center&quot; style=&quot;font-size:0px;padding:10px 25px;word-break:break-word;&quot;&gt;
+                        &lt;div style=&quot;font-family:Source Sans Pro, Helvetica;font-size:13px;line-height:1;text-align:center;color:#000000;&quot;&gt; - 74ff0712-b77c-469e-957f-682e7675c0ff
+                            &lt;br /&gt;
+                           - b83b28e8-dc8f-4e03-b781-e5cdba4c92ee
+                            &lt;br /&gt;
+                          &lt;/div&gt;
+                      &lt;/td&gt;
+                    &lt;/tr&gt;
+                  &lt;/tbody&gt;
+                &lt;/table&gt;
+              &lt;/div&gt;
+              &lt;!--[if mso | IE]&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;![endif]--&gt;
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+    &lt;!--[if mso | IE]&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;![endif]--&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</htmlMessage>
+  <checksum>b33a30364c89e62137e7dcf306a33a7ba5d8dad19c6c836baf29f1b6ed5390a2</checksum>
+  <requestTimestamp>2023-01-02T09:58:04.641Z[UTC]</requestTimestamp>
+  <attempts>0</attempts>
+  <organizationId>1</organizationId>
+</alfio.model.EmailMessage>

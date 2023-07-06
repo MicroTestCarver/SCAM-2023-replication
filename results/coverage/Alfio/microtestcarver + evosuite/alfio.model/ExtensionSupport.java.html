@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExtensionSupport.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">ExtensionSupport.java</span></div><h1>ExtensionSupport.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import alfio.extension.ExtensionMetadata;
+import alfio.model.support.JSONData;
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+public class ExtensionSupport {
+
+    private final Integer id;
+    private final String path;
+    private final String name;
+    private final String hash;
+    private final boolean enabled;
+    private final boolean async;
+    private final String script;
+    private final ExtensionMetadata extensionMetadata;
+
+
+    public ExtensionSupport(@Column(&quot;es_id&quot;) Integer id,
+                            @Column(&quot;path&quot;) String path,
+                            @Column(&quot;name&quot;) String name,
+                            @Column(&quot;hash&quot;) String hash,
+                            @Column(&quot;enabled&quot;) boolean enabled,
+                            @Column(&quot;async&quot;) boolean async,
+                            @Column(&quot;script&quot;) String script,
+<span class="nc" id="L45">                            @Column(&quot;metadata&quot;) @JSONData ExtensionMetadata extensionMetadata) {</span>
+<span class="nc" id="L46">        this.id = id;</span>
+<span class="nc" id="L47">        this.path = path;</span>
+<span class="nc" id="L48">        this.name = name;</span>
+<span class="nc" id="L49">        this.hash = hash;</span>
+<span class="nc" id="L50">        this.enabled = enabled;</span>
+<span class="nc" id="L51">        this.async = async;</span>
+<span class="nc" id="L52">        this.script = script;</span>
+<span class="nc" id="L53">        this.extensionMetadata = extensionMetadata;</span>
+<span class="nc" id="L54">    }</span>
+
+
+    @Getter
+    public static class ScriptPathNameHash {
+        private final String path;
+        private final String name;
+        private final String hash;
+
+        public ScriptPathNameHash(@Column(&quot;path&quot;) String path,
+                                  @Column(&quot;name&quot;) String name,
+<span class="nc" id="L65">                                  @Column(&quot;hash&quot;) String hash) {</span>
+<span class="nc" id="L66">            this.path = path;</span>
+<span class="nc" id="L67">            this.name = name;</span>
+<span class="nc" id="L68">            this.hash = hash;</span>
+<span class="nc" id="L69">        }</span>
+    }
+
+    @Getter
+    public static class ExtensionParameterKeyValue {
+        private final String name;
+        private final String configurationLevel;
+        private final String configurationPath;
+        private final String configurationValue;
+
+        public ExtensionParameterKeyValue(@Column(&quot;ecm_name&quot;) String name,
+                                          @Column(&quot;ecm_configuration_level&quot;) String configurationLevel,
+                                          @Column(&quot;conf_path&quot;) String configurationPath,
+<span class="nc" id="L82">                                          @Column(&quot;conf_value&quot;) String configurationValue) {</span>
+<span class="nc" id="L83">            this.name = name;</span>
+<span class="nc" id="L84">            this.configurationLevel = configurationLevel;</span>
+<span class="nc" id="L85">            this.configurationPath = configurationPath;</span>
+<span class="nc" id="L86">            this.configurationValue = configurationValue;</span>
+<span class="nc" id="L87">        }</span>
+    }
+
+    @Getter
+    public static class ExtensionParameterMetadataAndValue {
+        private final int id;
+        private final String name;
+        private final String extensionDisplayName;
+        private final String configurationLevel;
+        private final String description;
+        private final String type;
+        private final boolean mandatory;
+        private final String path;
+        private final int extensionId;
+        private final String extensionName;
+        private final String configurationPath;
+        private final String configurationValue;
+
+
+        public ExtensionParameterMetadataAndValue(@Column(&quot;ecm_id&quot;) int id,
+                                                  @Column(&quot;ecm_name&quot;) String name,
+                                                  @Column(&quot;ecm_configuration_level&quot;) String configurationLevel,
+                                                  @Column(&quot;ecm_description&quot;) String description,
+                                                  @Column(&quot;ecm_type&quot;) String type,
+                                                  @Column(&quot;ecm_mandatory&quot;) boolean mandatory,
+                                                  @Column(&quot;path&quot;) String path,
+                                                  @Column(&quot;es_id&quot;) int extensionId,
+                                                  @Column(&quot;name&quot;) String extensionName,
+                                                  @Column(&quot;display_name&quot;) String extensionDisplayName,
+                                                  @Column(&quot;conf_path&quot;) String configurationPath,
+<span class="nc" id="L117">                                                  @Column(&quot;conf_value&quot;) String configurationValue) {</span>
+<span class="nc" id="L118">            this.id = id;</span>
+<span class="nc" id="L119">            this.name = name;</span>
+<span class="nc" id="L120">            this.configurationLevel = configurationLevel;</span>
+<span class="nc" id="L121">            this.description = description;</span>
+<span class="nc" id="L122">            this.type = type;</span>
+<span class="nc" id="L123">            this.mandatory = mandatory;</span>
+<span class="nc" id="L124">            this.path = path;</span>
+<span class="nc" id="L125">            this.extensionId = extensionId;</span>
+<span class="nc" id="L126">            this.extensionName = extensionName;</span>
+<span class="nc" id="L127">            this.extensionDisplayName = extensionDisplayName;</span>
+<span class="nc" id="L128">            this.configurationPath = configurationPath;</span>
+<span class="nc" id="L129">            this.configurationValue = configurationValue;</span>
+<span class="nc" id="L130">        }</span>
+
+        //for compatibility
+        public String getComponentType() {
+<span class="nc" id="L134">            return type;</span>
+        }
+
+        public String getValue() {
+<span class="nc" id="L138">            return configurationValue;</span>
+        }
+
+        public String getConfigurationPathLevel() {
+<span class="nc" id="L142">            return configurationLevel;</span>
+        }
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class ExtensionMetadataValue {
+        private final int id;
+        private final String value;
+    }
+
+
+    @Getter
+    public static class NameAndValue {
+        private final String name;
+        private final String value;
+
+        public NameAndValue(@Column(&quot;ecm_name&quot;) String name,
+<span class="nc" id="L160">                            @Column(&quot;conf_value&quot;) String value) {</span>
+<span class="nc" id="L161">            this.name = name;</span>
+<span class="nc" id="L162">            this.value = value;</span>
+<span class="nc" id="L163">        }</span>
+    }
+
+    @Getter
+    public static class ExtensionMetadataIdAndName {
+        private final int id;
+        private final String name;
+
+        public ExtensionMetadataIdAndName(@Column(&quot;ecm_id&quot;) int id,
+<span class="nc" id="L172">                                          @Column(&quot;ecm_name&quot;) String name) {</span>
+<span class="nc" id="L173">            this.id = id;</span>
+<span class="nc" id="L174">            this.name = name;</span>
+<span class="nc" id="L175">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

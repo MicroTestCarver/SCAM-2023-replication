@@ -1,0 +1,14 @@
+<list>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+    <code>EUR</code>
+    <label>Europe</label>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+    <code>WORLD</code>
+    <label>World</label>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+    <code>PL</code>
+    <label>Poland</label>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+</list>

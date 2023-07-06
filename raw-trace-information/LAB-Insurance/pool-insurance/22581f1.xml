@@ -1,0 +1,102 @@
+<pl.altkom.asc.lab.micronaut.poc.policy.domain.PolicyVersion>
+  <id>11</id>
+  <policy>
+    <id>10</id>
+    <number>780d39eb-115f-4c3d-8c72-7ab5cefe0dca</number>
+    <agent>
+      <login>admin</login>
+    </agent>
+    <versions class="org.hibernate.collection.internal.PersistentSet">
+      <isTempSession>false</isTempSession>
+      <initialized>true</initialized>
+      <owner class="pl.altkom.asc.lab.micronaut.poc.policy.domain.Policy" reference="../.."/>
+      <cachedSize>-1</cachedSize>
+      <role>pl.altkom.asc.lab.micronaut.poc.policy.domain.Policy.versions</role>
+      <key class="long">10</key>
+      <dirty>false</dirty>
+      <elementRemoved>false</elementRemoved>
+      <storedSnapshot class="map">
+        <entry>
+          <pl.altkom.asc.lab.micronaut.poc.policy.domain.PolicyVersion reference="../../../../.."/>
+          <pl.altkom.asc.lab.micronaut.poc.policy.domain.PolicyVersion reference="../../../../.."/>
+        </entry>
+      </storedSnapshot>
+      <allowLoadOutsideTransaction>false</allowLoadOutsideTransaction>
+      <set>
+        <pl.altkom.asc.lab.micronaut.poc.policy.domain.PolicyVersion reference="../../../.."/>
+      </set>
+    </versions>
+  </policy>
+  <versionNumber>1</versionNumber>
+  <productCode>FAI</productCode>
+  <policyHolder>
+    <firstName>Amir</firstName>
+    <lastName>jackson</lastName>
+    <pesel>2977</pesel>
+  </policyHolder>
+  <accountNumber>a6fb1630-b99c-4c1f-945c-f99ab9c03232</accountNumber>
+  <coverPeriod>
+    <from>2023-05-17</from>
+    <to>2023-05-31</to>
+  </coverPeriod>
+  <versionValidityPeriod>
+    <from>2023-05-17</from>
+    <to>2023-05-31</to>
+  </versionValidityPeriod>
+  <covers class="org.hibernate.collection.internal.PersistentSet">
+    <isTempSession>false</isTempSession>
+    <initialized>true</initialized>
+    <owner class="pl.altkom.asc.lab.micronaut.poc.policy.domain.PolicyVersion" reference="../.."/>
+    <cachedSize>-1</cachedSize>
+    <role>pl.altkom.asc.lab.micronaut.poc.policy.domain.PolicyVersion.covers</role>
+    <key class="long">11</key>
+    <dirty>false</dirty>
+    <elementRemoved>false</elementRemoved>
+    <storedSnapshot class="map">
+      <entry>
+        <pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover>
+          <id>13</id>
+          <code>C4</code>
+          <price>120.00</price>
+          <policyVersion reference="../../../../.."/>
+        </pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover>
+        <pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover reference="../pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover"/>
+      </entry>
+      <entry>
+        <pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover>
+          <id>14</id>
+          <code>C3</code>
+          <price>90.00</price>
+          <policyVersion reference="../../../../.."/>
+        </pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover>
+        <pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover reference="../pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover"/>
+      </entry>
+      <entry>
+        <pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover>
+          <id>12</id>
+          <code>C1</code>
+          <price>30.00</price>
+          <policyVersion reference="../../../../.."/>
+        </pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover>
+        <pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover reference="../pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover"/>
+      </entry>
+      <entry>
+        <pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover>
+          <id>15</id>
+          <code>C2</code>
+          <price>60.00</price>
+          <policyVersion reference="../../../../.."/>
+        </pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover>
+        <pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover reference="../pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover"/>
+      </entry>
+    </storedSnapshot>
+    <allowLoadOutsideTransaction>false</allowLoadOutsideTransaction>
+    <set>
+      <pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover reference="../../storedSnapshot/entry/pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover"/>
+      <pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover reference="../../storedSnapshot/entry[2]/pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover"/>
+      <pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover reference="../../storedSnapshot/entry[3]/pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover"/>
+      <pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover reference="../../storedSnapshot/entry[4]/pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover"/>
+    </set>
+  </covers>
+  <totalPremiumAmount>300.00</totalPremiumAmount>
+</pl.altkom.asc.lab.micronaut.poc.policy.domain.PolicyVersion>

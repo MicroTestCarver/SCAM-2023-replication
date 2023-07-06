@@ -1,0 +1,18 @@
+<map>
+  <entry>
+    <string>NUM_OF_CLAIM</string>
+    <int>5</int>
+  </entry>
+  <entry>
+    <string>FLOOD</string>
+    <string>YES</string>
+  </entry>
+  <entry>
+    <string>AREA</string>
+    <int>5000</int>
+  </entry>
+  <entry>
+    <string>TYP</string>
+    <string>KW</string>
+  </entry>
+</map>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RequestHeaderBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.manager.payment.saferpay</a> &gt; <span class="el_source">RequestHeaderBuilder.java</span></div><h1>RequestHeaderBuilder.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.manager.payment.saferpay;
+
+import com.google.gson.stream.JsonWriter;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+
+@RequiredArgsConstructor
+class RequestHeaderBuilder {
+    private static final String SPEC_VERSION = &quot;1.18&quot;;
+    private final String customerId;
+    private final String requestId;
+    private final Integer retryIndicator;
+
+<span class="fc" id="L30">    @SneakyThrows</span>
+    JsonWriter appendTo(JsonWriter writer) {
+<span class="fc" id="L32">        writer.name(&quot;RequestHeader&quot;).beginObject() //</span>
+<span class="fc" id="L33">            .name(&quot;SpecVersion&quot;).value(SPEC_VERSION) //</span>
+<span class="fc" id="L34">            .name(&quot;CustomerId&quot;).value(customerId) //</span>
+<span class="fc" id="L35">            .name(&quot;RequestId&quot;).value(requestId);</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        if(retryIndicator != null) {</span>
+<span class="fc" id="L37">            writer.name(&quot;RetryIndicator&quot;).value(retryIndicator);</span>
+        }
+<span class="fc" id="L39">        return writer.endObject();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,10 @@
+<pl.altkom.asc.lab.micronaut.poc.policy.service.api.v1.events.PolicyRegisteredEvent>
+  <policy>
+    <number>7dceb536-5109-4cf8-a23a-39651e5ad3f8</number>
+    <from>2023-05-25</from>
+    <to>2023-05-31</to>
+    <policyHolder>Amir jackson</policyHolder>
+    <productCode>FAI</productCode>
+    <totalPremium>300.00</totalPremium>
+  </policy>
+</pl.altkom.asc.lab.micronaut.poc.policy.service.api.v1.events.PolicyRegisteredEvent>

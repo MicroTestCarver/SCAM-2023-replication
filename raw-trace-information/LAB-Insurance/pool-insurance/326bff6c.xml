@@ -1,0 +1,10 @@
+<list>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+    <code>YES</code>
+    <label>Yes</label>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+    <code>NO</code>
+    <label>No</label>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+</list>

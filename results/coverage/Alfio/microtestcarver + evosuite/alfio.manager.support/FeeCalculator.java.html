@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FeeCalculator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.manager.support</a> &gt; <span class="el_source">FeeCalculator.java</span></div><h1>FeeCalculator.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.manager.support;
+
+import alfio.manager.system.ConfigurationManager;
+import alfio.model.Configurable;
+import alfio.util.MonetaryUtil;
+
+import java.math.BigDecimal;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.BiFunction;
+
+import static alfio.model.system.ConfigurationKeys.*;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+import static org.apache.commons.lang3.StringUtils.*;
+
+public class FeeCalculator {
+    private final BigDecimal fee;
+    private final BigDecimal percentageFee;
+    private final BigDecimal minimumFee;
+    private final BigDecimal maximumFee;
+    private final boolean maxFeeDefined;
+    private final int numTickets;
+    private final String currencyCode;
+
+<span class="nc" id="L42">    private FeeCalculator(String feeAsString, String percentageFeeAsString, String minimumFeeAsString, String maxFeeAsString, String currencyCode, int numTickets) {</span>
+<span class="nc" id="L43">        this.fee = new BigDecimal(defaultIfEmpty(trimToNull(feeAsString), &quot;0&quot;));</span>
+<span class="nc" id="L44">        this.percentageFee = new BigDecimal(defaultIfEmpty(substringBefore(trimToNull(percentageFeeAsString), &quot;%&quot;), &quot;0&quot;));</span>
+<span class="nc" id="L45">        this.minimumFee = new BigDecimal(defaultIfEmpty(trimToNull(minimumFeeAsString), &quot;0&quot;));</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        this.maximumFee = isEmpty(maxFeeAsString) ? null : new BigDecimal(trimToNull(maxFeeAsString));</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        this.maxFeeDefined = this.maximumFee != null;</span>
+<span class="nc" id="L48">        this.numTickets = numTickets;</span>
+<span class="nc" id="L49">        this.currencyCode = currencyCode;</span>
+<span class="nc" id="L50">    }</span>
+
+    private long calculate(long price) {
+<span class="nc" id="L53">        long percentage = MonetaryUtil.calcPercentage(price, percentageFee, BigDecimal::longValueExact);</span>
+<span class="nc" id="L54">        long fixed = (long) MonetaryUtil.unitToCents(fee, currencyCode) * numTickets;</span>
+<span class="nc" id="L55">        long minFee = MonetaryUtil.unitToCents(minimumFee, currencyCode, BigDecimal::longValueExact) * numTickets;</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        long maxFee = maxFeeDefined ? MonetaryUtil.unitToCents(maximumFee, currencyCode, BigDecimal::longValueExact) * numTickets : Long.MAX_VALUE;</span>
+<span class="nc" id="L57">        return min(maxFee, max(percentage + fixed, minFee));</span>
+    }
+
+    public static BiFunction&lt;Integer, Long, Optional&lt;Long&gt;&gt; getCalculator(Configurable configurable, ConfigurationManager configurationManager, String currencyCode) {
+<span class="nc" id="L61">        return (numTickets, amountInCent) -&gt; {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            if(isPlatformModeEnabled(configurable, configurationManager)) {</span>
+<span class="nc" id="L63">                var fees = configurationManager.getFor(Set.of(PLATFORM_FIXED_FEE, PLATFORM_PERCENTAGE_FEE, PLATFORM_MINIMUM_FEE, PLATFORM_MAXIMUM_FEE), configurable.getConfigurationLevel());</span>
+<span class="nc" id="L64">                String fixedFee = fees.get(PLATFORM_FIXED_FEE).getValueOrDefault(&quot;0&quot;);</span>
+<span class="nc" id="L65">                String percentageFee = fees.get(PLATFORM_PERCENTAGE_FEE).getValueOrDefault(&quot;0&quot;);</span>
+<span class="nc" id="L66">                String minimumFee = fees.get(PLATFORM_MINIMUM_FEE).getValueOrDefault(&quot;0&quot;);</span>
+<span class="nc" id="L67">                String maximumFee = fees.get(PLATFORM_MAXIMUM_FEE).getValueOrDefault(&quot;&quot;);</span>
+<span class="nc" id="L68">                return Optional.of(new FeeCalculator(fixedFee, percentageFee, minimumFee, maximumFee, currencyCode, numTickets).calculate(amountInCent));</span>
+            }
+<span class="nc" id="L70">            return Optional.empty();</span>
+        };
+    }
+
+    private static boolean isPlatformModeEnabled(Configurable configurable, ConfigurationManager configurationManager) {
+<span class="nc" id="L75">        return configurationManager.getFor(PLATFORM_MODE_ENABLED, configurable.getConfigurationLevel()).getValueAsBooleanOrDefault();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

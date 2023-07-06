@@ -1,0 +1,42 @@
+<list>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto>
+    <code>TYP</code>
+    <index>1</index>
+    <text>Apartment / House</text>
+    <choices>
+      <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+        <code>APT</code>
+        <label>Apartment</label>
+      </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+      <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+        <code>HOUSE</code>
+        <label>House</label>
+      </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+    </choices>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto>
+    <code>AREA</code>
+    <index>2</index>
+    <text>Area</text>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto>
+    <code>NUM_OF_CLAIM</code>
+    <index>3</index>
+    <text>Number of claims in last 5 years</text>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto>
+    <code>FLOOD</code>
+    <index>4</index>
+    <text>Located in flood risk area</text>
+    <choices>
+      <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+        <code>YES</code>
+        <label>Yes</label>
+      </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+      <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+        <code>NO</code>
+        <label>No</label>
+      </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+    </choices>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto>
+</list>

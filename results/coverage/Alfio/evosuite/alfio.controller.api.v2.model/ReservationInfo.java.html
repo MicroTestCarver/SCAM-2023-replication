@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReservationInfo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.controller.api.v2.model</a> &gt; <span class="el_source">ReservationInfo.java</span></div><h1>ReservationInfo.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.controller.api.v2.model;
+
+import alfio.model.BillingDetails;
+import alfio.model.OrderSummary;
+import alfio.model.SummaryRow.SummaryType;
+import alfio.model.TicketCategory;
+import alfio.model.TicketReservation.TicketReservationStatus;
+import alfio.model.subscription.UsageDetails;
+import alfio.model.transaction.PaymentMethod;
+import alfio.model.transaction.PaymentProxy;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+@AllArgsConstructor
+@Getter
+public class ReservationInfo {
+    private final String id;
+    private final String shortId;
+    private final String firstName;
+    private final String lastName;
+    private final String email;
+    private final long validity;
+    private final List&lt;TicketsByTicketCategory&gt; ticketsByCategory;
+    private final ReservationInfoOrderSummary orderSummary;
+
+
+    private final TicketReservationStatus status;
+    private final boolean validatedBookingInformation;
+    private final Map&lt;String, String&gt; formattedExpirationDate; // map of language -&gt; formatted date
+
+    private final String invoiceNumber;
+    private final boolean invoiceRequested;
+
+
+    private final boolean invoiceOrReceiptDocumentPresent;
+    private final boolean paid;
+    private final boolean tokenAcquired;
+    private final PaymentProxy paymentProxy;
+
+
+    //billing info from additional info
+    private final Boolean addCompanyBillingDetails;
+    //
+    private final String customerReference;
+    private final Boolean skipVatNr;
+
+    private final String billingAddress;
+
+    private final BillingDetails billingDetails;
+
+    //reservation info group related info
+    private final boolean containsCategoriesLinkedToGroups;
+    //
+
+    private final Map&lt;PaymentMethod, PaymentProxyWithParameters&gt; activePaymentMethods;
+
+    private final List&lt;SubscriptionInfo&gt; subscriptionInfos;
+
+
+    @AllArgsConstructor
+    @Getter
+    public static class TicketsByTicketCategory {
+        private final String name;
+        private final TicketCategory.TicketAccessType ticketAccessType;
+        private final List&lt;BookingInfoTicket&gt; tickets;
+    }
+
+
+    @AllArgsConstructor
+    public static class BookingInfoTicket {
+        private final String uuid;
+        private final String firstName;
+        private final String lastName;
+        private final String email;
+        private final String fullName;
+        private final String userLanguage;
+        private final boolean assigned;
+        private final boolean locked;
+        private final boolean acquired;
+        private final boolean cancellationEnabled;
+        private final boolean sendMailEnabled;
+        private final boolean downloadEnabled;
+        private final List&lt;AdditionalField&gt; ticketFieldConfiguration;
+        private final Map&lt;String, String&gt; formattedOnlineCheckInDate;
+        private final boolean onlineEventStarted;
+
+        public String getEmail() {
+<span class="nc" id="L109">            return email;</span>
+        }
+
+        public String getFirstName() {
+<span class="nc" id="L113">            return firstName;</span>
+        }
+
+        public String getLastName() {
+<span class="nc" id="L117">            return lastName;</span>
+        }
+
+        public String getUuid() {
+<span class="nc" id="L121">            return uuid;</span>
+        }
+
+        public String getFullName() {
+<span class="nc" id="L125">            return fullName;</span>
+        }
+
+        public boolean isAssigned() {
+<span class="nc" id="L129">            return assigned;</span>
+        }
+
+        public boolean isAcquired() {
+<span class="nc" id="L133">            return acquired;</span>
+        }
+
+        public String getUserLanguage() {
+<span class="nc" id="L137">            return userLanguage;</span>
+        }
+
+<span class="nc" id="L140">        public boolean isLocked() { return locked; }</span>
+
+        public boolean isCancellationEnabled() {
+<span class="nc" id="L143">            return cancellationEnabled;</span>
+        }
+
+        public List&lt;AdditionalField&gt; getTicketFieldConfigurationBeforeStandard() {
+<span class="nc" id="L147">            return ticketFieldConfiguration.stream().filter(AdditionalField::isBeforeStandardFields).collect(Collectors.toList());</span>
+        }
+
+        public List&lt;AdditionalField&gt; getTicketFieldConfigurationAfterStandard() {
+<span class="nc bnc" id="L151" title="All 2 branches missed.">            return ticketFieldConfiguration.stream().filter(tv -&gt; !tv.isBeforeStandardFields()).collect(Collectors.toList());</span>
+        }
+
+        public Map&lt;String, String&gt; getFormattedOnlineCheckInDate() {
+<span class="nc" id="L155">            return formattedOnlineCheckInDate;</span>
+        }
+
+        public boolean isOnlineEventStarted() {
+<span class="nc" id="L159">            return onlineEventStarted;</span>
+        }
+
+        public boolean isSendMailEnabled() {
+<span class="nc" id="L163">            return sendMailEnabled;</span>
+        }
+
+        public boolean isDownloadEnabled() {
+<span class="nc" id="L167">            return downloadEnabled;</span>
+        }
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class AdditionalField {
+        private final String name;
+        private final String value;
+        private final String type;
+        private final boolean required;
+        private final boolean editable;
+        private final Integer minLength;
+        private final Integer maxLength;
+        private final List&lt;String&gt; restrictedValues;
+        private final List&lt;Field&gt; fields;
+        private final boolean beforeStandardFields;
+        private final Map&lt;String, Description&gt; description;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class Description {
+        private final String label;
+        private final String placeholder;
+        private final Map&lt;String, String&gt; restrictedValuesDescription;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class Field {
+        private final int fieldIndex;
+        private final String fieldValue;
+    }
+
+
+    @Getter
+    public static class ReservationInfoOrderSummary {
+
+        private final List&lt;ReservationInfoOrderSummaryRow&gt; summary;
+        private final String totalPrice;
+        private final boolean free;
+        private final boolean displayVat;
+        private final int priceInCents;
+        private final String descriptionForPayment;
+        private final String totalVAT;
+        private final String vatPercentage;
+        private final boolean notYetPaid;
+
+<span class="nc" id="L216">        public ReservationInfoOrderSummary(OrderSummary orderSummary) {</span>
+<span class="nc" id="L217">            this.summary = orderSummary.getSummary()</span>
+<span class="nc" id="L218">                .stream()</span>
+<span class="nc" id="L219">                .map(s -&gt; new ReservationInfoOrderSummaryRow(s.getName(), s.getAmount(), s.getPrice(), s.getSubTotal(), s.getType(), s.getTaxPercentage()))</span>
+<span class="nc" id="L220">                .collect(Collectors.toList());</span>
+<span class="nc" id="L221">            this.totalPrice = orderSummary.getTotalPrice();</span>
+<span class="nc" id="L222">            this.free = orderSummary.getFree();</span>
+<span class="nc" id="L223">            this.displayVat = orderSummary.getDisplayVat();</span>
+<span class="nc" id="L224">            this.priceInCents = orderSummary.getPriceInCents();</span>
+<span class="nc" id="L225">            this.descriptionForPayment = orderSummary.getDescriptionForPayment();</span>
+<span class="nc" id="L226">            this.totalVAT = orderSummary.getTotalVAT();</span>
+<span class="nc" id="L227">            this.vatPercentage = orderSummary.getVatPercentage();</span>
+<span class="nc" id="L228">            this.notYetPaid = orderSummary.getNotYetPaid();</span>
+<span class="nc" id="L229">        }</span>
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class ReservationInfoOrderSummaryRow {
+        private final String name;
+        private final int amount;
+        private final String price;
+        private final String subTotal;
+        private final SummaryType type;
+        private final String taxPercentage;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class SubscriptionInfo {
+        private final UUID id;
+        private final String pin;
+        private final UsageDetails usageDetails;
+        private final SubscriptionOwner owner;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class SubscriptionOwner {
+        private final String firstName;
+        private final String lastName;
+        private final String email;
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

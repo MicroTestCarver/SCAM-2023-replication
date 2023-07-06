@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QuestionAnswer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pricing-service</a> &gt; <a href="index.source.html" class="el_package">pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto</a> &gt; <span class="el_source">QuestionAnswer.java</span></div><h1>QuestionAnswer.java</h1><pre class="source lang-java linenums">package pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto;
+
+import io.micronaut.core.annotation.Introspected;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.Objects;
+
+@Introspected
+<span class="fc" id="L12">@NoArgsConstructor</span>
+<span class="nc" id="L13">@AllArgsConstructor</span>
+@Getter
+<span class="fc" id="L15">@Setter</span>
+public class QuestionAnswer&lt;T&gt; {
+<span class="nc" id="L17">    private String questionCode;</span>
+<span class="nc" id="L18">    private T answer;</span>
+
+    @Override
+    public boolean equals(Object obj){
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">        if (this == obj)</span>
+<span class="nc" id="L23">            return true;</span>
+<span class="pc bpc" id="L24" title="1 of 2 branches missed.">        if (obj == null)</span>
+<span class="nc" id="L25">            return false;</span>
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">        if (getClass() != obj.getClass())</span>
+<span class="nc" id="L27">            return false;</span>
+<span class="fc" id="L28">        QuestionAnswer source = (QuestionAnswer) obj;</span>
+<span class="pc bpc" id="L29" title="2 of 4 branches missed.">        return Objects.equals(questionCode, source.questionCode) &amp;&amp; Objects.equals(answer, source.answer) ;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

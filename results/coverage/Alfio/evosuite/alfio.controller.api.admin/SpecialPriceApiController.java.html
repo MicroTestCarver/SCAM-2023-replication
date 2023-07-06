@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpecialPriceApiController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.controller.api.admin</a> &gt; <span class="el_source">SpecialPriceApiController.java</span></div><h1>SpecialPriceApiController.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.controller.api.admin;
+
+import alfio.manager.SpecialPriceManager;
+import alfio.model.SpecialPrice;
+import alfio.model.modification.SendCodeModification;
+import alfio.model.modification.UploadBase64FileModification;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.security.Principal;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.commons.lang3.StringUtils.trim;
+
+@RestController
+@RequestMapping(&quot;/admin/api&quot;)
+<span class="nc" id="L45">@Log4j2</span>
+public class SpecialPriceApiController {
+
+    private final SpecialPriceManager specialPriceManager;
+
+    @Autowired
+<span class="nc" id="L51">    public SpecialPriceApiController(SpecialPriceManager specialPriceManager) {</span>
+<span class="nc" id="L52">        this.specialPriceManager = specialPriceManager;</span>
+<span class="nc" id="L53">    }</span>
+
+    @ExceptionHandler
+    @ResponseBody
+    public ResponseEntity&lt;String&gt; handleExceptions(Exception e) {
+<span class="nc" id="L58">        log.error(&quot;Unexpected exception in SpecialPriceApiController&quot;, e);</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        if(!(e instanceof IllegalArgumentException)) {</span>
+<span class="nc" id="L60">            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.toString());</span>
+        }
+<span class="nc" id="L62">        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());</span>
+    }
+
+    @PostMapping(&quot;/events/{eventName}/categories/{categoryId}/link-codes&quot;)
+    public ResponseEntity&lt;List&lt;SendCodeModification&gt;&gt; linkAssigneeToCodes(@PathVariable(&quot;eventName&quot;) String eventName,
+                                                                         @PathVariable(&quot;categoryId&quot;) int categoryId,
+                                                                         @RequestBody UploadBase64FileModification file,
+                                                                         Principal principal) throws IOException, CsvException {
+
+<span class="nc" id="L71">        Validate.isTrue(StringUtils.isNotEmpty(eventName));</span>
+<span class="nc" id="L72">        try(InputStreamReader isr = new InputStreamReader(file.getInputStream(), UTF_8); CSVReader reader = new CSVReader(isr)) {</span>
+<span class="nc" id="L73">            List&lt;SendCodeModification&gt; content = reader.readAll().stream()</span>
+<span class="nc" id="L74">                    .map(line -&gt; {</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">                        Validate.isTrue(line.length &gt;= 4);</span>
+<span class="nc" id="L76">                        return new SendCodeModification(StringUtils.trimToNull(line[0]), trim(line[1]), trim(line[2]), trim(line[3]));</span>
+                    })
+<span class="nc" id="L78">                    .collect(Collectors.toList());</span>
+<span class="nc" id="L79">            return ResponseEntity.ok(specialPriceManager.linkAssigneeToCode(content, eventName, categoryId, principal.getName()));</span>
+        }
+    }
+
+    @PostMapping(&quot;/events/{eventName}/categories/{categoryId}/send-codes&quot;)
+    public boolean sendCodes(@PathVariable(&quot;eventName&quot;) String eventName,
+                             @PathVariable(&quot;categoryId&quot;) int categoryId,
+                             @RequestBody List&lt;SendCodeModification&gt; codes,
+                             Principal principal) {
+
+<span class="nc" id="L89">        Validate.isTrue(StringUtils.isNotEmpty(eventName));</span>
+<span class="nc" id="L90">        Objects.requireNonNull(codes);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        Validate.isTrue(!codes.isEmpty(), &quot;Collection of codes cannot be empty&quot;);</span>
+<span class="nc" id="L92">        specialPriceManager.sendCodeToAssignee(codes, eventName, categoryId, principal.getName());</span>
+<span class="nc" id="L93">        return true;</span>
+    }
+
+    @GetMapping(&quot;/events/{eventName}/categories/{categoryId}/sent-codes&quot;)
+    public List&lt;SpecialPrice&gt; loadSentCodes(@PathVariable(&quot;eventName&quot;) String eventName,
+                                            @PathVariable(&quot;categoryId&quot;) int categoryId,
+                                            Principal principal) {
+<span class="nc" id="L100">        return specialPriceManager.loadSentCodes(eventName, categoryId, principal.getName());</span>
+    }
+
+    @DeleteMapping(&quot;/events/{eventName}/categories/{categoryId}/codes/{codeId}/recipient&quot;)
+    public boolean clearRecipientData(@PathVariable(&quot;eventName&quot;) String eventName,
+                                      @PathVariable(&quot;categoryId&quot;) int categoryId,
+                                      @PathVariable(&quot;codeId&quot;) int codeId,
+                                      Principal principal) {
+<span class="nc" id="L108">        return specialPriceManager.clearRecipientData(eventName, categoryId, codeId, principal.getName());</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

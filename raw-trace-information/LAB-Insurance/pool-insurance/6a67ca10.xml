@@ -1,0 +1,29 @@
+<pl.altkom.asc.lab.micronaut.poc.policy.service.api.v1.commands.createoffer.CreateOfferCommand>
+  <productCode>FAI</productCode>
+  <policyFrom>2023-05-25</policyFrom>
+  <policyTo>2023-05-31</policyTo>
+  <selectedCovers>
+    <string>C1</string>
+    <string>C2</string>
+    <string>C3</string>
+    <string>C4</string>
+  </selectedCovers>
+  <answers>
+    <pl.altkom.asc.lab.micronaut.poc.policy.service.api.v1.commands.createoffer.dto.ChoiceQuestionAnswer>
+      <questionCode>TYP</questionCode>
+      <answer class="string">ZB</answer>
+    </pl.altkom.asc.lab.micronaut.poc.policy.service.api.v1.commands.createoffer.dto.ChoiceQuestionAnswer>
+    <pl.altkom.asc.lab.micronaut.poc.policy.service.api.v1.commands.createoffer.dto.NumericQuestionAnswer>
+      <questionCode>AREA</questionCode>
+      <answer class="big-decimal">5000</answer>
+    </pl.altkom.asc.lab.micronaut.poc.policy.service.api.v1.commands.createoffer.dto.NumericQuestionAnswer>
+    <pl.altkom.asc.lab.micronaut.poc.policy.service.api.v1.commands.createoffer.dto.NumericQuestionAnswer>
+      <questionCode>NUM_OF_CLAIM</questionCode>
+      <answer class="big-decimal">5</answer>
+    </pl.altkom.asc.lab.micronaut.poc.policy.service.api.v1.commands.createoffer.dto.NumericQuestionAnswer>
+    <pl.altkom.asc.lab.micronaut.poc.policy.service.api.v1.commands.createoffer.dto.ChoiceQuestionAnswer>
+      <questionCode>FLOOD</questionCode>
+      <answer class="string">YES</answer>
+    </pl.altkom.asc.lab.micronaut.poc.policy.service.api.v1.commands.createoffer.dto.ChoiceQuestionAnswer>
+  </answers>
+</pl.altkom.asc.lab.micronaut.poc.policy.service.api.v1.commands.createoffer.CreateOfferCommand>

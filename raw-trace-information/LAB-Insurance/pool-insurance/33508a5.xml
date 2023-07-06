@@ -1,0 +1,61 @@
+<pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.ProductDto_-ProductDtoBuilder>
+  <code>TRI</code>
+  <name>Safe Traveller</name>
+  <image>/static/travel.jpg</image>
+  <description>Travel insurance</description>
+  <covers>
+    <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+      <code>C1</code>
+      <name>Luggage</name>
+      <description></description>
+      <optional>false</optional>
+      <sumInsured>5000</sumInsured>
+    </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+    <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+      <code>C2</code>
+      <name>Illness</name>
+      <description></description>
+      <optional>false</optional>
+      <sumInsured>5000</sumInsured>
+    </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+    <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+      <code>C3</code>
+      <name>Assistance</name>
+      <description></description>
+      <optional>true</optional>
+    </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+  </covers>
+  <questions>
+    <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto>
+      <code>DESTINATION</code>
+      <index>1</index>
+      <text>Destination</text>
+      <choices>
+        <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+          <code>EUR</code>
+          <label>Europe</label>
+        </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+        <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+          <code>WORLD</code>
+          <label>World</label>
+        </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+        <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+          <code>PL</code>
+          <label>Poland</label>
+        </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+      </choices>
+    </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto>
+    <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto>
+      <code>NUM_OF_ADULTS</code>
+      <index>2</index>
+      <text>Number of adults</text>
+    </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto>
+    <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto>
+      <code>NUM_OF_CHILDREN</code>
+      <index>3</index>
+      <text>Number of children</text>
+    </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto>
+  </questions>
+  <maxNumberOfInsured>10</maxNumberOfInsured>
+  <icon>plane</icon>
+</pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.ProductDto_-ProductDtoBuilder>

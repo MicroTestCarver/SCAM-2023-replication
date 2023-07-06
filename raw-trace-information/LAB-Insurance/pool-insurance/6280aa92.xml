@@ -1,0 +1,18 @@
+<map>
+  <entry>
+    <string>C3</string>
+    <big-decimal>90.00</big-decimal>
+  </entry>
+  <entry>
+    <string>C4</string>
+    <big-decimal>120.00</big-decimal>
+  </entry>
+  <entry>
+    <string>C1</string>
+    <big-decimal>30.00</big-decimal>
+  </entry>
+  <entry>
+    <string>C2</string>
+    <big-decimal>60.00</big-decimal>
+  </entry>
+</map>

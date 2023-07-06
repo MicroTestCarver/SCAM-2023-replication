@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReservationHeader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.controller.api.v2.model</a> &gt; <span class="el_source">ReservationHeader.java</span></div><h1>ReservationHeader.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.controller.api.v2.model;
+
+import alfio.model.PriceContainer;
+import alfio.model.ReservationWithPurchaseContext;
+import alfio.model.TicketReservation;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import static alfio.util.LocaleUtil.formatDate;
+
+@RequiredArgsConstructor
+@Getter
+public class ReservationHeader {
+    private final String id;
+    private final TicketReservation.TicketReservationStatus status;
+    private final Map&lt;String, String&gt; formattedExpiresOn;
+    private final Map&lt;String, String&gt; formattedConfirmedOn;
+    private final Map&lt;String, String&gt; formattedCreatedOn;
+    private final String invoiceNumber;
+    private final BigDecimal finalPrice;
+    private final String currencyCode;
+    private final BigDecimal usedVatPercent;
+    private final PriceContainer.VatStatus vatStatus;
+    private final List&lt;ReservationWithPurchaseContext.PurchaseContextItem&gt; items;
+
+
+    public static ReservationHeader from(ReservationWithPurchaseContext r, Map&lt;Locale, String&gt; datePatternsMap) {
+<span class="nc" id="L49">        return new ReservationHeader(</span>
+<span class="nc" id="L50">            r.getId(),</span>
+<span class="nc" id="L51">            r.getStatus(),</span>
+<span class="nc" id="L52">            formatDate(r.getValidity(), datePatternsMap),</span>
+<span class="nc" id="L53">            formatDate(r.getConfirmationTs(), datePatternsMap),</span>
+<span class="nc" id="L54">            formatDate(r.getRegistrationTs(), datePatternsMap),</span>
+<span class="nc" id="L55">            r.getInvoiceNumber(),</span>
+<span class="nc" id="L56">            r.getFinalPrice(),</span>
+<span class="nc" id="L57">            r.getCurrencyCode(),</span>
+<span class="nc" id="L58">            r.getVatPercentage(),</span>
+<span class="nc" id="L59">            r.getVatStatus(),</span>
+<span class="nc" id="L60">            r.getItems()</span>
+        );
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

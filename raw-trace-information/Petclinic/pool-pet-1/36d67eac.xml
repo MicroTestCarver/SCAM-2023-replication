@@ -1,0 +1,9 @@
+<org.springframework.data.domain.PageRequest>
+  <page>0</page>
+  <size>5</size>
+  <sort>
+    <orders class="java.util.Arrays$ArrayList">
+      <a class="org.springframework.data.domain.Sort$Order-array"/>
+    </orders>
+  </sort>
+</org.springframework.data.domain.PageRequest>

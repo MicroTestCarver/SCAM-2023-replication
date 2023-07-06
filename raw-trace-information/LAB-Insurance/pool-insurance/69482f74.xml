@@ -1,0 +1,29 @@
+<list>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+    <code>C1</code>
+    <name>Fire</name>
+    <description></description>
+    <optional>false</optional>
+    <sumInsured>200000</sumInsured>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+    <code>C2</code>
+    <name>Flood</name>
+    <description></description>
+    <optional>false</optional>
+    <sumInsured>100000</sumInsured>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+    <code>C3</code>
+    <name>Theft</name>
+    <description></description>
+    <optional>false</optional>
+    <sumInsured>50000</sumInsured>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+    <code>C4</code>
+    <name>Assistance</name>
+    <description></description>
+    <optional>true</optional>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+</list>

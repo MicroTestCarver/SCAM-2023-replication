@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExtensionCapabilitySummary.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">ExtensionCapabilitySummary.java</span></div><h1>ExtensionCapabilitySummary.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import alfio.manager.support.extension.ExtensionCapability;
+import alfio.model.support.EnumTypeAsString;
+import alfio.model.support.JSONData;
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+
+import java.util.List;
+import java.util.Objects;
+
+@Getter
+public class ExtensionCapabilitySummary {
+
+    private final ExtensionCapability capability;
+    private final List&lt;ExtensionCapabilityDetails&gt; details;
+
+    public ExtensionCapabilitySummary(@Column(&quot;capability&quot;) @EnumTypeAsString ExtensionCapability capability,
+<span class="nc" id="L37">                                      @Column(&quot;capability_detail&quot;) @JSONData List&lt;ExtensionCapabilityDetails&gt; details) {</span>
+<span class="nc" id="L38">        this.capability = capability;</span>
+<span class="nc" id="L39">        this.details = details;</span>
+<span class="nc" id="L40">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L45" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="nc" id="L46">        ExtensionCapabilitySummary that = (ExtensionCapabilitySummary) o;</span>
+<span class="nc bnc" id="L47" title="All 4 branches missed.">        return capability == that.capability &amp;&amp; Objects.equals(details, that.details);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L52">        return Objects.hash(capability, details);</span>
+    }
+
+    @Getter
+    public static class ExtensionCapabilityDetails {
+        private final String label;
+        private final String description;
+        private final String selector;
+
+        @JsonCreator
+        public ExtensionCapabilityDetails(@JsonProperty(&quot;label&quot;) String label,
+                                          @JsonProperty(&quot;description&quot;) String description,
+<span class="nc" id="L64">                                          @JsonProperty(&quot;selector&quot;) String selector) {</span>
+<span class="nc" id="L65">            this.label = label;</span>
+<span class="nc" id="L66">            this.description = description;</span>
+<span class="nc" id="L67">            this.selector = selector;</span>
+<span class="nc" id="L68">        }</span>
+
+        @Override
+        public boolean equals(Object o) {
+<span class="nc bnc" id="L72" title="All 2 branches missed.">            if (this == o) return true;</span>
+<span class="nc bnc" id="L73" title="All 4 branches missed.">            if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="nc" id="L74">            ExtensionCapabilityDetails that = (ExtensionCapabilityDetails) o;</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">            return label.equals(that.label)</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">                &amp;&amp; Objects.equals(description, that.description)</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">                &amp;&amp; Objects.equals(selector, that.selector);</span>
+        }
+
+        @Override
+        public int hashCode() {
+<span class="nc" id="L82">            return Objects.hash(label, description, selector);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

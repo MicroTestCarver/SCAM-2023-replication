@@ -1,0 +1,18 @@
+<list>
+  <pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.ChoiceQuestionAnswer>
+    <questionCode>TYP</questionCode>
+    <answer class="string">ZB</answer>
+  </pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.ChoiceQuestionAnswer>
+  <pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.NumericQuestionAnswer>
+    <questionCode>AREA</questionCode>
+    <answer class="big-decimal">5000</answer>
+  </pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.NumericQuestionAnswer>
+  <pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.NumericQuestionAnswer>
+    <questionCode>NUM_OF_CLAIM</questionCode>
+    <answer class="big-decimal">5</answer>
+  </pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.NumericQuestionAnswer>
+  <pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.ChoiceQuestionAnswer>
+    <questionCode>FLOOD</questionCode>
+    <answer class="string">YES</answer>
+  </pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.ChoiceQuestionAnswer>
+</list>

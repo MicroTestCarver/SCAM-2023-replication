@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WeatherResponse.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-testing</a> &gt; <a href="index.source.html" class="el_package">example.weather</a> &gt; <span class="el_source">WeatherResponse.java</span></div><h1>WeatherResponse.java</h1><pre class="source lang-java linenums">package example.weather;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class WeatherResponse implements Serializable {
+
+    private List&lt;Weather&gt; weather;
+
+<span class="nc" id="L16">    public WeatherResponse() {}</span>
+
+<span class="fc" id="L18">    public WeatherResponse(String main, String description) {</span>
+<span class="fc" id="L19">        this.weather = Collections.singletonList(new Weather(main, description));</span>
+<span class="fc" id="L20">    }</span>
+
+    public String getSummary() {
+<span class="fc" id="L23">        return weather.stream()</span>
+<span class="fc" id="L24">                .map(w -&gt; w.main + &quot;: &quot; + w.description)</span>
+<span class="fc" id="L25">                .collect(Collectors.joining(&quot;\n&quot;));</span>
+    }
+
+    public List&lt;Weather&gt; getWeather() {
+<span class="nc" id="L29">        return weather;</span>
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L35" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="fc" id="L36">        WeatherResponse that = (WeatherResponse) o;</span>
+<span class="fc" id="L37">        return Objects.equals(weather, that.weather);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L42">        return Objects.hash(weather);</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L47">        return &quot;WeatherResponse{&quot; +</span>
+                &quot;weather=&quot; + weather +
+                '}';
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Weather implements Serializable {
+        private String main;
+        private String description;
+
+<span class="nc" id="L57">        public Weather() {}</span>
+
+<span class="fc" id="L59">        public Weather(String main, String description) {</span>
+<span class="fc" id="L60">            this.main = main;</span>
+<span class="fc" id="L61">            this.description = description;</span>
+<span class="fc" id="L62">        }</span>
+
+        public String getMain() {
+<span class="nc" id="L65">            return main;</span>
+        }
+
+        public String getDescription() {
+<span class="nc" id="L69">            return description;</span>
+        }
+
+        @Override
+        public boolean equals(Object o) {
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">            if (this == o) return true;</span>
+<span class="pc bpc" id="L75" title="2 of 4 branches missed.">            if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="fc" id="L76">            Weather weather = (Weather) o;</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">            return Objects.equals(main, weather.main) &amp;&amp;</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">                    Objects.equals(description, weather.description);</span>
+        }
+
+        @Override
+        public int hashCode() {
+<span class="nc" id="L83">            return Objects.hash(main, description);</span>
+        }
+
+        @Override
+        public String toString() {
+<span class="nc" id="L88">            return &quot;Weather{&quot; +</span>
+                    &quot;main='&quot; + main + '\'' +
+                    &quot;, description='&quot; + description + '\'' +
+                    '}';
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

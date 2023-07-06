@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductsAssembler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">product-service</a> &gt; <a href="index.source.html" class="el_package">pl.altkom.asc.lab.micronaut.poc.product.service.infrastructure.adapters.web</a> &gt; <span class="el_source">ProductsAssembler.java</span></div><h1>ProductsAssembler.java</h1><pre class="source lang-java linenums">package pl.altkom.asc.lab.micronaut.poc.product.service.infrastructure.adapters.web;
+
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto;
+import pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.ProductDto;
+import pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.*;
+import pl.altkom.asc.lab.micronaut.poc.product.service.domain.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+final class ProductsAssembler {
+
+    static List&lt;ProductDto&gt; map(List&lt;Product&gt; products) {
+<span class="nc" id="L18">        return products.stream()</span>
+<span class="nc" id="L19">                .map(ProductsAssembler::map)</span>
+<span class="nc" id="L20">                .collect(Collectors.toList());</span>
+    }
+
+    static ProductDto map(Product product) {
+<span class="nc" id="L24">        return ProductDto.builder()</span>
+<span class="nc" id="L25">                .code(product.getCode())</span>
+<span class="nc" id="L26">                .name(product.getName())</span>
+<span class="nc" id="L27">                .image(product.getImage())</span>
+<span class="nc" id="L28">                .description(product.getDescription())</span>
+<span class="nc" id="L29">                .covers(mapCovers(product))</span>
+<span class="nc" id="L30">                .questions(mapQuestions(product))</span>
+<span class="nc" id="L31">                .maxNumberOfInsured(product.getMaxNumberOfInsured())</span>
+<span class="nc" id="L32">                .icon(product.getIcon())</span>
+<span class="nc" id="L33">                .build();</span>
+    }
+
+    private static List&lt;QuestionDto&gt; mapQuestions(Product product) {
+<span class="nc" id="L37">        return product.getQuestions().stream()</span>
+<span class="nc" id="L38">                .map(ProductsAssembler::mapQuestion)</span>
+<span class="nc" id="L39">                .collect(Collectors.toList());</span>
+    }
+
+    private static List&lt;CoverDto&gt; mapCovers(Product product) {
+<span class="nc" id="L43">        return product.getCovers().stream()</span>
+<span class="nc" id="L44">                .map(ProductsAssembler::mapCover)</span>
+<span class="nc" id="L45">                .collect(Collectors.toList());</span>
+    }
+
+    private static CoverDto mapCover(Cover cover) {
+<span class="nc" id="L49">        return new CoverDto(</span>
+<span class="nc" id="L50">                cover.getCode(),</span>
+<span class="nc" id="L51">                cover.getName(),</span>
+<span class="nc" id="L52">                cover.getDescription(),</span>
+<span class="nc" id="L53">                cover.isOptional(),</span>
+<span class="nc" id="L54">                cover.getSumInsured()</span>
+        );
+    }
+
+    private static QuestionDto mapQuestion(Question question) {
+<span class="nc" id="L59">        QuestionDto dto = mapToNumericIfFit(question);</span>
+
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        dto = dto == null ? mapToDateIfFit(question) : dto;</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        dto = dto == null ? mapToChoiceIfFit(question) : dto;</span>
+
+<span class="nc" id="L64">        return dto;</span>
+    }
+
+    private static QuestionDto mapToChoiceIfFit(Question question) {
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (!(question instanceof ChoiceQuestion))</span>
+<span class="nc" id="L69">            return null;</span>
+
+<span class="nc" id="L71">        return new ChoiceQuestionDto(question.getCode(), question.getIndex(), question.getText(), mapChoices(question));</span>
+    }
+
+    private static List&lt;ChoiceDto&gt; mapChoices(Question question) {
+<span class="nc" id="L75">        List&lt;Choice&gt; choices = ((ChoiceQuestion) question).getChoices();</span>
+
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        if (choices == null)</span>
+<span class="nc" id="L78">            return new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L80">        return choices.stream()</span>
+<span class="nc" id="L81">                .map(x -&gt; new ChoiceDto(x.getCode(), x.getLabel()))</span>
+<span class="nc" id="L82">                .collect(Collectors.toList());</span>
+    }
+
+    private static QuestionDto mapToDateIfFit(Question question) {
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (!(question instanceof DateQuestion))</span>
+<span class="nc" id="L87">            return null;</span>
+
+<span class="nc" id="L89">        return new DateQuestionDto(question.getCode(), question.getIndex(), question.getText());</span>
+    }
+
+    private static QuestionDto mapToNumericIfFit(Question question) {
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (!(question instanceof NumericQuestion))</span>
+<span class="nc" id="L94">            return null;</span>
+
+<span class="nc" id="L96">        return new NumericQuestionDto(question.getCode(), question.getIndex(), question.getText());</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

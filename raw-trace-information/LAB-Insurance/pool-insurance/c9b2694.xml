@@ -1,0 +1,30 @@
+<map>
+  <entry>
+    <string>C3</string>
+    <pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>
+      <code>C3</code>
+      <price>90.00</price>
+    </pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>
+  </entry>
+  <entry>
+    <string>C4</string>
+    <pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>
+      <code>C4</code>
+      <price>120.00</price>
+    </pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>
+  </entry>
+  <entry>
+    <string>C1</string>
+    <pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>
+      <code>C1</code>
+      <price>30.00</price>
+    </pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>
+  </entry>
+  <entry>
+    <string>C2</string>
+    <pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>
+      <code>C2</code>
+      <price>60.00</price>
+    </pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>
+  </entry>
+</map>

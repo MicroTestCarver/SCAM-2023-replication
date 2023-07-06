@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DemoProductsFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">product-service</a> &gt; <a href="index.source.html" class="el_package">pl.altkom.asc.lab.micronaut.poc.product.service.init</a> &gt; <span class="el_source">DemoProductsFactory.java</span></div><h1>DemoProductsFactory.java</h1><pre class="source lang-java linenums">package pl.altkom.asc.lab.micronaut.poc.product.service.init;
+
+import pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice;
+import pl.altkom.asc.lab.micronaut.poc.product.service.domain.ChoiceQuestion;
+import pl.altkom.asc.lab.micronaut.poc.product.service.domain.NumericQuestion;
+import pl.altkom.asc.lab.micronaut.poc.product.service.domain.Product;
+
+import java.math.BigDecimal;
+import java.util.Arrays;
+
+<span class="nc" id="L11">class DemoProductsFactory {</span>
+
+    static Product travel() {
+<span class="nc" id="L14">        Product p = new Product(</span>
+                &quot;TRI&quot;,
+                &quot;Safe Traveller&quot;,
+                &quot;/static/travel.jpg&quot;,
+                &quot;Travel insurance&quot;,
+                10,
+                &quot;plane&quot;);
+
+<span class="nc" id="L22">        p.addCover(&quot;C1&quot;, &quot;Luggage&quot;, &quot;&quot;, false, new BigDecimal(&quot;5000&quot;));</span>
+<span class="nc" id="L23">        p.addCover(&quot;C2&quot;, &quot;Illness&quot;, &quot;&quot;, false, new BigDecimal(&quot;5000&quot;));</span>
+<span class="nc" id="L24">        p.addCover(&quot;C3&quot;, &quot;Assistance&quot;, &quot;&quot;, true, null);</span>
+
+<span class="nc" id="L26">        p.addQuestions(Arrays.asList(</span>
+<span class="nc" id="L27">                new ChoiceQuestion(&quot;DESTINATION&quot;, 1, &quot;Destination&quot;, Arrays.asList(</span>
+                        new Choice(&quot;EUR&quot;, &quot;Europe&quot;),
+                        new Choice(&quot;WORLD&quot;, &quot;World&quot;),
+                        new Choice(&quot;PL&quot;, &quot;Poland&quot;)
+                )),
+                new NumericQuestion(&quot;NUM_OF_ADULTS&quot;, 2, &quot;Number of adults&quot;),
+                new NumericQuestion(&quot;NUM_OF_CHILDREN&quot;, 3, &quot;Number of children&quot;)
+        ));
+<span class="nc" id="L35">        return p;</span>
+    }
+
+    static Product house() {
+<span class="nc" id="L39">        Product p = new Product(</span>
+                &quot;HSI&quot;,
+                &quot;Happy House&quot;,
+                &quot;/static/house.jpg&quot;,
+                &quot;House insurance&quot;,
+                5,
+                &quot;building&quot;);
+
+<span class="nc" id="L47">        p.addCover(&quot;C1&quot;, &quot;Fire&quot;, &quot;&quot;, false, new BigDecimal(&quot;200000&quot;));</span>
+<span class="nc" id="L48">        p.addCover(&quot;C2&quot;, &quot;Flood&quot;, &quot;&quot;, false, new BigDecimal(&quot;100000&quot;));</span>
+<span class="nc" id="L49">        p.addCover(&quot;C3&quot;, &quot;Theft&quot;, &quot;&quot;, false, new BigDecimal(&quot;50000&quot;));</span>
+<span class="nc" id="L50">        p.addCover(&quot;C4&quot;, &quot;Assistance&quot;, &quot;&quot;, true, null);</span>
+
+<span class="nc" id="L52">        p.addQuestions(Arrays.asList(</span>
+<span class="nc" id="L53">                new ChoiceQuestion(&quot;TYP&quot;, 1, &quot;Apartment / House&quot;, Arrays.asList(</span>
+                        new Choice(&quot;APT&quot;, &quot;Apartment&quot;),
+                        new Choice(&quot;HOUSE&quot;, &quot;House&quot;)
+                )),
+                new NumericQuestion(&quot;AREA&quot;, 2, &quot;Area&quot;),
+                new NumericQuestion(&quot;NUM_OF_CLAIM&quot;, 3, &quot;Number of claims in last 5 years&quot;),
+<span class="nc" id="L59">                new ChoiceQuestion(&quot;FLOOD&quot;, 4, &quot;Located in flood risk area&quot;, ChoiceQuestion.yesNoChoice())</span>
+        ));
+<span class="nc" id="L61">        return p;</span>
+    }
+
+    static Product farm() {
+<span class="nc" id="L65">        Product p = new Product(</span>
+                &quot;FAI&quot;,
+                &quot;Happy farm&quot;,
+                &quot;/static/farm.jpg&quot;,
+                &quot;Farm insurance&quot;,
+                1,
+                &quot;apple&quot;);
+
+<span class="nc" id="L73">        p.addCover(&quot;C1&quot;, &quot;Crops&quot;, &quot;&quot;, false, new BigDecimal(&quot;200000&quot;));</span>
+<span class="nc" id="L74">        p.addCover(&quot;C2&quot;, &quot;Flood&quot;, &quot;&quot;, false, new BigDecimal(&quot;100000&quot;));</span>
+<span class="nc" id="L75">        p.addCover(&quot;C3&quot;, &quot;Fire&quot;, &quot;&quot;, false, new BigDecimal(&quot;50000&quot;));</span>
+<span class="nc" id="L76">        p.addCover(&quot;C4&quot;, &quot;Equipment&quot;, &quot;&quot;, true, new BigDecimal(&quot;300000&quot;));</span>
+
+<span class="nc" id="L78">        p.addQuestions(Arrays.asList(</span>
+<span class="nc" id="L79">                new ChoiceQuestion(&quot;TYP&quot;, 1, &quot;Cultivation type&quot;, Arrays.asList(</span>
+                        new Choice(&quot;ZB&quot;, &quot;Crop&quot;),
+                        new Choice(&quot;KW&quot;, &quot;Vegetable&quot;)
+                )),
+                new NumericQuestion(&quot;AREA&quot;, 2, &quot;Area&quot;),
+                new NumericQuestion(&quot;NUM_OF_CLAIM&quot;, 3, &quot;Number of claims in last 5 years&quot;),
+<span class="nc" id="L85">                new ChoiceQuestion(&quot;FLOOD&quot;, 4, &quot;Located in flood risk area&quot;, ChoiceQuestion.yesNoChoice())</span>
+        ));
+<span class="nc" id="L87">        return p;</span>
+    }
+
+    static Product car() {
+<span class="nc" id="L91">        Product p = new Product(</span>
+                &quot;CAR&quot;,
+                &quot;Happy Driver&quot;,
+                &quot;/static/car.jpg&quot;,
+                &quot;Car insurance&quot;,
+                1,
+                &quot;car&quot;);
+
+<span class="nc" id="L99">        p.addCover(&quot;C1&quot;, &quot;Assistance&quot;, &quot;&quot;, true, null);</span>
+<span class="nc" id="L100">        p.addQuestions(Arrays.asList(</span>
+                new NumericQuestion(&quot;NUM_OF_CLAIM&quot;, 3, &quot;Number of claims in last 5 years&quot;)
+        ));
+
+<span class="nc" id="L104">        return p;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

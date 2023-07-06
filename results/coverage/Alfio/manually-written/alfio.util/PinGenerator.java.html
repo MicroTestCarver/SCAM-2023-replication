@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PinGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.util</a> &gt; <span class="el_source">PinGenerator.java</span></div><h1>PinGenerator.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.util;
+
+import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.Assert;
+
+import java.math.BigInteger;
+import java.util.Objects;
+import java.util.regex.Pattern;
+
+@UtilityClass
+public class PinGenerator {
+
+    private static final String ALLOWED_CHARS = &quot;ACDEFGHJKLMNPQRTUVWXY34679&quot;;
+<span class="fc" id="L31">    private static final Pattern VALIDATION_PATTERN = Pattern.compile(&quot;^[&quot;+ALLOWED_CHARS+&quot;]+$&quot;);</span>
+    private static final int PIN_LENGTH = 6;
+
+
+    public static String uuidToPin(String uuid, int pinLength) {
+<span class="fc" id="L36">        var src = new BigInteger(uuid.replace(&quot;-&quot;, &quot;&quot;).substring(0, pinLength+1), 16);</span>
+<span class="fc" id="L37">        var chars = BigInteger.valueOf(ALLOWED_CHARS.length());</span>
+<span class="fc" id="L38">        var pin = new StringBuilder();</span>
+        do {
+<span class="fc" id="L40">            var remainder = src.mod(chars);</span>
+<span class="fc" id="L41">            pin.append(ALLOWED_CHARS.charAt(remainder.intValue()));</span>
+<span class="fc" id="L42">            src = src.divide(chars);</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        } while (!src.equals(BigInteger.ZERO));</span>
+
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        while(pin.length() &lt; pinLength) {</span>
+<span class="fc" id="L46">            pin.append(ALLOWED_CHARS.charAt(0));</span>
+        }
+
+<span class="fc" id="L49">        return pin.reverse().toString();</span>
+    }
+
+    public static String pinToPartialUuid(String pin, int pinLength) {
+<span class="fc" id="L53">        Assert.isTrue(isPinValid(pin, pinLength), &quot;the given PIN is not valid&quot;);</span>
+<span class="fc" id="L54">        var uppercasePin = Objects.requireNonNull(pin).strip().toUpperCase();</span>
+<span class="fc" id="L55">        var base = BigInteger.valueOf(ALLOWED_CHARS.length());</span>
+<span class="fc" id="L56">        var num = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        for (int i = 0; i &lt; pin.length(); i++) {</span>
+<span class="fc" id="L58">            char c = uppercasePin.charAt(pin.length() - 1 - i);</span>
+<span class="fc" id="L59">            var toAdd = BigInteger.valueOf(ALLOWED_CHARS.indexOf(c)).multiply(base.pow(i));</span>
+<span class="fc" id="L60">            num = num.add(toAdd);</span>
+        }
+<span class="fc" id="L62">        return StringUtils.leftPad(num.toString(16), pinLength+1, '0');</span>
+    }
+
+    public static boolean isPinValid(String pin, int pinLength) {
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        return pin != null</span>
+<span class="fc bfc" id="L67" title="All 4 branches covered.">            &amp;&amp; (pin.strip().length() == pinLength || pin.strip().length() == pinLength + 1)</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">            &amp;&amp; VALIDATION_PATTERN.matcher(pin.toUpperCase()).matches();</span>
+    }
+
+    public static String uuidToPin(String uuid) {
+<span class="fc" id="L72">        return uuidToPin(uuid, PIN_LENGTH);</span>
+    }
+
+    public static String pinToPartialUuid(String pin) {
+<span class="fc" id="L76">        return pinToPartialUuid(pin, PIN_LENGTH);</span>
+    }
+
+    public static boolean isPinValid(String pin) {
+<span class="fc" id="L80">        return isPinValid(pin, PIN_LENGTH);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TotalPrice.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">TotalPrice.java</span></div><h1>TotalPrice.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+
+@Getter
+public class TotalPrice {
+    private final int priceWithVAT;
+    private final int VAT;
+    private final int discount;
+    private final int discountAppliedCount;
+    private final String currencyCode;
+
+    @JsonCreator
+    public TotalPrice(@JsonProperty(&quot;priceWithVAT&quot;) int priceWithVAT,
+                      @JsonProperty(&quot;vat&quot;) int VAT,
+                      @JsonProperty(&quot;discount&quot;) int discount,
+                      @JsonProperty(&quot;discountAppliedCount&quot;) int discountAppliedCount,
+<span class="fc" id="L36">                      @JsonProperty(&quot;currencyCode&quot;) String currencyCode) {</span>
+<span class="fc" id="L37">        this.priceWithVAT = priceWithVAT;</span>
+<span class="fc" id="L38">        this.VAT = VAT;</span>
+<span class="fc" id="L39">        this.discount = discount;</span>
+<span class="fc" id="L40">        this.discountAppliedCount = discountAppliedCount;</span>
+<span class="fc" id="L41">        this.currencyCode = currencyCode;</span>
+<span class="fc" id="L42">    }</span>
+
+    public boolean requiresPayment() {
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        return this.priceWithVAT &gt; 0;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

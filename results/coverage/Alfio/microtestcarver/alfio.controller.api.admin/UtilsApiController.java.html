@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UtilsApiController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.controller.api.admin</a> &gt; <span class="el_source">UtilsApiController.java</span></div><h1>UtilsApiController.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.controller.api.admin;
+
+import alfio.config.Initializer;
+import alfio.controller.api.support.CurrencyDescriptor;
+import alfio.controller.api.support.TicketHelper;
+import alfio.manager.EventNameManager;
+import alfio.util.MustacheCustomTag;
+import alfio.util.Wrappers;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.tuple.Pair;
+import org.joda.money.CurrencyUnit;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
+import java.util.*;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping(&quot;/admin/api/utils&quot;)
+<span class="nc" id="L44">@Log4j2</span>
+public class UtilsApiController {
+
+<span class="nc" id="L47">    private static final List&lt;String&gt; CURRENCIES_BLACKLIST = Arrays.asList(&quot;USN&quot;, &quot;USS&quot;, &quot;CHE&quot;, &quot;CHW&quot;);</span>
+    private final EventNameManager eventNameManager;
+    private final String version;
+    private final Environment environment;
+
+    @Autowired
+<span class="nc" id="L53">    public UtilsApiController(EventNameManager eventNameManager, @Value(&quot;${alfio.version}&quot;) String version, Environment environment) {</span>
+<span class="nc" id="L54">        this.eventNameManager = eventNameManager;</span>
+<span class="nc" id="L55">        this.version = version;</span>
+<span class="nc" id="L56">        this.environment = environment;</span>
+<span class="nc" id="L57">    }</span>
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity&lt;String&gt; handleMissingServletRequestParameterException(Exception e) {
+<span class="nc" id="L61">        log.warn(&quot;missing parameters&quot;, e);</span>
+<span class="nc" id="L62">        return new ResponseEntity&lt;&gt;(&quot;missing parameters&quot;, HttpStatus.BAD_REQUEST);</span>
+    }
+
+    @GetMapping(&quot;/short-name/generate&quot;)
+    public String generateShortName(@RequestParam(&quot;displayName&quot;) String displayName) {
+<span class="nc" id="L67">        return eventNameManager.generateShortName(displayName);</span>
+    }
+
+    @PostMapping(&quot;/short-name/validate&quot;)
+    public boolean validateShortName(@RequestParam(&quot;shortName&quot;) String shortName, HttpServletResponse response) {
+<span class="nc" id="L72">        boolean unique = eventNameManager.isUnique(shortName);</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        if(!unique) {</span>
+<span class="nc" id="L74">            response.setStatus(HttpServletResponse.SC_CONFLICT);</span>
+        }
+<span class="nc" id="L76">        return unique;</span>
+    }
+    
+    @GetMapping(&quot;/render-commonmark&quot;)
+    public String renderCommonmark(@RequestParam(&quot;text&quot;) String input) {
+<span class="nc" id="L81">        return MustacheCustomTag.renderToHtmlCommonmarkEscaped(input);</span>
+    }
+
+    @GetMapping(&quot;/alfio/info&quot;)
+    public Map&lt;String, Object&gt; getApplicationInfo(Principal principal) {
+<span class="nc" id="L86">        Map&lt;String, Object&gt; applicationInfo = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L87">        applicationInfo.put(&quot;version&quot;, version);</span>
+<span class="nc" id="L88">        applicationInfo.put(&quot;username&quot;, principal.getName());</span>
+<span class="nc" id="L89">        applicationInfo.put(&quot;isDemoMode&quot;, environment.acceptsProfiles(Profiles.of(Initializer.PROFILE_DEMO)));</span>
+<span class="nc" id="L90">        return applicationInfo;</span>
+    }
+
+    @GetMapping(&quot;/currencies&quot;)
+    public List&lt;CurrencyDescriptor&gt; getCurrencies() {
+<span class="nc" id="L95">        return CurrencyUnit.registeredCurrencies().stream()</span>
+            //we don't support pseudo currencies, as it is very unlikely that payment providers would support them
+<span class="nc bnc" id="L97" title="All 6 branches missed.">            .filter(c -&gt; !c.isPseudoCurrency() &amp;&amp; !CURRENCIES_BLACKLIST.contains(c.getCode()) &amp;&amp; Wrappers.optionally(() -&gt; Currency.getInstance(c.getCode())).isPresent())</span>
+<span class="nc" id="L98">            .map(c -&gt; new CurrencyDescriptor(c.getCode(), c.toCurrency().getDisplayName(Locale.ENGLISH), c.getSymbol(Locale.ENGLISH), c.getDecimalPlaces()))</span>
+<span class="nc" id="L99">            .collect(Collectors.toList());</span>
+    }
+
+    @GetMapping(&quot;/countriesForVat&quot;)
+    public Map&lt;String, String&gt; getCountriesForVat() {
+<span class="nc" id="L104">        return TicketHelper.getLocalizedCountriesForVat(Locale.ENGLISH)</span>
+<span class="nc" id="L105">            .stream()</span>
+<span class="nc" id="L106">            .collect(Collectors.toMap(Pair::getKey, Pair::getValue));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

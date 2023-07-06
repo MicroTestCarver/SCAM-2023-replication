@@ -1,0 +1,32 @@
+<pl.altkom.asc.lab.micronaut.poc.policy.domain.CoverCollection>
+  <policyVersion>
+    <policy>
+      <number>3a2513a8-16b0-449a-b6bf-4d9020c7ef06</number>
+      <agent>
+        <login>admin</login>
+      </agent>
+      <versions>
+        <pl.altkom.asc.lab.micronaut.poc.policy.domain.PolicyVersion reference="../../.."/>
+      </versions>
+    </policy>
+    <versionNumber>1</versionNumber>
+    <productCode>FAI</productCode>
+    <policyHolder>
+      <firstName>Amir</firstName>
+      <lastName>jackson</lastName>
+      <pesel>2977</pesel>
+    </policyHolder>
+    <accountNumber>18066082-6b72-4470-b26e-5b1608a44f59</accountNumber>
+    <coverPeriod>
+      <from>2023-05-25</from>
+      <to>2023-05-31</to>
+    </coverPeriod>
+    <versionValidityPeriod>
+      <from>2023-05-25</from>
+      <to>2023-05-31</to>
+    </versionValidityPeriod>
+    <covers/>
+    <totalPremiumAmount>300.00</totalPremiumAmount>
+  </policyVersion>
+  <covers reference="../policyVersion/covers"/>
+</pl.altkom.asc.lab.micronaut.poc.policy.domain.CoverCollection>

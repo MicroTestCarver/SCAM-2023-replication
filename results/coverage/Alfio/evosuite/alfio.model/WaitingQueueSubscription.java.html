@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WaitingQueueSubscription.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">WaitingQueueSubscription.java</span></div><h1>WaitingQueueSubscription.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import alfio.util.LocaleUtil;
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import lombok.Getter;
+import lombok.ToString;
+
+import java.time.ZonedDateTime;
+import java.util.Locale;
+import java.util.Optional;
+
+@Getter
+@ToString
+public class WaitingQueueSubscription {
+
+<span class="nc" id="L32">    public enum Status {</span>
+<span class="nc" id="L33">        WAITING, PENDING, ACQUIRED, EXPIRED, CANCELLED</span>
+    }
+
+<span class="nc" id="L36">    public enum Type {</span>
+<span class="nc" id="L37">        PRE_SALES, SOLD_OUT</span>
+    }
+
+    private final int id;
+    private final ZonedDateTime creation;
+    private final int eventId;
+    private final Status status;
+    private final String fullName;
+    private final String firstName;
+    private final String lastName;
+    private final String emailAddress;
+    private final String reservationId;
+    private final String userLanguage;
+    private final Integer selectedCategoryId;
+    private final Type subscriptionType;
+
+    public WaitingQueueSubscription(@Column(&quot;id&quot;) int id,
+                                    @Column(&quot;creation&quot;) ZonedDateTime creation,
+                                    @Column(&quot;event_id&quot;) int eventId,
+                                    @Column(&quot;status&quot;) String status,
+                                    @Column(&quot;full_name&quot;) String fullName,
+                                    @Column(&quot;first_name&quot;) String firstName,
+                                    @Column(&quot;last_name&quot;) String lastName,
+                                    @Column(&quot;email_address&quot;) String emailAddress,
+                                    @Column(&quot;ticket_reservation_id&quot;) String reservationId,
+                                    @Column(&quot;user_language&quot;) String userLanguage,
+                                    @Column(&quot;selected_category_id&quot;) Integer selectedCategoryId,
+<span class="nc" id="L64">                                    @Column(&quot;subscription_type&quot;) Type subscriptionType) {</span>
+<span class="nc" id="L65">        this.id = id;</span>
+<span class="nc" id="L66">        this.creation = creation;</span>
+<span class="nc" id="L67">        this.eventId = eventId;</span>
+<span class="nc" id="L68">        this.userLanguage = userLanguage;</span>
+<span class="nc" id="L69">        this.selectedCategoryId = selectedCategoryId;</span>
+<span class="nc" id="L70">        this.subscriptionType = subscriptionType;</span>
+<span class="nc" id="L71">        this.status = Status.valueOf(status);</span>
+<span class="nc" id="L72">        this.fullName = fullName;</span>
+<span class="nc" id="L73">        this.firstName = firstName;</span>
+<span class="nc" id="L74">        this.lastName = lastName;</span>
+<span class="nc" id="L75">        this.reservationId = reservationId;</span>
+<span class="nc" id="L76">        this.emailAddress = emailAddress;</span>
+<span class="nc" id="L77">    }</span>
+
+    public Locale getLocale() {
+<span class="nc" id="L80">        return LocaleUtil.forLanguageTag(userLanguage);</span>
+    }
+
+    public boolean isPreSales() {
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        return Optional.ofNullable(subscriptionType).map(s -&gt; s == Type.PRE_SALES).orElse(false);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

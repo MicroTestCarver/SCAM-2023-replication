@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Product.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">product-service</a> &gt; <a href="index.source.html" class="el_package">pl.altkom.asc.lab.micronaut.poc.product.service.domain</a> &gt; <span class="el_source">Product.java</span></div><h1>Product.java</h1><pre class="source lang-java linenums">package pl.altkom.asc.lab.micronaut.poc.product.service.domain;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonDiscriminator;
+import org.bson.codecs.pojo.annotations.BsonProperty;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+<span class="nc" id="L14">@NoArgsConstructor</span>
+@BsonDiscriminator
+public class Product {
+<span class="fc" id="L17">    private String code;</span>
+<span class="fc" id="L18">    private String name;</span>
+<span class="fc" id="L19">    private String image;</span>
+<span class="fc" id="L20">    private String description;</span>
+<span class="nc" id="L21">    private List&lt;Cover&gt; covers;</span>
+<span class="nc" id="L22">    private List&lt;Question&gt; questions;</span>
+<span class="fc" id="L23">    private int maxNumberOfInsured;</span>
+<span class="fc" id="L24">    private String icon;</span>
+
+    @BsonCreator
+    public Product(
+            @BsonProperty(&quot;code&quot;) String code,
+            @BsonProperty(&quot;name&quot;) String name,
+            @BsonProperty(&quot;image&quot;) String image,
+            @BsonProperty(&quot;description&quot;) String description,
+            @BsonProperty(&quot;covers&quot;) List&lt;Cover&gt; covers,
+            @BsonProperty(&quot;questions&quot;) List&lt;Question&gt; questions,
+            @BsonProperty(&quot;maxNumberOfInsured&quot;) int maxNumberOfInsured,
+<span class="nc" id="L35">            @BsonProperty(&quot;icon&quot;) String icon) {</span>
+<span class="nc" id="L36">        this.code = code;</span>
+<span class="nc" id="L37">        this.name = name;</span>
+<span class="nc" id="L38">        this.image = image;</span>
+<span class="nc" id="L39">        this.description = description;</span>
+<span class="nc" id="L40">        this.covers = covers;</span>
+<span class="nc" id="L41">        this.questions = questions;</span>
+<span class="nc" id="L42">        this.maxNumberOfInsured = maxNumberOfInsured;</span>
+<span class="nc" id="L43">        this.icon = icon;</span>
+<span class="nc" id="L44">    }</span>
+
+<span class="fc" id="L46">    public Product(String code, String name, String image, String description, int maxNumberOfInsured, String icon) {</span>
+<span class="fc" id="L47">        this.code = code;</span>
+<span class="fc" id="L48">        this.name = name;</span>
+<span class="fc" id="L49">        this.image = image;</span>
+<span class="fc" id="L50">        this.description = description;</span>
+<span class="fc" id="L51">        this.maxNumberOfInsured = maxNumberOfInsured;</span>
+<span class="fc" id="L52">        this.covers = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L53">        this.questions = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L54">        this.icon = icon;</span>
+<span class="fc" id="L55">    }</span>
+
+    public void addCover(String code, String name, String description, boolean isOptional, BigDecimal sumInsured) {
+<span class="fc" id="L58">        covers.add(new Cover(code, name, description, isOptional, sumInsured));</span>
+<span class="fc" id="L59">    }</span>
+
+    public void addQuestions(List&lt;Question&gt; questions) {
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        if (this.questions == null) {</span>
+<span class="nc" id="L63">            this.questions = new ArrayList&lt;&gt;();</span>
+        }
+<span class="fc" id="L65">        this.questions.addAll(questions);</span>
+<span class="fc" id="L66">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

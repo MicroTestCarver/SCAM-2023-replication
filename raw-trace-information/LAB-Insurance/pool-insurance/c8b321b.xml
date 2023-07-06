@@ -1,0 +1,23 @@
+<pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.ProductDto>
+  <code>CAR</code>
+  <name>Happy Driver</name>
+  <image>/static/car.jpg</image>
+  <description>Car insurance</description>
+  <covers>
+    <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+      <code>C1</code>
+      <name>Assistance</name>
+      <description></description>
+      <optional>true</optional>
+    </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+  </covers>
+  <questions>
+    <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto>
+      <code>NUM_OF_CLAIM</code>
+      <index>3</index>
+      <text>Number of claims in last 5 years</text>
+    </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto>
+  </questions>
+  <maxNumberOfInsured>1</maxNumberOfInsured>
+  <icon>car</icon>
+</pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.ProductDto>

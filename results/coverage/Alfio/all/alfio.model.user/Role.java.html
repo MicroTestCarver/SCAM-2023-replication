@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Role.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model.user</a> &gt; <span class="el_source">Role.java</span></div><h1>Role.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model.user;
+
+import lombok.Getter;
+
+import java.util.Arrays;
+
+<span class="fc" id="L23">@Getter</span>
+public enum Role {
+<span class="fc" id="L25">    ADMIN(&quot;ROLE_ADMIN&quot;, &quot;Administrator&quot;, RoleTarget.ADMIN),</span>
+<span class="fc" id="L26">    OWNER(&quot;ROLE_OWNER&quot;, &quot;Organization owner&quot;, RoleTarget.USER),</span>
+<span class="fc" id="L27">    SUPERVISOR(&quot;ROLE_SUPERVISOR&quot;, &quot;Check-in supervisor&quot;, RoleTarget.USER),</span>
+<span class="fc" id="L28">    OPERATOR(&quot;ROLE_OPERATOR&quot;, &quot;Check-in operator&quot;, RoleTarget.API_KEY),</span>
+<span class="fc" id="L29">    SPONSOR(&quot;ROLE_SPONSOR&quot;, &quot;Sponsor&quot;, RoleTarget.API_KEY),</span>
+<span class="fc" id="L30">    API_CONSUMER(&quot;ROLE_API_CLIENT&quot;, &quot;API Client&quot;, RoleTarget.API_KEY);</span>
+
+    private final String roleName;
+    private final String description;
+    private final RoleTarget target;
+
+<span class="fc" id="L36">    Role(String roleName, String description, RoleTarget target) {</span>
+<span class="fc" id="L37">        this.roleName = roleName;</span>
+<span class="fc" id="L38">        this.description = description;</span>
+<span class="fc" id="L39">        this.target = target;</span>
+<span class="fc" id="L40">    }</span>
+
+    public static Role fromRoleName(String roleName) {
+<span class="fc" id="L43">        return Arrays.stream(values()).filter(r -&gt; r.getRoleName().equals(roleName)).findFirst().orElse(OPERATOR);</span>
+    }
+
+    public String getRoleName()
+    {
+<span class="fc" id="L48">        return roleName;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

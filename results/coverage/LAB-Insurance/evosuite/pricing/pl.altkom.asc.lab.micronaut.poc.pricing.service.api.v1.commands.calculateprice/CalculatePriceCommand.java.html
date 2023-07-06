@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CalculatePriceCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pricing-service</a> &gt; <a href="index.source.html" class="el_package">pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice</a> &gt; <span class="el_source">CalculatePriceCommand.java</span></div><h1>CalculatePriceCommand.java</h1><pre class="source lang-java linenums">package pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice;
+
+import pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import io.micronaut.core.annotation.Introspected;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Introspected
+@Getter
+<span class="fc" id="L17">@Setter</span>
+<span class="fc" id="L18">@Builder</span>
+<span class="fc" id="L19">@NoArgsConstructor</span>
+<span class="fc" id="L20">@AllArgsConstructor</span>
+public class CalculatePriceCommand {
+<span class="fc" id="L22">    private String productCode;</span>
+<span class="fc" id="L23">    private LocalDate policyFrom;</span>
+<span class="fc" id="L24">    private LocalDate policyTo;</span>
+<span class="fc" id="L25">    private List&lt;String&gt; selectedCovers;</span>
+<span class="fc" id="L26">    private List&lt;QuestionAnswer&gt; answers;</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

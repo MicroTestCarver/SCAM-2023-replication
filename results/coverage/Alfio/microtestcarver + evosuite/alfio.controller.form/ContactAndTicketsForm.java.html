@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ContactAndTicketsForm.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.controller.form</a> &gt; <span class="el_source">ContactAndTicketsForm.java</span></div><h1>ContactAndTicketsForm.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.controller.form;
+
+import alfio.controller.support.CustomBindingResult;
+import alfio.manager.SameCountryValidator;
+import alfio.model.PurchaseContext;
+import alfio.model.PurchaseContext.PurchaseContextType;
+import alfio.model.TicketReservationInvoicingAdditionalInfo.ItalianEInvoicing;
+import alfio.model.result.ValidationResult;
+import alfio.model.result.WarningMessage;
+import alfio.model.system.ConfigurationKeys;
+import alfio.util.ErrorsCode;
+import alfio.util.ItalianTaxIdValidator;
+import alfio.util.Validator;
+import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ValidationUtils;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static alfio.util.ErrorsCode.STEP_2_INVALID_VAT;
+import static alfio.util.ErrorsCode.STEP_2_MISSING_ATTENDEE_DATA;
+
+// step 2 : contact/claim tickets
+//
+@Data
+public class ContactAndTicketsForm implements Serializable {
+
+    private String email;
+    private String fullName;
+    private String firstName;
+    private String lastName;
+    private String billingAddress;
+    private String customerReference;
+
+    private Boolean expressCheckoutRequested;
+    private boolean postponeAssignment = false;
+    private String vatCountryCode;
+    private String vatNr;
+    private boolean invoiceRequested = false;
+    private Map&lt;String, UpdateTicketOwnerForm&gt; tickets = new HashMap&lt;&gt;();
+    //
+    private String billingAddressCompany;
+    private String billingAddressLine1;
+    private String billingAddressLine2;
+    private String billingAddressZip;
+    private String billingAddressCity;
+    private String billingAddressState;
+
+    private Boolean addCompanyBillingDetails;
+    private Boolean skipVatNr;
+    //
+
+    // https://github.com/alfio-event/alf.io/issues/573
+    private String italyEInvoicingFiscalCode;
+    private ItalianEInvoicing.ReferenceType italyEInvoicingReferenceType;
+    private String italyEInvoicingReferenceAddresseeCode;
+    private String italyEInvoicingReferencePEC;
+    private boolean italyEInvoicingSplitPayment;
+    private boolean differentSubscriptionOwner;
+    private UpdateSubscriptionOwnerForm subscriptionOwner;
+
+    //
+
+    private static void rejectIfOverLength(BindingResult bindingResult, String field, String errorCode,
+            String value, int maxLength) {
+<span class="nc bnc" id="L88" title="All 4 branches missed.">        if (value != null &amp;&amp; value.length() &gt; maxLength) {</span>
+<span class="nc" id="L89">            bindingResult.rejectValue(field, errorCode, new Object[] {maxLength}, null);</span>
+        }
+<span class="nc" id="L91">    }</span>
+
+
+
+    public void validate(CustomBindingResult bindingResult, PurchaseContext purchaseContext,
+                         SameCountryValidator vatValidator,
+                         Map&lt;ConfigurationKeys, Boolean&gt; formValidationParameters,
+                         Optional&lt;Validator.TicketFieldsFilterer&gt; ticketFieldsFilterer,
+                         boolean reservationRequiresPayment) {
+
+
+<span class="nc" id="L102">        formalValidation(bindingResult, formValidationParameters.getOrDefault(ConfigurationKeys.ENABLE_ITALY_E_INVOICING, false), reservationRequiresPayment);</span>
+
+<span class="nc" id="L104">        purchaseContext.event().ifPresent(event -&gt; {</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">            if(!postponeAssignment) {</span>
+<span class="nc" id="L106">                Optional&lt;List&lt;ValidationResult&gt;&gt; validationResults = Optional.ofNullable(tickets)</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">                    .filter(m -&gt; !m.isEmpty())</span>
+<span class="nc" id="L108">                    .map(m -&gt; m.entrySet().stream().map(e -&gt; {</span>
+<span class="nc" id="L109">                        var filteredForTicket = ticketFieldsFilterer.orElseThrow().getFieldsForTicket(e.getKey());</span>
+<span class="nc" id="L110">                        return Validator.validateTicketAssignment(e.getValue(), filteredForTicket, Optional.of(bindingResult), event, &quot;tickets[&quot; + e.getKey() + &quot;]&quot;, vatValidator);</span>
+                    }))
+<span class="nc" id="L112">                    .map(s -&gt; s.collect(Collectors.toList()));</span>
+
+<span class="nc" id="L114">                boolean success = validationResults</span>
+<span class="nc" id="L115">                    .filter(l -&gt; l.stream().allMatch(ValidationResult::isSuccess))</span>
+<span class="nc" id="L116">                    .isPresent();</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">                if(!success) {</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">                    String errorCode = validationResults.filter(this::containsVatValidationError).isPresent() ? STEP_2_INVALID_VAT : STEP_2_MISSING_ATTENDEE_DATA;</span>
+<span class="nc" id="L119">                    bindingResult.reject(errorCode);</span>
+                }
+            }
+<span class="nc" id="L122">        });</span>
+
+<span class="nc bnc" id="L124" title="All 4 branches missed.">        if(purchaseContext.ofType(PurchaseContextType.subscription) &amp;&amp; differentSubscriptionOwner) {</span>
+<span class="nc" id="L125">            ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult, &quot;subscriptionOwner.firstName&quot;, ErrorsCode.STEP_2_EMPTY_FIRSTNAME);</span>
+<span class="nc" id="L126">            ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult, &quot;subscriptionOwner.lastName&quot;, ErrorsCode.STEP_2_EMPTY_LASTNAME);</span>
+<span class="nc" id="L127">            ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult, &quot;subscriptionOwner.email&quot;, ErrorsCode.STEP_2_EMPTY_EMAIL);</span>
+        }
+<span class="nc" id="L129">    }</span>
+
+    public void formalValidation(CustomBindingResult bindingResult,
+                                 boolean italianEInvoicingEnabled,
+                                 boolean reservationRequiresPayment) {
+<span class="nc" id="L134">        email = StringUtils.trim(email);</span>
+
+<span class="nc" id="L136">        fullName = StringUtils.trim(fullName);</span>
+<span class="nc" id="L137">        firstName = StringUtils.trim(firstName);</span>
+<span class="nc" id="L138">        lastName = StringUtils.trim(lastName);</span>
+
+<span class="nc" id="L140">        billingAddress = StringUtils.trim(billingAddress);</span>
+
+<span class="nc" id="L142">        ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult, &quot;email&quot;, ErrorsCode.STEP_2_EMPTY_EMAIL);</span>
+<span class="nc" id="L143">        rejectIfOverLength(bindingResult, &quot;email&quot;, ErrorsCode.STEP_2_MAX_LENGTH_EMAIL, email, 255);</span>
+
+
+<span class="nc" id="L146">        ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult, &quot;firstName&quot;, ErrorsCode.STEP_2_EMPTY_FIRSTNAME);</span>
+<span class="nc" id="L147">        rejectIfOverLength(bindingResult, &quot;firstName&quot;, ErrorsCode.STEP_2_MAX_LENGTH_FIRSTNAME, fullName, 255);</span>
+<span class="nc" id="L148">        ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult, &quot;lastName&quot;, ErrorsCode.STEP_2_EMPTY_LASTNAME);</span>
+<span class="nc" id="L149">        rejectIfOverLength(bindingResult, &quot;lastName&quot;, ErrorsCode.STEP_2_MAX_LENGTH_LASTNAME, fullName, 255);</span>
+
+
+<span class="nc bnc" id="L152" title="All 2 branches missed.">        if(invoiceRequested) {</span>
+<span class="nc" id="L153">            ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult, &quot;billingAddressLine1&quot;, ErrorsCode.EMPTY_FIELD);</span>
+<span class="nc" id="L154">            rejectIfOverLength(bindingResult, &quot;billingAddressLine1&quot;, &quot;error.tooLong&quot;, billingAddressLine1, 256);</span>
+
+<span class="nc" id="L156">            rejectIfOverLength(bindingResult, &quot;billingAddressLine2&quot;, &quot;error.tooLong&quot;, billingAddressLine2, 256);</span>
+
+<span class="nc" id="L158">            ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult, &quot;billingAddressZip&quot;, ErrorsCode.EMPTY_FIELD);</span>
+<span class="nc" id="L159">            rejectIfOverLength(bindingResult, &quot;billingAddressZip&quot;, &quot;error.tooLong&quot;, billingAddressZip, 51);</span>
+
+<span class="nc" id="L161">            ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult, &quot;billingAddressCity&quot;, ErrorsCode.EMPTY_FIELD);</span>
+<span class="nc" id="L162">            rejectIfOverLength(bindingResult, &quot;billingAddressCity&quot;, &quot;error.tooLong&quot;, billingAddressCity, 256);</span>
+
+<span class="nc" id="L164">            ValidationUtils.rejectIfEmpty(bindingResult, &quot;vatCountryCode&quot;, ErrorsCode.EMPTY_FIELD);</span>
+
+<span class="nc bnc" id="L166" title="All 4 branches missed.">            if(StringUtils.trimToNull(billingAddressCompany) != null &amp;&amp; !canSkipVatNrCheck()) {</span>
+<span class="nc" id="L167">                ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult, &quot;vatNr&quot;, ErrorsCode.EMPTY_FIELD);</span>
+            }
+
+        }
+
+        // https://github.com/alfio-event/alf.io/issues/573
+        // only for IT and only if enabled!
+<span class="nc bnc" id="L174" title="All 6 branches missed.">        if (italianEInvoicingEnabled &amp;&amp; StringUtils.isNotEmpty(vatCountryCode) &amp;&amp; reservationRequiresPayment) {</span>
+            // mandatory
+<span class="nc" id="L176">            ValidationUtils.rejectIfEmpty(bindingResult, &quot;italyEInvoicingFiscalCode&quot;, ErrorsCode.EMPTY_FIELD);</span>
+<span class="nc" id="L177">            rejectIfOverLength(bindingResult, &quot;italyEInvoicingFiscalCode&quot;, &quot;error.tooLong&quot;, italyEInvoicingFiscalCode, 28);</span>
+        }
+
+<span class="nc bnc" id="L180" title="All 6 branches missed.">        if (italianEInvoicingEnabled &amp;&amp; &quot;IT&quot;.equals(vatCountryCode) &amp;&amp; reservationRequiresPayment) {</span>
+            //
+<span class="nc" id="L182">            ValidationUtils.rejectIfEmpty(bindingResult, &quot;italyEInvoicingReferenceType&quot;, &quot;error.italyEInvoicingReferenceTypeSelectValue&quot;);</span>
+            //
+<span class="nc bnc" id="L184" title="All 2 branches missed.">            if (ItalianEInvoicing.ReferenceType.ADDRESSEE_CODE == italyEInvoicingReferenceType) {</span>
+<span class="nc" id="L185">                ValidationUtils.rejectIfEmpty(bindingResult, &quot;italyEInvoicingReferenceAddresseeCode&quot;, ErrorsCode.EMPTY_FIELD);</span>
+<span class="nc" id="L186">                italyEInvoicingReferenceAddresseeCode = StringUtils.trim(italyEInvoicingReferenceAddresseeCode);</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">                if (italyEInvoicingReferenceAddresseeCode != null) {</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">                    if (italyEInvoicingReferenceAddresseeCode.length() != 7) {</span>
+<span class="nc" id="L189">                        bindingResult.rejectValue(&quot;italyEInvoicingReferenceAddresseeCode&quot;, &quot;error.lengthMustBe7&quot;);</span>
+                    }
+
+<span class="nc bnc" id="L192" title="All 2 branches missed.">                    if (!StringUtils.isAlphanumeric(italyEInvoicingReferenceAddresseeCode)) {</span>
+<span class="nc" id="L193">                        bindingResult.rejectValue(&quot;italyEInvoicingReferenceAddresseeCode&quot;, &quot;error.alphanumeric&quot;);</span>
+                    }
+                }
+            }
+<span class="nc bnc" id="L197" title="All 2 branches missed.">            if (ItalianEInvoicing.ReferenceType.PEC == italyEInvoicingReferenceType) {</span>
+<span class="nc" id="L198">                ValidationUtils.rejectIfEmpty(bindingResult, &quot;italyEInvoicingReferencePEC&quot;, ErrorsCode.EMPTY_FIELD);</span>
+            }
+
+<span class="nc bnc" id="L201" title="All 4 branches missed.">            if(billingAddressState == null || billingAddressState.strip().length() != 2) {</span>
+<span class="nc" id="L202">                bindingResult.rejectValue(&quot;billingAddressState&quot;, &quot;error.length&quot;, new Object[] { 2 }, null);</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">            } else if(!StringUtils.isAlpha(billingAddressState)) {</span>
+<span class="nc" id="L204">                bindingResult.rejectValue(&quot;billingAddressState&quot;, &quot;error.restrictedValue&quot;);</span>
+            }
+
+<span class="nc bnc" id="L207" title="All 4 branches missed.">            if(StringUtils.isNotEmpty(vatNr) &amp;&amp; !ItalianTaxIdValidator.validateVatId(vatNr)) {</span>
+<span class="nc" id="L208">                bindingResult.rejectValue(&quot;vatNr&quot;, &quot;error.STEP_2_INVALID_VAT&quot;);</span>
+            }
+
+<span class="nc" id="L211">            boolean fiscalCodeValid = ItalianTaxIdValidator.validateFiscalCode(italyEInvoicingFiscalCode);</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">            if(!fiscalCodeValid) {</span>
+<span class="nc" id="L213">                bindingResult.rejectValue(&quot;italyEInvoicingFiscalCode&quot;, &quot;error.restrictedValue&quot;);</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">            } else if(!ItalianTaxIdValidator.fiscalCodeMatchesWithName(firstName, lastName, italyEInvoicingFiscalCode)) {</span>
+<span class="nc" id="L215">                bindingResult.addWarning(&quot;warning.fiscal-code-name-mismatch&quot;);</span>
+            }
+
+<span class="nc bnc" id="L218" title="All 2 branches missed.">            if(StringUtils.length(StringUtils.trimToNull(billingAddressZip)) != 5) {</span>
+<span class="nc" id="L219">                bindingResult.rejectValue(&quot;billingAddressZip&quot;, &quot;error.length&quot;, new Object[] { 5 }, null);</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">            } else if(!StringUtils.isNumeric(billingAddressZip)) {</span>
+<span class="nc" id="L221">                bindingResult.rejectValue(&quot;billingAddressZip&quot;, &quot;error.restrictedValue&quot;);</span>
+            }
+
+        }
+
+<span class="nc bnc" id="L226" title="All 4 branches missed.">        if (email != null &amp;&amp; !bindingResult.hasFieldErrors(&quot;email&quot;)) {</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">            if (!Validator.isEmailValid(email)) {</span>
+<span class="nc" id="L228">                bindingResult.rejectValue(&quot;email&quot;, ErrorsCode.STEP_2_INVALID_EMAIL, new Object[] {}, null);</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">            } else if (!Validator.isCanonicalMailAddress(email)) {</span>
+<span class="nc" id="L230">                bindingResult.addWarning(new WarningMessage(ErrorsCode.STEP_2_EMAIL_TYPO, List.of(email)));</span>
+            }
+        }
+<span class="nc" id="L233">    }</span>
+
+    private boolean containsVatValidationError(List&lt;ValidationResult&gt; l) {
+<span class="nc bnc" id="L236" title="All 4 branches missed.">        return l.stream().anyMatch(v -&gt; !v.isSuccess() &amp;&amp; v.getErrorDescriptors().stream().anyMatch(ed -&gt; ed.getCode().equals(STEP_2_INVALID_VAT)));</span>
+    }
+
+    public boolean canSkipVatNrCheck() {
+<span class="nc" id="L240">        return Boolean.TRUE.equals(skipVatNr);</span>
+    }
+
+    public boolean isBusiness() {
+<span class="nc bnc" id="L244" title="All 6 branches missed.">        return getAddCompanyBillingDetails() &amp;&amp; !canSkipVatNrCheck() &amp;&amp; invoiceRequested;</span>
+    }
+
+    public boolean getAddCompanyBillingDetails() {
+<span class="nc" id="L248">        return Boolean.TRUE.equals(addCompanyBillingDetails);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,3 @@
+(.*)(EnhancerBySpringCGLIB)(.*)
+(.*)(HibernateProxy)(.*)
+(.*)(FastClassBySpringCGLIB)(.*)

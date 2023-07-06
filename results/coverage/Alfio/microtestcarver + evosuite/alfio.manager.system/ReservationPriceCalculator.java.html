@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReservationPriceCalculator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.manager.system</a> &gt; <span class="el_source">ReservationPriceCalculator.java</span></div><h1>ReservationPriceCalculator.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.manager.system;
+
+import alfio.model.*;
+import alfio.model.decorator.AdditionalServiceItemPriceContainer;
+import alfio.model.decorator.SubscriptionPriceContainer;
+import alfio.model.decorator.TicketPriceContainer;
+import alfio.model.subscription.Subscription;
+import alfio.util.MonetaryUtil;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.ObjectUtils.firstNonNull;
+
+@RequiredArgsConstructor
+public class ReservationPriceCalculator implements PriceContainer {
+    final TicketReservation reservation;
+    final PromoCodeDiscount discount;
+    final List&lt;Ticket&gt; tickets;
+    final List&lt;AdditionalServiceItem&gt; additionalServiceItems;
+    final List&lt;AdditionalService&gt; additionalServices;
+    final PurchaseContext purchaseContext;
+    private final List&lt;Subscription&gt; subscriptions;
+    private final Optional&lt;Subscription&gt; appliedSubscription;
+
+    @Override
+    public int getSrcPriceCts() {
+<span class="nc" id="L49">        return tickets.stream().mapToInt(this::getTicketSrcPriceCts).sum() +</span>
+<span class="nc" id="L50">            additionalServiceItems.stream().mapToInt(AdditionalServiceItem::getSrcPriceCts).sum() +</span>
+<span class="nc" id="L51">            subscriptions.stream().mapToInt(Subscription::getSrcPriceCts).sum();</span>
+    }
+
+    @Override
+    public BigDecimal getAppliedDiscount() {
+
+<span class="nc" id="L57">        int subscriptionDiscount = appliedSubscription</span>
+<span class="nc" id="L58">            .map(subscription -&gt; tickets.stream().filter(t -&gt; Objects.equals(t.getSubscriptionId(), subscription.getId())).mapToInt(Ticket::getSrcPriceCts).sum())</span>
+<span class="nc" id="L59">            .orElse(0);</span>
+
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        if(discount != null) {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            if (discount.getDiscountType() == PromoCodeDiscount.DiscountType.FIXED_AMOUNT_RESERVATION) {</span>
+<span class="nc" id="L63">                return MonetaryUtil.centsToUnit(discount.getDiscountAmount() + subscriptionDiscount, reservation.getCurrencyCode());</span>
+            }
+<span class="nc" id="L65">            return MonetaryUtil.centsToUnit(tickets.stream().mapToInt(Ticket::getDiscountCts).sum() +</span>
+<span class="nc" id="L66">                    additionalServiceItems.stream().mapToInt(AdditionalServiceItem::getDiscountCts).sum() +</span>
+<span class="nc" id="L67">                    subscriptions.stream().mapToInt(Subscription::getDiscountCts).sum() + subscriptionDiscount, reservation.getCurrencyCode());</span>
+        }
+<span class="nc" id="L69">        return MonetaryUtil.centsToUnit(subscriptionDiscount, reservation.getCurrencyCode());</span>
+    }
+
+    @Override
+    public String getCurrencyCode() {
+<span class="nc" id="L74">        return purchaseContext.getCurrency();</span>
+    }
+
+    @Override
+    public Optional&lt;BigDecimal&gt; getOptionalVatPercentage() {
+<span class="nc" id="L79">        return Optional.ofNullable(firstNonNull(reservation.getUsedVatPercent(), purchaseContext.getVat()));</span>
+    }
+
+    @Override
+    public VatStatus getVatStatus() {
+<span class="nc" id="L84">        return firstNonNull(reservation.getVatStatus(), purchaseContext.getVatStatus());</span>
+    }
+
+    @Override
+    public Optional&lt;PromoCodeDiscount&gt; getDiscount() {
+<span class="nc" id="L89">        return Optional.ofNullable(discount);</span>
+    }
+
+    @Override
+    public BigDecimal getTaxablePrice() {
+<span class="nc" id="L94">        var ticketsTaxablePrice = tickets.stream()</span>
+<span class="nc" id="L95">            .map(t -&gt; TicketPriceContainer.from(t, reservation.getVatStatus(), getVatPercentageOrZero(), purchaseContext.getVatStatus(), discount).getTaxablePrice())</span>
+<span class="nc" id="L96">            .reduce(BigDecimal.ZERO, BigDecimal::add);</span>
+<span class="nc" id="L97">        var additionalServiceTaxablePrice = additionalServiceItems.stream()</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">            .map(asi -&gt; AdditionalServiceItemPriceContainer.from(asi, additionalServices.stream().filter(as -&gt; as.getId() == asi.getAdditionalServiceId()).findFirst().orElseThrow(), purchaseContext, discount).getTaxablePrice())</span>
+<span class="nc" id="L99">            .reduce(BigDecimal.ZERO, BigDecimal::add);</span>
+<span class="nc" id="L100">        var subscriptionsPrice = subscriptions.stream().map(s -&gt; SubscriptionPriceContainer.from(s, purchaseContext, discount).getTaxablePrice())</span>
+<span class="nc" id="L101">            .reduce(BigDecimal.ZERO, BigDecimal::add);</span>
+<span class="nc" id="L102">        var totalTicketsAndAdditional = ticketsTaxablePrice.add(additionalServiceTaxablePrice).add(subscriptionsPrice);</span>
+<span class="nc bnc" id="L103" title="All 4 branches missed.">        if(discount != null &amp;&amp; discount.getDiscountType() != PromoCodeDiscount.DiscountType.FIXED_AMOUNT_RESERVATION) {</span>
+            // no need to add the discounted price here, since the single items are already taking it into account
+<span class="nc" id="L105">            return totalTicketsAndAdditional;</span>
+        }
+<span class="nc" id="L107">        return totalTicketsAndAdditional.subtract(getAppliedDiscount());</span>
+    }
+
+    public static ReservationPriceCalculator from(TicketReservation reservation, PromoCodeDiscount discount, List&lt;Ticket&gt; tickets, PurchaseContext purchaseContext, List&lt;Pair&lt;AdditionalService, List&lt;AdditionalServiceItem&gt;&gt;&gt; additionalServiceItemsByAdditionalService,
+                                                  List&lt;Subscription&gt; subscriptions, Optional&lt;Subscription&gt; appliedSubscription) {
+<span class="nc" id="L112">        var additionalServiceItems = additionalServiceItemsByAdditionalService.stream().flatMap(p -&gt; p.getRight().stream()).collect(Collectors.toList());</span>
+<span class="nc" id="L113">        var additionalServices = additionalServiceItemsByAdditionalService.stream().map(Pair::getKey).collect(Collectors.toList());</span>
+<span class="nc" id="L114">        return new ReservationPriceCalculator(reservation, discount, tickets, additionalServiceItems, additionalServices, purchaseContext, subscriptions, appliedSubscription);</span>
+    }
+
+    private int getTicketSrcPriceCts(Ticket t) {
+<span class="nc bnc" id="L118" title="All 4 branches missed.">        if(t.getVatStatus() == VatStatus.INCLUDED_EXEMPT || t.getVatStatus() == VatStatus.NOT_INCLUDED_EXEMPT) {</span>
+<span class="nc" id="L119">            return t.getSrcPriceCts() - Math.abs(t.getVatCts()); // VAT can be negative in some cases</span>
+        }
+<span class="nc" id="L121">        return t.getSrcPriceCts();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

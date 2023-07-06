@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SubscriptionPriceContainer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model.subscription</a> &gt; <span class="el_source">SubscriptionPriceContainer.java</span></div><h1>SubscriptionPriceContainer.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model.subscription;
+
+import alfio.model.PriceContainer;
+import alfio.model.PromoCodeDiscount;
+import lombok.AllArgsConstructor;
+
+import java.math.BigDecimal;
+import java.util.Optional;
+
+import static alfio.util.MonetaryUtil.centsToUnit;
+import static alfio.util.MonetaryUtil.unitToCents;
+
+@AllArgsConstructor
+public class SubscriptionPriceContainer implements PriceContainer {
+
+    private final Subscription subscription;
+    private final PromoCodeDiscount promoCodeDiscount;
+    private final SubscriptionDescriptor descriptor;
+
+
+    @Override
+    public int getSrcPriceCts() {
+<span class="nc" id="L39">        return subscription.getSrcPriceCts();</span>
+    }
+
+    @Override
+    public String getCurrencyCode() {
+<span class="nc" id="L44">        return subscription.getCurrency();</span>
+    }
+
+    @Override
+    public Optional&lt;BigDecimal&gt; getOptionalVatPercentage() {
+<span class="nc" id="L49">        return Optional.ofNullable(descriptor.getVat());</span>
+    }
+
+    @Override
+    public VatStatus getVatStatus() {
+<span class="nc" id="L54">        return descriptor.getVatStatus();</span>
+    }
+
+    @Override
+    public Optional&lt;PromoCodeDiscount&gt; getDiscount() {
+<span class="nc" id="L59">        return Optional.ofNullable(promoCodeDiscount);</span>
+    }
+
+    // FIXME remove once merged, as it has been implemented in Master
+    public BigDecimal getNetPrice() {
+<span class="nc" id="L64">        var vatStatus = getVatStatus();</span>
+<span class="nc" id="L65">        var currencyCode = getCurrencyCode();</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if(vatStatus == VatStatus.NOT_INCLUDED_EXEMPT) {</span>
+<span class="nc" id="L67">            return centsToUnit(getSrcPriceCts(), currencyCode);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        } else if(vatStatus == VatStatus.INCLUDED_EXEMPT) {</span>
+<span class="nc" id="L69">            var rawVat = vatStatus.extractRawVAT(centsToUnit(getSrcPriceCts(), getCurrencyCode()), getVatPercentageOrZero());</span>
+<span class="nc" id="L70">            return centsToUnit(getSrcPriceCts(), currencyCode).add(rawVat);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        } else if(vatStatus == VatStatus.INCLUDED) {</span>
+<span class="nc" id="L72">            var rawVat = vatStatus.extractRawVAT(centsToUnit(getSrcPriceCts(), getCurrencyCode()), getVatPercentageOrZero());</span>
+<span class="nc" id="L73">            return centsToUnit(getSrcPriceCts(), currencyCode).subtract(rawVat);</span>
+        } else {
+<span class="nc" id="L75">            return centsToUnit(getSrcPriceCts(), currencyCode);</span>
+        }
+    }
+
+    public int getSummarySrcPriceCts() {
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if(VatStatus.isVatExempt(getVatStatus())) {</span>
+<span class="nc" id="L81">            return unitToCents(getFinalPrice(), getCurrencyCode());</span>
+        }
+<span class="nc" id="L83">        return getSrcPriceCts();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

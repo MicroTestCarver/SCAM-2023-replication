@@ -1,0 +1,35 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+
+apply plugin: 'java'
+
+compileTestJava {
+    sourceCompatibility = 8
+    targetCompatibility = 8
+}
+
+task buildEventsJar(type: Jar) {
+    inputs.files compileJava
+    from files("${project.buildDir}/classes/java/main")
+    archiveBaseName = "events"
+    archiveVersion = ""
+    archiveClassifier = ""
+}
+
+test {
+    onlyIf {
+        project.hasProperty("integration") &&
+        new File("${projectDir}/../btrace-dist/build/resources/main/v${project.version}/libs/btrace-client.jar").exists()
+    }
+    dependsOn cleanTest, buildEventsJar
+
+    testLogging.showStandardStreams = true
+
+    def props = new Properties()
+    props.load(Files.newInputStream(Paths.get(System.getenv("JAVA_HOME"), "release")))
+    if (props.getProperty("JAVA_VERSION")?.contains("1.8")) {
+        jvmArgs "-Dproject.dir=${projectDir}", "-Dproject.version=${project.version}", "-Dbtrace.libs=${projectDir}/../btrace-dist/build/resources/main/v${project.version}/libs/"
+    } else {
+        jvmArgs "-Dproject.dir=${projectDir}", "-Dbtrace.libs=${projectDir}/../btrace-dist/build/resources/main/v${project.version}/libs/", '-XX:+IgnoreUnrecognizedVMOptions', '--add-opens', 'java.base/jdk.internal.reflect=ALL-UNNAMED', '--add-exports', 'java.base/jdk.internal.reflect=ALL-UNNAMED', "-Dproject.version=${project.version}"
+    }
+}

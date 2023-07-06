@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicketCategory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">TicketCategory.java</span></div><h1>TicketCategory.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import alfio.util.MonetaryUtil;
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import org.apache.commons.lang3.builder.CompareToBuilder;
+
+import java.math.BigDecimal;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Comparator;
+
+@Getter
+public class TicketCategory {
+
+<span class="pc" id="L33">    public static final Comparator&lt;TicketCategory&gt; COMPARATOR = (tc1, tc2) -&gt; new CompareToBuilder().append(tc1.utcInception, tc2.utcInception).append(tc1.utcExpiration, tc2.utcExpiration).toComparison();</span>
+
+<span class="nc" id="L35">    public enum Status {</span>
+<span class="nc" id="L36">        ACTIVE, NOT_ACTIVE</span>
+    }
+
+    /**
+     * Defines the check-in strategy that must be adopted for this TicketCategory
+     */
+<span class="nc" id="L42">    public enum TicketCheckInStrategy {</span>
+        /**
+         * Default, retro-compatible. Attendees can check-in only once, using their ticket
+         */
+<span class="nc" id="L46">        ONCE_PER_EVENT,</span>
+        /**
+         * Extends ONCE_PER_EVENT by adding the possibility to re-enter the event by using the printed badge.
+         * If an attendee tries to enter more than once in a single day, the operator will receive a warning.
+         * ** IMPORTANT **:
+         * additional check-ins can be done only using the printed badge.
+         * This ensures that a badge is printed only once
+         */
+<span class="nc" id="L54">        ONCE_PER_DAY</span>
+    }
+
+    /**
+     * Defines the category access type. It will impact how tickets are generated/sent/checked-in.
+     */
+<span class="nc" id="L60">    public enum TicketAccessType {</span>
+        /**
+         * Inherit the access type from the Event format (default)
+         */
+<span class="nc" id="L64">        INHERIT,</span>
+
+        /**
+         * Attendees of this category will receive a ticket and Wallet Pass, and will be allowed to access
+         * the event venue.
+         */
+<span class="nc" id="L70">        IN_PERSON,</span>
+
+        /**
+         * Attendees of this category can only access the event online.
+         */
+<span class="nc" id="L75">        ONLINE</span>
+    }
+
+    private final int id;
+    private final ZonedDateTime utcInception;
+    private final ZonedDateTime utcExpiration;
+    private final int maxTickets;
+    private final String name;
+    private final boolean accessRestricted;
+    private final Status status;
+    private final int eventId;
+    private final boolean bounded;
+    private final int srcPriceCts;
+    private final String code;
+    private final ZonedDateTime validCheckInFrom;
+    private final ZonedDateTime validCheckInTo;
+    private final ZonedDateTime ticketValidityStart;
+    private final ZonedDateTime ticketValidityEnd;
+    private final String currencyCode;
+    private final int ordinal;
+    private final TicketCheckInStrategy ticketCheckInStrategy;
+    private final TicketAccessType ticketAccessType;
+
+
+    public TicketCategory(@JsonProperty(&quot;id&quot;) @Column(&quot;id&quot;) int id,
+                          @JsonProperty(&quot;utcInception&quot;) @Column(&quot;inception&quot;) ZonedDateTime utcInception,
+                          @JsonProperty(&quot;utcExpiration&quot;) @Column(&quot;expiration&quot;) ZonedDateTime utcExpiration,
+                          @JsonProperty(&quot;maxTickets&quot;) @Column(&quot;max_tickets&quot;) int maxTickets,
+                          @JsonProperty(&quot;name&quot;) @Column(&quot;name&quot;) String name,
+                          @JsonProperty(&quot;accessRestricted&quot;) @Column(&quot;access_restricted&quot;) boolean accessRestricted,
+                          @JsonProperty(&quot;status&quot;) @Column(&quot;tc_status&quot;) Status status,
+                          @JsonProperty(&quot;eventId&quot;) @Column(&quot;event_id&quot;) int eventId,
+                          @JsonProperty(&quot;bounded&quot;) @Column(&quot;bounded&quot;) boolean bounded,
+                          @JsonProperty(&quot;srcPriceCts&quot;) @Column(&quot;src_price_cts&quot;) int srcPriceCts,
+                          @JsonProperty(&quot;code&quot;) @Column(&quot;category_code&quot;) String code,
+                          @JsonProperty(&quot;validCheckInFrom&quot;) @Column(&quot;valid_checkin_from&quot;) ZonedDateTime validCheckInFrom,
+                          @JsonProperty(&quot;validCheckInTo&quot;) @Column(&quot;valid_checkin_to&quot;) ZonedDateTime validCheckInTo,
+                          @JsonProperty(&quot;ticketValidityStart&quot;) @Column(&quot;ticket_validity_start&quot;) ZonedDateTime ticketValidityStart,
+                          @JsonProperty(&quot;ticketValidityEnd&quot;) @Column(&quot;ticket_validity_end&quot;) ZonedDateTime ticketValidityEnd,
+                          @JsonProperty(&quot;currencyCode&quot;) @Column(&quot;currency_code&quot;) String currencyCode,
+                          @JsonProperty(&quot;ordinal&quot;) @Column(&quot;ordinal&quot;) Integer ordinal,
+                          @JsonProperty(&quot;ticketCheckInStrategy&quot;) @Column(&quot;ticket_checkin_strategy&quot;) TicketCheckInStrategy ticketCheckInStrategy,
+<span class="nc" id="L117">                          @JsonProperty(&quot;ticketAccessType&quot;) @Column(&quot;ticket_access_type&quot;) TicketAccessType ticketAccessType) {</span>
+<span class="nc" id="L118">        this.id = id;</span>
+<span class="nc" id="L119">        this.utcInception = utcInception;</span>
+<span class="nc" id="L120">        this.utcExpiration = utcExpiration;</span>
+<span class="nc" id="L121">        this.maxTickets = maxTickets;</span>
+<span class="nc" id="L122">        this.name = name;</span>
+<span class="nc" id="L123">        this.accessRestricted = accessRestricted;</span>
+<span class="nc" id="L124">        this.status = status;</span>
+<span class="nc" id="L125">        this.eventId = eventId;</span>
+<span class="nc" id="L126">        this.bounded = bounded;</span>
+<span class="nc" id="L127">        this.srcPriceCts = srcPriceCts;</span>
+<span class="nc" id="L128">        this.code = code;</span>
+<span class="nc" id="L129">        this.validCheckInFrom = validCheckInFrom;</span>
+<span class="nc" id="L130">        this.validCheckInTo = validCheckInTo;</span>
+<span class="nc" id="L131">        this.ticketValidityStart = ticketValidityStart;</span>
+<span class="nc" id="L132">        this.ticketValidityEnd = ticketValidityEnd;</span>
+<span class="nc" id="L133">        this.currencyCode = currencyCode;</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">        this.ordinal = ordinal != null ? ordinal : 0;</span>
+<span class="nc" id="L135">        this.ticketCheckInStrategy = ticketCheckInStrategy;</span>
+<span class="nc" id="L136">        this.ticketAccessType = ticketAccessType;</span>
+<span class="nc" id="L137">    }</span>
+
+    public BigDecimal getPrice() {
+<span class="nc" id="L140">        return MonetaryUtil.centsToUnit(srcPriceCts, currencyCode);</span>
+    }
+    
+    public boolean getFree() {
+<span class="nc bnc" id="L144" title="All 2 branches missed.">        return srcPriceCts == 0;</span>
+    }
+
+    public ZonedDateTime getInception(ZoneId zoneId) {
+<span class="nc" id="L148">        return utcInception.withZoneSameInstant(zoneId);</span>
+    }
+
+    public ZonedDateTime getExpiration(ZoneId zoneId) {
+<span class="nc" id="L152">        return utcExpiration.withZoneSameInstant(zoneId);</span>
+    }
+
+    public ZonedDateTime getValidCheckInFrom(ZoneId zoneId) {
+<span class="nc bnc" id="L156" title="All 2 branches missed.">        return validCheckInFrom == null ? null : validCheckInFrom.withZoneSameInstant(zoneId);</span>
+    }
+
+    public ZonedDateTime getValidCheckInTo(ZoneId zoneId) {
+<span class="nc bnc" id="L160" title="All 2 branches missed.">        return validCheckInTo == null ? null : validCheckInTo.withZoneSameInstant(zoneId);</span>
+    }
+
+    public ZonedDateTime getTicketValidityStart(ZoneId zoneId) {
+<span class="nc bnc" id="L164" title="All 2 branches missed.">        return ticketValidityStart == null ? null : ticketValidityStart.withZoneSameInstant(zoneId);</span>
+    }
+
+    public ZonedDateTime getTicketValidityEnd(ZoneId zoneId) {
+<span class="nc bnc" id="L168" title="All 2 branches missed.">        return ticketValidityEnd == null ? null : ticketValidityEnd.withZoneSameInstant(zoneId);</span>
+    }
+
+    public boolean hasValidCheckIn(ZonedDateTime now, ZoneId eventZoneId) {
+        // check from boundary -&gt; from cannot be after now
+        // check to boundary -&gt; to cannot be before now
+<span class="nc bnc" id="L174" title="All 8 branches missed.">        return (validCheckInFrom == null || !getValidCheckInFrom(eventZoneId).isAfter(now)) &amp;&amp; (validCheckInTo == null || !getValidCheckInTo(eventZoneId).isBefore(now));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

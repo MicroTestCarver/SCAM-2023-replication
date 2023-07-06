@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UsersApiController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.controller.api.admin</a> &gt; <span class="el_source">UsersApiController.java</span></div><h1>UsersApiController.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.controller.api.admin;
+
+import alfio.config.authentication.support.AuthenticationConstants;
+import alfio.manager.system.ConfigurationManager;
+import alfio.manager.user.UserManager;
+import alfio.model.modification.OrganizationModification;
+import alfio.model.modification.UserModification;
+import alfio.model.result.ValidationResult;
+import alfio.model.system.ConfigurationKeys;
+import alfio.model.user.*;
+import alfio.util.ImageUtil;
+import alfio.util.Json;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StreamUtils;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.security.Principal;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
+import static org.apache.commons.lang3.StringUtils.defaultString;
+import static org.apache.commons.lang3.StringUtils.trimToNull;
+
+@RestController
+@RequestMapping(&quot;/admin/api&quot;)
+@Log4j2
+@AllArgsConstructor
+public class UsersApiController {
+
+    private static final String OK = &quot;OK&quot;;
+    private final UserManager userManager;
+    private final ConfigurationManager configurationManager;
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public String unhandledException(Exception e) {
+        log.error(&quot;unhandled exception&quot;, e);
+        return e != null ? e.getMessage() : &quot;Unexpected error&quot;;
+    }
+
+    @GetMapping(&quot;/roles&quot;)
+    public Collection&lt;RoleDescriptor&gt; getAllRoles(Principal principal) {
+        return userManager.getAvailableRoles(principal.getName()).stream().map(RoleDescriptor::new).collect(Collectors.toList());
+    }
+
+    /**
+     * This endpoint is intended only for external use. If a user is registered as &quot;sponsor&quot;, then the answer will be &quot;SPONSOR&quot;, otherwise &quot;OPERATOR&quot;.
+     * @return &quot;SPONSOR&quot; or &quot;OPERATOR&quot;, depending on current user's privileges.
+     */
+    @GetMapping(&quot;/user-type&quot;)
+    public String getLoggedUserType() {
+        return SecurityContextHolder.getContext()
+            .getAuthentication()
+            .getAuthorities()
+            .stream()
+            .map(GrantedAuthority::getAuthority)
+            .map(s -&gt; StringUtils.substringAfter(s, &quot;ROLE_&quot;))
+            .filter(AuthenticationConstants.SPONSOR::equals)
+            .findFirst()
+            .orElse(AuthenticationConstants.OPERATOR);
+    }
+
+    @GetMapping(&quot;/user/details&quot;)
+    public Map&lt;String, String&gt; retrieveDetails(Principal principal) {
+        User user = userManager.findUserByUsername(principal.getName());
+        Map&lt;String, String&gt; result = new HashMap&lt;&gt;();
+        boolean isApiKey = user.getType() == User.Type.API_KEY;
+        result.put(isApiKey ? &quot;apiKey&quot; : &quot;username&quot;, user.getUsername());
+        if(!isApiKey) {
+            result.put(&quot;firstName&quot;, user.getFirstName());
+            result.put(&quot;lastName&quot;, user.getLastName());
+        }
+        result.put(&quot;description&quot;, user.getDescription());
+        result.put(&quot;userType&quot;, getLoggedUserType());
+        return result;
+    }
+
+    @GetMapping(&quot;/organizations&quot;)
+    @ResponseStatus(HttpStatus.OK)
+    public List&lt;Organization&gt; getAllOrganizations(Principal principal) {
+        return userManager.findUserOrganizations(principal.getName());
+    }
+
+    @GetMapping(&quot;/organizations/{id}&quot;)
+    public Organization getOrganization(@PathVariable(&quot;id&quot;) int id, Principal principal) {
+        return userManager.findOrganizationById(id, principal.getName());
+    }
+
+    @GetMapping(&quot;/users&quot;)
+    public List&lt;UserWithOrganizations&gt; getAllUsers(Principal principal) {
+        return userManager.findAllUsers(principal.getName());
+    }
+
+    @PostMapping(&quot;/api-keys/bulk&quot;)
+    public ResponseEntity&lt;String&gt; bulkCreate(@RequestBody BulkApiKeyCreation request, Principal principal) {
+        Optional&lt;User&gt; userOptional = userManager.findOptionalEnabledUserByUsername(principal.getName())
+            .filter(u -&gt; userManager.isOwnerOfOrganization(u, request.organizationId));
+        if(userOptional.isPresent()) {
+            userManager.bulkInsertApiKeys(request.organizationId, request.role, request.descriptions);
+            return ResponseEntity.ok(&quot;OK&quot;);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping(&quot;/organizations/new&quot;)
+    public String insertOrganization(@RequestBody OrganizationModification om) {
+        userManager.createOrganization(om);
+        return OK;
+    }
+
+    @PostMapping(&quot;/organizations/update&quot;)
+    public String updateOrganization(@RequestBody OrganizationModification om, Principal principal) {
+        userManager.updateOrganization(om, principal);
+        return OK;
+    }
+
+    @PostMapping(&quot;/organizations/check&quot;)
+    public ValidationResult validateOrganization(@RequestBody OrganizationModification om, Principal principal) {
+        return userManager.validateOrganization(om, principal);
+    }
+
+    @PostMapping(&quot;/organizations/validate-slug&quot;)
+    public ValidationResult validateSlug(@RequestBody OrganizationModification om, Principal principal) {
+        return userManager.validateOrganizationSlug(om, principal);
+    }
+
+    @PostMapping(&quot;/users/check&quot;)
+    public ValidationResult validateUser(@RequestBody UserModification userModification) {
+        if(userModification.getType() == User.Type.API_KEY) {
+            return ValidationResult.success();
+        } else {
+            return userManager.validateUser(userModification.getId(), userModification.getUsername(),
+                    userModification.getFirstName(), userModification.getLastName(), userModification.getEmailAddress());
+        }
+    }
+
+    @PostMapping(&quot;/users/edit&quot;)
+    public String editUser(@RequestBody UserModification userModification, Principal principal) {
+        userManager.editUser(userModification.getId(), userModification.getOrganizationId(),
+            userModification.getUsername(), userModification.getFirstName(), userModification.getLastName(),
+            userModification.getEmailAddress(), userModification.getDescription(),
+            Role.valueOf(userModification.getRole()), principal.getName());
+        return OK;
+    }
+
+    @PostMapping(&quot;/users/new&quot;)
+    public UserWithPasswordAndQRCode insertUser(@RequestBody UserModification userModification, @RequestParam(&quot;baseUrl&quot;) String baseUrl, Principal principal) {
+        Role requested = Role.valueOf(userModification.getRole());
+        Validate.isTrue(userManager.getAvailableRoles(principal.getName()).stream().anyMatch(requested::equals), String.format(&quot;Requested role %s is not available for current user&quot;, userModification.getRole()));
+        User.Type type = userModification.getType();
+        UserWithPassword userWithPassword = userManager.insertUser(userModification.getOrganizationId(), userModification.getUsername(),
+            userModification.getFirstName(), userModification.getLastName(),
+            userModification.getEmailAddress(), requested,
+            type == null ? User.Type.INTERNAL : type,
+            userModification.getValidToAsDateTime(), userModification.getDescription());
+        String qrCode = type != User.Type.API_KEY ? Base64.getEncoder().encodeToString(generateQRCode(userWithPassword, baseUrl)) : null;
+        return new UserWithPasswordAndQRCode(userWithPassword, qrCode);
+    }
+
+    @GetMapping(&quot;/api-keys/organization/{organizationId}/all&quot;)
+    public void getAllApiKeys(@PathVariable(&quot;organizationId&quot;) int organizationId, HttpServletResponse response, Principal principal) throws IOException {
+        String username = principal.getName();
+        if(userManager.isOwnerOfOrganization(username, organizationId)) {
+            response.setContentType(&quot;application/zip&quot;);
+            response.setHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=apiKeys.zip&quot;);
+
+            String baseUrl = configurationManager.getForSystem(ConfigurationKeys.BASE_URL).getRequiredValue();
+            try(OutputStream os = response.getOutputStream(); ZipOutputStream zipOS = new ZipOutputStream(os)) {
+                for (User user : userManager.findAllApiKeysFor(organizationId)) {
+                    Pair&lt;String, byte[]&gt; result = generateApiKeyQRCode(user, baseUrl);
+                    zipOS.putNextEntry(new ZipEntry(user.getType().name() + &quot;-&quot; +result.getLeft()+&quot;.png&quot;));
+                    StreamUtils.copy(result.getRight(), zipOS);
+                }
+            }
+        } else {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        }
+    }
+
+    private static Pair&lt;String, byte[]&gt; generateApiKeyQRCode(User user, String baseUrl) {
+        Map&lt;String, String&gt; info = new HashMap&lt;&gt;();
+        info.put(&quot;apiKey&quot;, user.getUsername());
+        info.put(&quot;baseUrl&quot;, baseUrl);
+        String description = defaultString(trimToNull(user.getDescription()), user.getUsername());
+        return Pair.of(description, ImageUtil.createQRCodeWithDescription(Json.GSON.toJson(info), description));
+    }
+
+    private static byte[] generateQRCode(UserWithPassword userWithPassword, String baseUrl) {
+        Map&lt;String, Object&gt; info = new HashMap&lt;&gt;();
+        info.put(&quot;username&quot;, userWithPassword.getUsername());
+        info.put(&quot;password&quot;, userWithPassword.getPassword());
+        info.put(&quot;baseUrl&quot;, baseUrl);
+        return ImageUtil.createQRCode(Json.GSON.toJson(info));
+    }
+
+    @DeleteMapping(&quot;/users/{id}&quot;)
+    public String deleteUser(@PathVariable(&quot;id&quot;) int userId, Principal principal) {
+        userManager.deleteUser(userId, principal.getName());
+        return OK;
+    }
+
+    @PostMapping(&quot;/users/{id}/enable/{enable}&quot;)
+    public String enableUser(@PathVariable(&quot;id&quot;) int userId, @PathVariable(&quot;enable&quot;)boolean enable, Principal principal) {
+        userManager.enable(userId, principal.getName(), enable);
+        return OK;
+    }
+
+    @GetMapping(&quot;/users/{id}&quot;)
+    public UserModification loadUser(@PathVariable(&quot;id&quot;) int userId) {
+        User user = userManager.findUser(userId);
+        List&lt;Organization&gt; userOrganizations = userManager.findUserOrganizations(user.getUsername());
+        return new UserModification(user.getId(), userOrganizations.get(0).getId(), userManager.getUserRole(user).name(),
+            user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmailAddress(),
+            user.getType(), user.getValidToEpochSecond(), user.getDescription());
+    }
+
+    @GetMapping(&quot;/users/current&quot;)
+    public UserModification loadCurrentUser(Principal principal) {
+        User user = userManager.findUserByUsername(principal.getName());
+        Optional&lt;Organization&gt; userOrganization = userManager.findUserOrganizations(user.getUsername()).stream().findFirst();
+        return new UserModification(user.getId(), userOrganization.map(Organization::getId).orElse(-1),
+            userManager.getUserRole(user).name(), user.getUsername(), user.getFirstName(), user.getLastName(),
+            user.getEmailAddress(), user.getType(), user.getValidToEpochSecond(), user.getDescription());
+    }
+
+    @PostMapping(&quot;/users/current/update-password&quot;)
+    public ValidationResult updateCurrentUserPassword(@RequestBody PasswordModification passwordModification, Principal principal) {
+        return userManager.validateNewPassword(principal.getName(), passwordModification.oldPassword, passwordModification.newPassword, passwordModification.newPasswordConfirm)
+            .ifSuccess(() -&gt; userManager.updatePassword(principal.getName(), passwordModification.newPassword));
+    }
+
+    @PostMapping(&quot;/users/current/edit&quot;)
+    public void updateCurrentUser(@RequestBody UserModification userModification, Principal principal) {
+        User user = userManager.findUserByUsername(principal.getName());
+        userManager.updateUserContactInfo(user.getId(), userModification.getFirstName(), userModification.getLastName(), userModification.getEmailAddress());
+
+    }
+
+    @PutMapping(&quot;/users/{id}/reset-password&quot;)
+    public UserWithPasswordAndQRCode resetPassword(@PathVariable(&quot;id&quot;) int userId, @RequestParam(&quot;baseUrl&quot;) String baseUrl) {
+        UserWithPassword userWithPassword = userManager.resetPassword(userId);
+        return new UserWithPasswordAndQRCode(userWithPassword, Base64.getEncoder().encodeToString(generateQRCode(userWithPassword, baseUrl)));
+    }
+
+    @Getter
+    public static class UserWithPasswordAndQRCode extends UserWithPassword {
+
+        private final String qrCode;
+
+        UserWithPasswordAndQRCode(UserWithPassword userWithPassword, String qrCode) {
+<span class="fc" id="L284">            super(userWithPassword.getUser(), userWithPassword.getPassword(), userWithPassword.getUniqueId());</span>
+<span class="fc" id="L285">            this.qrCode = qrCode;</span>
+<span class="fc" id="L286">        }</span>
+    }
+
+    private static final class RoleDescriptor {
+        private final Role role;
+
+<span class="nc" id="L292">        RoleDescriptor(Role role) {</span>
+<span class="nc" id="L293">            this.role = role;</span>
+<span class="nc" id="L294">        }</span>
+
+        public String getRole() {
+<span class="nc" id="L297">            return role.name();</span>
+        }
+
+        public String getDescription() {
+<span class="nc" id="L301">            return role.getDescription();</span>
+        }
+
+<span class="nc" id="L304">        public String getTarget() { return role.getTarget().name(); }</span>
+    }
+
+    private static final class PasswordModification {
+
+        private final String oldPassword;
+        private final String newPassword;
+        private final String newPasswordConfirm;
+
+        @JsonCreator
+        private PasswordModification(@JsonProperty(&quot;oldPassword&quot;) String oldPassword,
+                                     @JsonProperty(&quot;newPassword&quot;) String newPassword,
+<span class="nc" id="L316">                                     @JsonProperty(&quot;newPasswordConfirm&quot;) String newPasswordConfirm) {</span>
+<span class="nc" id="L317">            this.oldPassword = oldPassword;</span>
+<span class="nc" id="L318">            this.newPassword = newPassword;</span>
+<span class="nc" id="L319">            this.newPasswordConfirm = newPasswordConfirm;</span>
+<span class="nc" id="L320">        }</span>
+    }
+
+    private static final class BulkApiKeyCreation {
+
+        private final int organizationId;
+        private final Role role;
+        private final List&lt;String&gt; descriptions;
+
+        @JsonCreator
+        private BulkApiKeyCreation(@JsonProperty(&quot;organizationId&quot;) int organizationId,
+                                   @JsonProperty(&quot;role&quot;) Role role,
+<span class="nc" id="L332">                                   @JsonProperty(&quot;descriptions&quot;) List&lt;String&gt; descriptions) {</span>
+<span class="nc" id="L333">            this.organizationId = organizationId;</span>
+<span class="nc" id="L334">            this.role = role;</span>
+<span class="nc" id="L335">            this.descriptions = descriptions;</span>
+<span class="nc" id="L336">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

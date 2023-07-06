@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PassKitApiController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.controller.api.pass</a> &gt; <span class="el_source">PassKitApiController.java</span></div><h1>PassKitApiController.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.controller.api.pass;
+
+import alfio.manager.PassKitManager;
+import alfio.model.EventAndOrganizationId;
+import alfio.model.Ticket;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Optional;
+
+/**
+ * https://developer.apple.com/library/archive/documentation/PassKit/Reference/PassKit_WebService/WebService.html
+ */
+@RestController
+@RequestMapping(&quot;/api/pass/event/{eventName}/v1&quot;)
+<span class="nc" id="L37">@Log4j2</span>
+@RequiredArgsConstructor
+public class PassKitApiController {
+
+    private final PassKitManager passKitManager;
+
+
+    @GetMapping(&quot;/version/passes/{passTypeIdentifier}/{serialNumber}&quot;)
+    public void getLatestVersion(@PathVariable(&quot;eventName&quot;) String eventName,
+                                 @PathVariable(&quot;passTypeIdentifier&quot;) String passTypeIdentifier,
+                                 @PathVariable(&quot;serialNumber&quot;) String serialNumber,
+                                 @RequestHeader(&quot;Authorization&quot;) String authorization,
+                                 HttpServletResponse response) throws IOException {
+<span class="nc" id="L50">        Optional&lt;Pair&lt;EventAndOrganizationId, Ticket&gt;&gt; validationResult = passKitManager.validateToken(eventName, passTypeIdentifier, serialNumber, authorization);</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        if(validationResult.isEmpty()) {</span>
+<span class="nc" id="L52">            response.sendError(HttpServletResponse.SC_NOT_FOUND);</span>
+        } else {
+<span class="nc" id="L54">            Pair&lt;EventAndOrganizationId, Ticket&gt; pair = validationResult.get();</span>
+<span class="nc" id="L55">            try (var os = response.getOutputStream()) {</span>
+<span class="nc" id="L56">                response.setContentType(&quot;application/vnd.apple.pkpass&quot;);</span>
+<span class="nc" id="L57">                passKitManager.writePass(pair.getRight(), pair.getLeft(), os);</span>
+<span class="nc" id="L58">            } catch (Exception e) {</span>
+<span class="nc" id="L59">                log.warn(&quot;Error during pass generation&quot;, e);</span>
+<span class="nc" id="L60">                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);</span>
+<span class="nc" id="L61">            }</span>
+        }
+<span class="nc" id="L63">    }</span>
+
+
+    // not (yet) implemented APIs. These are no-op for now.
+
+    @GetMapping(&quot;/devices/*/registrations/*&quot;)
+    public ResponseEntity&lt;Void&gt; getRegisteredPasses() {
+<span class="nc" id="L70">        log.trace(&quot;getRegisteredPasses called. Returning 204&quot;);</span>
+<span class="nc" id="L71">        return ResponseEntity.noContent().build();</span>
+    }
+
+    @PostMapping(&quot;/devices/*/registrations/*/*&quot;)
+    public ResponseEntity&lt;Void&gt; register() {
+<span class="nc" id="L76">        log.trace(&quot;register called. Returning 200&quot;);</span>
+<span class="nc" id="L77">        return ResponseEntity.ok().build();</span>
+    }
+
+    @DeleteMapping(&quot;/devices/*/registrations/*/*&quot;)
+    public ResponseEntity&lt;Void&gt; deleteRegistration() {
+<span class="nc" id="L82">        log.trace(&quot;deleteRegistration called. Returning 200&quot;);</span>
+<span class="nc" id="L83">        return ResponseEntity.ok().build();</span>
+    }
+
+    @PostMapping(&quot;/log&quot;)
+    public ResponseEntity&lt;Void&gt; log() {
+<span class="nc" id="L88">        log.trace(&quot;log called. Returning 200&quot;);</span>
+<span class="nc" id="L89">        return ResponseEntity.ok().build();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

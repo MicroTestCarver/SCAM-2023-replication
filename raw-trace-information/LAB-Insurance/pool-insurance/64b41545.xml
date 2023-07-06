@@ -1,0 +1,45 @@
+<pl.altkom.asc.lab.micronaut.poc.policy.domain.PolicyVersion>
+  <policy>
+    <number>7dceb536-5109-4cf8-a23a-39651e5ad3f8</number>
+    <agent>
+      <login>admin</login>
+    </agent>
+    <versions>
+      <pl.altkom.asc.lab.micronaut.poc.policy.domain.PolicyVersion reference="../../.."/>
+    </versions>
+  </policy>
+  <versionNumber>1</versionNumber>
+  <productCode>FAI</productCode>
+  <policyHolder>
+    <firstName>Amir</firstName>
+    <lastName>jackson</lastName>
+    <pesel>2977</pesel>
+  </policyHolder>
+  <accountNumber>dbd1867c-287a-4209-b1f1-0d71f5a6c54e</accountNumber>
+  <coverPeriod>
+    <from>2023-05-25</from>
+    <to>2023-05-31</to>
+  </coverPeriod>
+  <versionValidityPeriod>
+    <from>2023-05-25</from>
+    <to>2023-05-31</to>
+  </versionValidityPeriod>
+  <covers>
+    <pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover>
+      <code>C4</code>
+      <price>120.00</price>
+      <policyVersion reference="../../.."/>
+    </pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover>
+    <pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover>
+      <code>C3</code>
+      <price>90.00</price>
+      <policyVersion reference="../../.."/>
+    </pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover>
+    <pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover>
+      <code>C1</code>
+      <price>30.00</price>
+      <policyVersion reference="../../.."/>
+    </pl.altkom.asc.lab.micronaut.poc.policy.domain.Cover>
+  </covers>
+  <totalPremiumAmount>300.00</totalPremiumAmount>
+</pl.altkom.asc.lab.micronaut.poc.policy.domain.PolicyVersion>

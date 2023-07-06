@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicketMetadataContainer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model.metadata</a> &gt; <span class="el_source">TicketMetadataContainer.java</span></div><h1>TicketMetadataContainer.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model.metadata;
+
+import alfio.manager.support.extension.ExtensionEvent;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.*;
+
+public class TicketMetadataContainer {
+
+    public static final String GENERAL = &quot;general&quot;;
+<span class="nc" id="L28">    private static final Set&lt;String&gt; ALLOWED_KEYS = Set.of(</span>
+        GENERAL,
+<span class="nc" id="L30">        ExtensionEvent.CUSTOM_ONLINE_JOIN_URL.name()</span>
+    );
+
+    private final Map&lt;String, TicketMetadata&gt; metadataMap;
+
+    @JsonCreator
+<span class="nc" id="L36">    public TicketMetadataContainer(@JsonProperty(&quot;metadataMap&quot;) Map&lt;String, TicketMetadata&gt; metadataMap) {</span>
+<span class="nc" id="L37">        this.metadataMap = Objects.requireNonNullElse(metadataMap, new HashMap&lt;&gt;());</span>
+<span class="nc" id="L38">    }</span>
+
+    /**
+     * This method returns a read-only copy of the underlying map.
+     * Use
+     * @return a read-only copy of the metadataMap
+     */
+    public Map&lt;String, TicketMetadata&gt; getMetadataMap() {
+<span class="nc" id="L46">        return Map.copyOf(metadataMap);</span>
+    }
+
+    /**
+     * Returns the stored metadata for the given key, if present
+     *
+     * @param key metadata key
+     * @return TicketMetadata, if present
+     */
+    public Optional&lt;TicketMetadata&gt; getMetadataForKey(String key) {
+<span class="nc" id="L56">        return Optional.ofNullable(metadataMap.get(key));</span>
+    }
+
+    /**
+     * Adds the metadata value, only if the key is supported
+     *
+     * @param key the key for the metadata object
+     * @param value the metadata object to save
+     * @return {@code true} if key was accepted, otherwise {@code false}
+     */
+    public boolean putMetadata(String key, TicketMetadata value) {
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if(ALLOWED_KEYS.contains(key)) {</span>
+<span class="nc" id="L68">            metadataMap.put(key, value);</span>
+<span class="nc" id="L69">            return true;</span>
+        }
+<span class="nc" id="L71">        return false;</span>
+    }
+
+    public static TicketMetadataContainer empty() {
+<span class="nc" id="L75">        return new TicketMetadataContainer(new HashMap&lt;&gt;());</span>
+    }
+
+    public static TicketMetadataContainer fromMetadata(TicketMetadata metadata) {
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (metadata != null) {</span>
+<span class="nc" id="L80">            var map = new HashMap&lt;String, TicketMetadata&gt;();</span>
+<span class="nc" id="L81">            map.put(GENERAL, metadata);</span>
+<span class="nc" id="L82">            return new TicketMetadataContainer(map);</span>
+        }
+<span class="nc" id="L84">        return null;</span>
+    }
+
+    public static TicketMetadataContainer copyOf(TicketMetadataContainer src) {
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (src != null) {</span>
+<span class="nc" id="L89">            Map&lt;String, TicketMetadata&gt; newMap = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L90">            src.metadataMap.forEach((key, tm) -&gt; newMap.put(key, TicketMetadata.copyOf(tm)));</span>
+<span class="nc" id="L91">            return new TicketMetadataContainer(newMap);</span>
+        }
+<span class="nc" id="L93">        return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,17 @@
+<alfio.controller.api.v2.model.AlfioInfo>
+  <demoModeEnabled>false</demoModeEnabled>
+  <devModeEnabled>true</devModeEnabled>
+  <prodModeEnabled>false</prodModeEnabled>
+  <analyticsConfiguration>
+    <googleAnalyticsScrambledInfo>true</googleAnalyticsScrambledInfo>
+  </analyticsConfiguration>
+  <invoicingConfiguration>
+    <userCanDownloadReceiptOrInvoice>true</userCanDownloadReceiptOrInvoice>
+    <euVatCheckingEnabled>false</euVatCheckingEnabled>
+    <invoiceAllowed>false</invoiceAllowed>
+    <onlyInvoice>false</onlyInvoice>
+    <customerReferenceEnabled>false</customerReferenceEnabled>
+    <enabledItalyEInvoicing>false</enabledItalyEInvoicing>
+    <vatNumberStrictlyRequired>false</vatNumberStrictlyRequired>
+  </invoicingConfiguration>
+</alfio.controller.api.v2.model.AlfioInfo>

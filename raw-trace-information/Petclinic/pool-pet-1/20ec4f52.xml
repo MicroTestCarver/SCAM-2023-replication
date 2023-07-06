@@ -1,0 +1,16 @@
+<org.springframework.validation.support.BindingAwareModelMap serialization="custom">
+  <unserializable-parents/>
+  <map>
+    <default>
+      <loadFactor>0.75</loadFactor>
+      <threshold>0</threshold>
+    </default>
+    <int>16</int>
+    <int>0</int>
+  </map>
+  <linked-hash-map>
+    <default>
+      <accessOrder>false</accessOrder>
+    </default>
+  </linked-hash-map>
+</org.springframework.validation.support.BindingAwareModelMap>

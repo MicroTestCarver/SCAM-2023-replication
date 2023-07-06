@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MustacheCustomTag.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.util</a> &gt; <span class="el_source">MustacheCustomTag.java</span></div><h1>MustacheCustomTag.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.util;
+
+import alfio.controller.api.support.TicketHelper;
+import com.samskivert.mustache.Mustache;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.text.StringEscapeUtils;
+import org.commonmark.Extension;
+import org.commonmark.ext.gfm.tables.TablesExtension;
+import org.commonmark.node.Link;
+import org.commonmark.node.Node;
+import org.commonmark.node.Text;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.AttributeProvider;
+import org.commonmark.renderer.html.HtmlRenderer;
+import org.commonmark.renderer.text.TextContentRenderer;
+import org.springframework.security.web.util.UrlUtils;
+
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
+
+import static org.apache.commons.lang3.StringUtils.substring;
+
+/**
+ * For formatting date in a mustache template.
+ *
+ * &lt;p&gt;
+ * Syntax is: {{#format-date}}{{yourDate}} FORMAT locale:YOUR_LOCALE{{/format-date}}.
+ * &lt;/p&gt;
+ * &lt;p&gt;
+ * Where
+ * &lt;/p&gt;
+ * &lt;ul&gt;
+ * &lt;li&gt;yourDate has been formatted following the java.time.ZonedDateTime
+ * &lt;li&gt;FORMAT is a format understood by {@link DateTimeFormatter}&lt;/li&gt;
+ * &lt;li&gt;optional: locale:YOUR_LOCALE you can define the locale&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+@Log4j2
+public class MustacheCustomTag {
+
+    private MustacheCustomTag() {}
+
+    private static final Pattern ARG_PATTERN = Pattern.compile(&quot;\\[(.*?)]&quot;);
+    private static final String LOCALE_LABEL = &quot;locale:&quot;;
+
+    static final Mustache.Lambda FORMAT_DATE = (frag, out) -&gt; {
+        String execution = frag.execute().trim();
+        ZonedDateTime d = ZonedDateTime.parse(substring(execution, 0, execution.indexOf(' ')));
+        Pair&lt;String, Optional&lt;Locale&gt;&gt; p = parseParams(execution);
+        if (p.getRight().isPresent()) {
+            out.write(DateTimeFormatter.ofPattern(p.getLeft(), p.getRight().get()).format(d));
+        } else {
+            out.write(DateTimeFormatter.ofPattern(p.getLeft()).format(d));
+        }
+    };
+
+    /**
+     * {{#render-markdown}}[markdown][.html|.text]{{/render-markdown}}
+     * The string must end with either .html or .text, otherwise Markdown won't be parsed
+     * e.g.
+     * {{#render-markdown}}(link)[description].html{{/render-markdown}} will produce HTML output
+     * {{#render-markdown}}(link)[description].text{{/render-markdown}} will produce text/plain output
+     */
+    static final Mustache.Lambda RENDER_MARKDOWN = (frag, out) -&gt; {
+        String execution = frag.execute().strip();
+        if(execution.endsWith(&quot;.html&quot;)) {
+            out.write(renderToHtmlCommonmarkEscaped(StringUtils.removeEnd(execution, &quot;.html&quot;)));
+        } else if(execution.endsWith(&quot;.text&quot;)) {
+            out.write(renderToTextCommonmark(StringUtils.removeEnd(execution, &quot;.text&quot;)));
+        } else {
+            out.write(execution);
+        }
+    };
+
+    static final Mustache.Lambda COUNTRY_NAME = (frag, out) -&gt; {
+        String execution = frag.execute().trim();
+        String code = substring(execution, 0, 2);
+        Pair&lt;String, Optional&lt;Locale&gt;&gt; p = parseParams(execution);
+        out.write(translateCountryCode(code, p.getRight().orElse(null)));
+    };
+
+    static String translateCountryCode(String code, Locale locale) {
+        Locale lang = locale != null ? locale : Locale.ENGLISH;
+        return Stream.concat(TicketHelper.getLocalizedCountries(lang).stream(), TicketHelper.getLocalizedCountriesForVat(lang).stream())
+            .filter(p -&gt; p.getKey().equalsIgnoreCase(code))
+            .map(Pair::getValue)
+            .findFirst()
+            .orElse(code);
+    }
+
+    /**
+     * {{#additional-field-value}}[Prefix][name][suffix]{{/additional-field-value}}
+     * prefix is optional, unless a suffix is needed.
+     */
+    static final Function&lt;Object, Mustache.Lambda&gt; ADDITIONAL_FIELD_VALUE = obj -&gt; (frag, out) -&gt; {
+        if( !(obj instanceof Map) || ((Map&lt;?,?&gt;)obj).isEmpty()) {
+            log.warn(&quot;map not found or empty. Skipping additionalFieldValue tag&quot;);
+            return;
+        }
+        Map&lt;?, ?&gt; fieldNamesAndValues = (Map&lt;?, ?&gt;) obj;
+        String execution = frag.execute().trim();
+        Matcher matcher = ARG_PATTERN.matcher(execution);
+        List&lt;String&gt; args = new ArrayList&lt;&gt;();
+        while(matcher.find()) {
+            args.add(matcher.group(1));
+        }
+        if(args.isEmpty()) {
+            return;
+        }
+        String name = args.get(args.size() &gt; 1 ? 1 : 0);
+        String prefix = args.size() &gt; 1 ? args.get(0) + &quot; &quot; : &quot;&quot;;
+        String suffix = args.size() &gt; 2 ? &quot; &quot;+args.get(2) : &quot;&quot;;
+
+        if(fieldNamesAndValues.containsKey(name)) {
+            out.write(prefix + fieldNamesAndValues.get(name) + suffix);
+        }
+    };
+
+    private static Pair&lt;String, Optional&lt;Locale&gt;&gt; parseParams(String r) {
+
+        int indexLocale = r.indexOf(LOCALE_LABEL);
+        int end = Math.min(r.length(), indexLocale != -1 ? indexLocale : r.length());
+        String format = substring(r, r.indexOf(' '), end);
+
+        //
+        String[] res = r.split(&quot;\\s+&quot;);
+        Optional&lt;Locale&gt; locale = Arrays.stream(res).filter(s -&gt; s.startsWith(LOCALE_LABEL)).findFirst()
+                .map(l -&gt; LocaleUtil.forLanguageTag(substring(l, LOCALE_LABEL.length())));
+        //
+
+        return Pair.of(format, locale);
+    }
+
+
+    private static final List&lt;Extension&gt; COMMONMARK_EXTENSIONS = List.of(TablesExtension.create());
+    private static final Parser COMMONMARK_PARSER = Parser.builder().extensions(COMMONMARK_EXTENSIONS).build();
+    private static final HtmlRenderer COMMONMARK_RENDERER = HtmlRenderer.builder().extensions(COMMONMARK_EXTENSIONS).attributeProviderFactory((ctx) -&gt; new TargetBlankProvider()).build();
+    private static final TextContentRenderer COMMONMARK_TEXT_RENDERER = TextContentRenderer.builder().extensions(COMMONMARK_EXTENSIONS).build();
+    private static final ThreadLocal&lt;String&gt; A11Y_NEW_TAB_LABEL = new ThreadLocal&lt;&gt;();
+
+    //Open in a new window if the link contains an absolute url
+    private static class TargetBlankProvider implements AttributeProvider {
+        @Override
+        public void setAttributes(Node node, String tagName, Map&lt;String, String&gt; attributes) {
+<span class="fc bfc" id="L168" title="All 2 branches covered.">            if (node instanceof Link) {</span>
+<span class="fc" id="L169">                Link l = (Link) node;</span>
+<span class="fc" id="L170">                String destination = StringUtils.trimToEmpty(l.getDestination());</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">                if (UrlUtils.isAbsoluteUrl(destination)) {</span>
+<span class="fc" id="L172">                    attributes.put(&quot;target&quot;, &quot;_blank&quot;);</span>
+<span class="fc" id="L173">                    attributes.put(&quot;rel&quot;, &quot;nofollow noopener noreferrer&quot;);</span>
+<span class="fc" id="L174">                    var newTabLabel = A11Y_NEW_TAB_LABEL.get();</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">                    if (newTabLabel != null) {</span>
+<span class="fc" id="L176">                        attributes.put(&quot;aria-label&quot;, ((Text)node.getFirstChild()).getLiteral() + &quot; &quot; + newTabLabel);</span>
+                    }
+                }
+            }
+<span class="fc" id="L180">        }</span>
+    }
+    public static String renderToHtmlCommonmarkEscaped(String input) {
+        return renderToHtmlCommonmarkEscaped(input, null);
+    }
+
+    public static String renderToHtmlCommonmarkEscaped(String input, String localizedNewWindowLabel) {
+        try {
+            A11Y_NEW_TAB_LABEL.set(localizedNewWindowLabel);
+            Node document = COMMONMARK_PARSER.parse(StringEscapeUtils.escapeHtml4(input));
+            return COMMONMARK_RENDERER.render(document);
+        } finally {
+            A11Y_NEW_TAB_LABEL.remove();
+        }
+    }
+
+    public static String renderToTextCommonmark(String input) {
+        Node document = COMMONMARK_PARSER.parse(input);
+        return COMMONMARK_TEXT_RENDERER.render(document);
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

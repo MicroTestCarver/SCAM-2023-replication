@@ -1,0 +1,6 @@
+<list>
+  <pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+    <coverCode>C1</coverCode>
+    <basePriceFormula>10B</basePriceFormula>
+  </pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+</list>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LocationApiController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.controller.api.admin</a> &gt; <span class="el_source">LocationApiController.java</span></div><h1>LocationApiController.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.controller.api.admin;
+
+import alfio.manager.system.ConfigurationLevel;
+import alfio.manager.system.ConfigurationManager;
+import alfio.model.modification.support.LocationDescriptor;
+import alfio.model.system.ConfigurationKeys;
+import com.moodysalem.TimezoneMapper;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.ZoneId;
+import java.util.*;
+
+import static alfio.model.system.ConfigurationKeys.*;
+
+@RestController
+@RequestMapping(&quot;/admin/api&quot;)
+<span class="nc" id="L38">@Log4j2</span>
+public class LocationApiController {
+
+    private final ConfigurationManager configurationManager;
+
+    @Autowired
+<span class="nc" id="L44">    public LocationApiController(ConfigurationManager configurationManager) {</span>
+<span class="nc" id="L45">        this.configurationManager = configurationManager;</span>
+<span class="nc" id="L46">    }</span>
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String unhandledException(Exception e) {
+<span class="nc" id="L51">       log.error(&quot;Exception in location api&quot;, e);</span>
+<span class="nc" id="L52">        return e.getMessage();</span>
+    }
+
+    @GetMapping(&quot;/location/timezones&quot;)
+    public List&lt;String&gt; getTimezones() {
+<span class="nc" id="L57">        List&lt;String&gt; s = new ArrayList&lt;&gt;(ZoneId.getAvailableZoneIds());</span>
+<span class="nc" id="L58">        s.sort(String::compareTo);</span>
+<span class="nc" id="L59">        return s;</span>
+    }
+
+    @GetMapping(&quot;/location/timezone&quot;)
+    public String getTimezone(@RequestParam(&quot;lat&quot;) double lat, @RequestParam(&quot;lng&quot;) double lng) {
+<span class="nc" id="L64">        String tzId = TimezoneMapper.tzNameAt(lat, lng);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        return getTimezones().contains(tzId) ? tzId : null;</span>
+    }
+
+
+
+    @GetMapping(&quot;/location/static-map-image&quot;)
+    public String getMapImage(
+        @RequestParam(name = &quot;lat&quot;, required = false) String lat,
+        @RequestParam(name = &quot;lng&quot;, required = false) String lng) {
+<span class="nc" id="L74">        return LocationDescriptor.getMapUrl(lat, lng, getGeoConf());</span>
+    }
+
+    private Map&lt;ConfigurationKeys, ConfigurationManager.MaybeConfiguration&gt; getGeoConf() {
+<span class="nc" id="L78">        var keys = Set.of(MAPS_PROVIDER, MAPS_CLIENT_API_KEY, MAPS_HERE_API_KEY);</span>
+<span class="nc" id="L79">        return configurationManager.getFor(keys, ConfigurationLevel.system());</span>
+    }
+
+    @GetMapping(&quot;/location/map-provider-client-api-key&quot;)
+    public ProviderAndKeys getGeoInfoProviderAndKeys() {
+<span class="nc" id="L84">        var geoInfoConfiguration = getGeoConf();</span>
+<span class="nc" id="L85">        ConfigurationKeys.GeoInfoProvider provider = LocationDescriptor.getProvider(geoInfoConfiguration);</span>
+<span class="nc" id="L86">        Map&lt;ConfigurationKeys, String&gt; apiKeys = new EnumMap&lt;&gt;(ConfigurationKeys.class);</span>
+<span class="nc" id="L87">        geoInfoConfiguration.forEach((k,v) -&gt; v.getValue().ifPresent(value -&gt; apiKeys.put(k, value)));</span>
+<span class="nc" id="L88">        return new ProviderAndKeys(provider, apiKeys);</span>
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class ProviderAndKeys {
+        private final ConfigurationKeys.GeoInfoProvider provider;
+        private Map&lt;ConfigurationKeys, String&gt; keys;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,1686 @@
+### BTrace Log: 16/05/2023, 11:57
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#<init>:{
+Args: []
+
+Fields: [{
+    hash: 0,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: selectedCovers,
+    type: java.util.List<java.lang.String>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: answers,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#setProductCode(java.lang.String):{
+Args: [{
+    hash: 63810848,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: selectedCovers,
+    type: java.util.List<java.lang.String>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: answers,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#setPolicyFrom(java.time.LocalDate):{
+Args: [{
+    hash: 6a17fcec,
+    name: null,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@6a17fcec,
+}, ]
+
+Fields: [{
+    hash: 63810848,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 0,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: selectedCovers,
+    type: java.util.List<java.lang.String>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: answers,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#setPolicyTo(java.time.LocalDate):{
+Args: [{
+    hash: 4729aba6,
+    name: null,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@4729aba6,
+}, ]
+
+Fields: [{
+    hash: 63810848,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 6a17fcec,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@6a17fcec,
+}, {
+    hash: 0,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: selectedCovers,
+    type: java.util.List<java.lang.String>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: answers,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#setSelectedCovers(java.util.List):{
+Args: [{
+    hash: 75a6893a,
+    name: null,
+    type: java.util.ArrayList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@75a6893a,
+}, ]
+
+Fields: [{
+    hash: 63810848,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 6a17fcec,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@6a17fcec,
+}, {
+    hash: 4729aba6,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@4729aba6,
+}, {
+    hash: 0,
+    name: selectedCovers,
+    type: java.util.List<java.lang.String>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: answers,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#<init>:{
+Args: []
+
+Fields: [{
+    hash: 0,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#setQuestionCode(java.lang.String):{
+Args: [{
+    hash: 46ecee2,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "TYP",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#setAnswer(java.lang.Object):{
+Args: [{
+    hash: 42022a1a,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "KW",
+}, ]
+
+Fields: [{
+    hash: 46ecee2,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "TYP",
+}, {
+    hash: 0,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#<init>:{
+Args: []
+
+Fields: [{
+    hash: 0,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#setQuestionCode(java.lang.String):{
+Args: [{
+    hash: 464b5aef,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "AREA",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#setAnswer(java.lang.Object):{
+Args: [{
+    hash: 63629973,
+    name: null,
+    type: java.lang.Integer,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 5000,
+}, ]
+
+Fields: [{
+    hash: 464b5aef,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "AREA",
+}, {
+    hash: 0,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#<init>:{
+Args: []
+
+Fields: [{
+    hash: 0,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#setQuestionCode(java.lang.String):{
+Args: [{
+    hash: 20e3a8c7,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NUM_OF_CLAIM",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#setAnswer(java.lang.Object):{
+Args: [{
+    hash: 130b5b70,
+    name: null,
+    type: java.lang.Integer,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 5,
+}, ]
+
+Fields: [{
+    hash: 20e3a8c7,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NUM_OF_CLAIM",
+}, {
+    hash: 0,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#<init>:{
+Args: []
+
+Fields: [{
+    hash: 0,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#setQuestionCode(java.lang.String):{
+Args: [{
+    hash: 51eca522,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FLOOD",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#setAnswer(java.lang.Object):{
+Args: [{
+    hash: 50a09054,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "YES",
+}, ]
+
+Fields: [{
+    hash: 51eca522,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FLOOD",
+}, {
+    hash: 0,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#setAnswers(java.util.List):{
+Args: [{
+    hash: 779e2199,
+    name: null,
+    type: java.util.ArrayList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@779e2199,
+}, ]
+
+Fields: [{
+    hash: 63810848,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 6a17fcec,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@6a17fcec,
+}, {
+    hash: 4729aba6,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@4729aba6,
+}, {
+    hash: 75a6893a,
+    name: selectedCovers,
+    type: java.util.List<java.lang.String>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@75a6893a,
+}, {
+    hash: 0,
+    name: answers,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#getProductCode:{
+Args: []
+
+Fields: [{
+    hash: 63810848,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 6a17fcec,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@6a17fcec,
+}, {
+    hash: 4729aba6,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@4729aba6,
+}, {
+    hash: 75a6893a,
+    name: selectedCovers,
+    type: java.util.List<java.lang.String>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@75a6893a,
+}, {
+    hash: 779e2199,
+    name: answers,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@779e2199,
+}, ]
+
+Return: {
+    hash: 63810848,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#getProductCode:{
+Args: []
+
+Fields: [{
+    hash: 63810848,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 6a17fcec,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@6a17fcec,
+}, {
+    hash: 4729aba6,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@4729aba6,
+}, {
+    hash: 75a6893a,
+    name: selectedCovers,
+    type: java.util.List<java.lang.String>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@75a6893a,
+}, {
+    hash: 779e2199,
+    name: answers,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@779e2199,
+}, ]
+
+Return: {
+    hash: 63810848,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}
+}:
+
+public java.time.LocalDate pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#getPolicyFrom:{
+Args: []
+
+Fields: [{
+    hash: 63810848,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 6a17fcec,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@6a17fcec,
+}, {
+    hash: 4729aba6,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@4729aba6,
+}, {
+    hash: 75a6893a,
+    name: selectedCovers,
+    type: java.util.List<java.lang.String>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@75a6893a,
+}, {
+    hash: 779e2199,
+    name: answers,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@779e2199,
+}, ]
+
+Return: {
+    hash: 6a17fcec,
+    name: null,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@6a17fcec,
+}
+}:
+
+public java.time.LocalDate pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#getPolicyTo:{
+Args: []
+
+Fields: [{
+    hash: 63810848,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 6a17fcec,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@6a17fcec,
+}, {
+    hash: 4729aba6,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@4729aba6,
+}, {
+    hash: 75a6893a,
+    name: selectedCovers,
+    type: java.util.List<java.lang.String>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@75a6893a,
+}, {
+    hash: 779e2199,
+    name: answers,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@779e2199,
+}, ]
+
+Return: {
+    hash: 4729aba6,
+    name: null,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@4729aba6,
+}
+}:
+
+public java.util.List pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#getSelectedCovers:{
+Args: []
+
+Fields: [{
+    hash: 63810848,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 6a17fcec,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@6a17fcec,
+}, {
+    hash: 4729aba6,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@4729aba6,
+}, {
+    hash: 75a6893a,
+    name: selectedCovers,
+    type: java.util.List<java.lang.String>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@75a6893a,
+}, {
+    hash: 779e2199,
+    name: answers,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@779e2199,
+}, ]
+
+Return: {
+    hash: 75a6893a,
+    name: null,
+    type: java.util.ArrayList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@75a6893a,
+}
+}:
+
+public java.util.List pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#getAnswers:{
+Args: []
+
+Fields: [{
+    hash: 63810848,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 6a17fcec,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@6a17fcec,
+}, {
+    hash: 4729aba6,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@4729aba6,
+}, {
+    hash: 75a6893a,
+    name: selectedCovers,
+    type: java.util.List<java.lang.String>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@75a6893a,
+}, {
+    hash: 779e2199,
+    name: answers,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@779e2199,
+}, ]
+
+Return: {
+    hash: 779e2199,
+    name: null,
+    type: java.util.ArrayList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@779e2199,
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#getQuestionCode:{
+Args: []
+
+Fields: [{
+    hash: 46ecee2,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "TYP",
+}, {
+    hash: 42022a1a,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.lang.String@42022a1a,
+}, ]
+
+Return: {
+    hash: 46ecee2,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "TYP",
+}
+}:
+
+public java.lang.Object pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#getAnswer:{
+Args: []
+
+Fields: [{
+    hash: 46ecee2,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "TYP",
+}, {
+    hash: 42022a1a,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.lang.String@42022a1a,
+}, ]
+
+Return: {
+    hash: 42022a1a,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "KW",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#getQuestionCode:{
+Args: []
+
+Fields: [{
+    hash: 464b5aef,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "AREA",
+}, {
+    hash: 63629973,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.lang.Integer@63629973,
+}, ]
+
+Return: {
+    hash: 464b5aef,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "AREA",
+}
+}:
+
+public java.lang.Object pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#getAnswer:{
+Args: []
+
+Fields: [{
+    hash: 464b5aef,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "AREA",
+}, {
+    hash: 63629973,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.lang.Integer@63629973,
+}, ]
+
+Return: {
+    hash: 63629973,
+    name: null,
+    type: java.lang.Integer,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 5000,
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#getQuestionCode:{
+Args: []
+
+Fields: [{
+    hash: 20e3a8c7,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NUM_OF_CLAIM",
+}, {
+    hash: 130b5b70,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.lang.Integer@130b5b70,
+}, ]
+
+Return: {
+    hash: 20e3a8c7,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NUM_OF_CLAIM",
+}
+}:
+
+public java.lang.Object pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#getAnswer:{
+Args: []
+
+Fields: [{
+    hash: 20e3a8c7,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NUM_OF_CLAIM",
+}, {
+    hash: 130b5b70,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.lang.Integer@130b5b70,
+}, ]
+
+Return: {
+    hash: 130b5b70,
+    name: null,
+    type: java.lang.Integer,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 5,
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#getQuestionCode:{
+Args: []
+
+Fields: [{
+    hash: 51eca522,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FLOOD",
+}, {
+    hash: 50a09054,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.lang.String@50a09054,
+}, ]
+
+Return: {
+    hash: 51eca522,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FLOOD",
+}
+}:
+
+public java.lang.Object pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer#getAnswer:{
+Args: []
+
+Fields: [{
+    hash: 51eca522,
+    name: questionCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FLOOD",
+}, {
+    hash: 50a09054,
+    name: answer,
+    type: T,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.lang.String@50a09054,
+}, ]
+
+Return: {
+    hash: 50a09054,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "YES",
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceResult#<init>(java.math.BigDecimal, java.util.Map):{
+Args: [{
+    hash: 7d82b7f0,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7d82b7f0,
+}, {
+    hash: 6280aa92,
+    name: null,
+    type: java.util.HashMap,
+    index: 1,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@6280aa92,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: totalPrice,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: coversPrices,
+    type: java.util.Map<java.lang.String, java.math.BigDecimal>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 63ceb91a,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@63ceb91a,
+}
+}:
+
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceResult#getTotalPrice:{
+Args: []
+
+Fields: [{
+    hash: 7d82b7f0,
+    name: totalPrice,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7d82b7f0,
+}, {
+    hash: 6280aa92,
+    name: coversPrices,
+    type: java.util.Map<java.lang.String, java.math.BigDecimal>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@6280aa92,
+}, ]
+
+Return: {
+    hash: 7d82b7f0,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7d82b7f0,
+}
+}:
+
+public java.util.Map pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceResult#getCoversPrices:{
+Args: []
+
+Fields: [{
+    hash: 7d82b7f0,
+    name: totalPrice,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7d82b7f0,
+}, {
+    hash: 6280aa92,
+    name: coversPrices,
+    type: java.util.Map<java.lang.String, java.math.BigDecimal>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@6280aa92,
+}, ]
+
+Return: {
+    hash: 6280aa92,
+    name: null,
+    type: java.util.HashMap,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@6280aa92,
+}
+}:
+

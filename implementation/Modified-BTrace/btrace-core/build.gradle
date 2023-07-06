@@ -1,0 +1,33 @@
+import org.apache.tools.ant.filters.*
+
+plugins {
+    alias(libs.plugins.versioning)
+}
+
+dependencies {
+    implementation group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.19'
+    implementation group: 'org.codehaus.jettison', name: 'jettison', version: '1.5.2'
+
+    implementation libs.slf4j
+    implementation libs.slf4j.simple
+    implementation libs.jctools
+    implementation libs.asm
+    implementation libs.asm.util
+}
+
+compileJava {
+    sourceCompatibility = 8
+    targetCompatibility = 8
+    println "Java 11 Home: ${project.property("JAVA_11_HOME")}"
+    println "Java 11 Home: ${System.getenv("JAVA_11_HOME")}"
+    println "Java 8 Home: ${JAVA_8_HOME}"
+    options.fork = true
+    options.forkOptions.executable = "${project.property("JAVA_11_HOME")}/bin/javac"
+}
+
+processResources {
+    filter ReplaceTokens, tokens: [
+        "btrace.version": project.version,
+        "hash"          : versioning.info.commit
+    ]
+}

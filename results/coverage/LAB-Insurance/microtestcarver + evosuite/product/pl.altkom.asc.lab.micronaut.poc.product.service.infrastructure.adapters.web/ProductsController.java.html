@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductsController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">product-service</a> &gt; <a href="index.source.html" class="el_package">pl.altkom.asc.lab.micronaut.poc.product.service.infrastructure.adapters.web</a> &gt; <span class="el_source">ProductsController.java</span></div><h1>ProductsController.java</h1><pre class="source lang-java linenums">package pl.altkom.asc.lab.micronaut.poc.product.service.infrastructure.adapters.web;
+
+import io.micronaut.http.annotation.Controller;
+import io.reactivex.Maybe;
+import io.reactivex.Single;
+import lombok.RequiredArgsConstructor;
+import pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.ProductDto;
+import pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.ProductOperations;
+import pl.altkom.asc.lab.micronaut.poc.product.service.domain.Products;
+
+import java.util.List;
+
+@Controller(&quot;/products&quot;)
+<span class="nc" id="L14">@RequiredArgsConstructor</span>
+public class ProductsController implements ProductOperations {
+
+    private final Products products;
+
+    @Override
+    public Single&lt;List&lt;ProductDto&gt;&gt; getAll() {
+<span class="nc" id="L21">        return products.findAll().map(ProductsAssembler::map);</span>
+    }
+
+    @Override
+    public Maybe&lt;ProductDto&gt; get(String productCode) {
+<span class="nc" id="L26">        return products.findOne(productCode).map(ProductsAssembler::map);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

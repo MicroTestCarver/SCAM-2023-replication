@@ -1,0 +1,18 @@
+<list>
+  <pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>
+    <questionCode>TYP</questionCode>
+    <answer class="string">KW</answer>
+  </pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>
+  <pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>
+    <questionCode>AREA</questionCode>
+    <answer class="int">5000</answer>
+  </pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>
+  <pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>
+    <questionCode>NUM_OF_CLAIM</questionCode>
+    <answer class="int">5</answer>
+  </pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>
+  <pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>
+    <questionCode>FLOOD</questionCode>
+    <answer class="string">YES</answer>
+  </pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer>
+</list>

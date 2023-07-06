@@ -1,0 +1,108 @@
+<pl.altkom.asc.lab.micronaut.poc.policy.service.api.v1.commands.createoffer.CreateOfferResult>
+  <offerNumber>6785e034-bd76-46ec-b707-3e90d6117289</offerNumber>
+  <totalPrice>300.00</totalPrice>
+  <coversPrices class="org.hibernate.collection.internal.PersistentMap">
+    <isTempSession>false</isTempSession>
+    <initialized>true</initialized>
+    <owner class="pl.altkom.asc.lab.micronaut.poc.policy.domain.Offer">
+      <id>1</id>
+      <number>6785e034-bd76-46ec-b707-3e90d6117289</number>
+      <productCode>FAI</productCode>
+      <policyFrom>2023-05-25</policyFrom>
+      <policyTo>2023-05-31</policyTo>
+      <answers class="org.hibernate.collection.internal.PersistentMap">
+        <isTempSession>false</isTempSession>
+        <initialized>true</initialized>
+        <owner class="pl.altkom.asc.lab.micronaut.poc.policy.domain.Offer" reference="../.."/>
+        <cachedSize>-1</cachedSize>
+        <role>pl.altkom.asc.lab.micronaut.poc.policy.domain.Offer.answers</role>
+        <key class="long">1</key>
+        <dirty>false</dirty>
+        <elementRemoved>false</elementRemoved>
+        <storedSnapshot class="map">
+          <entry>
+            <string>NUM_OF_CLAIM</string>
+            <string>5</string>
+          </entry>
+          <entry>
+            <string>FLOOD</string>
+            <string>YES</string>
+          </entry>
+          <entry>
+            <string>TYP</string>
+            <string>ZB</string>
+          </entry>
+          <entry>
+            <string>AREA</string>
+            <string>5000</string>
+          </entry>
+        </storedSnapshot>
+        <allowLoadOutsideTransaction>false</allowLoadOutsideTransaction>
+        <map>
+          <entry>
+            <string>NUM_OF_CLAIM</string>
+            <string>5</string>
+          </entry>
+          <entry>
+            <string>FLOOD</string>
+            <string>YES</string>
+          </entry>
+          <entry>
+            <string>AREA</string>
+            <string>5000</string>
+          </entry>
+          <entry>
+            <string>TYP</string>
+            <string>ZB</string>
+          </entry>
+        </map>
+      </answers>
+      <totalPrice>300.00</totalPrice>
+      <coversPrices class="org.hibernate.collection.internal.PersistentMap" reference="../.."/>
+      <status>NEW</status>
+      <creationDate>2023-05-15</creationDate>
+    </owner>
+    <cachedSize>-1</cachedSize>
+    <role>pl.altkom.asc.lab.micronaut.poc.policy.domain.Offer.coversPrices</role>
+    <key class="long">1</key>
+    <dirty>false</dirty>
+    <elementRemoved>false</elementRemoved>
+    <storedSnapshot class="map">
+      <entry>
+        <string>C3</string>
+        <big-decimal>90.00</big-decimal>
+      </entry>
+      <entry>
+        <string>C4</string>
+        <big-decimal>120.00</big-decimal>
+      </entry>
+      <entry>
+        <string>C1</string>
+        <big-decimal>30.00</big-decimal>
+      </entry>
+      <entry>
+        <string>C2</string>
+        <big-decimal>60.00</big-decimal>
+      </entry>
+    </storedSnapshot>
+    <allowLoadOutsideTransaction>false</allowLoadOutsideTransaction>
+    <map class="linked-hash-map">
+      <entry>
+        <string>C3</string>
+        <big-decimal>90.00</big-decimal>
+      </entry>
+      <entry>
+        <string>C4</string>
+        <big-decimal>120.00</big-decimal>
+      </entry>
+      <entry>
+        <string>C1</string>
+        <big-decimal>30.00</big-decimal>
+      </entry>
+      <entry>
+        <string>C2</string>
+        <big-decimal>60.00</big-decimal>
+      </entry>
+    </map>
+  </coversPrices>
+</pl.altkom.asc.lab.micronaut.poc.policy.service.api.v1.commands.createoffer.CreateOfferResult>

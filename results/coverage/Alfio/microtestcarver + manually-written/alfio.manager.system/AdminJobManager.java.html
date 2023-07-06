@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdminJobManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.manager.system</a> &gt; <span class="el_source">AdminJobManager.java</span></div><h1>AdminJobManager.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.manager.system;
+
+import alfio.manager.system.AdminJobExecutor.JobName;
+import alfio.model.result.ErrorCode;
+import alfio.model.result.Result;
+import alfio.model.system.AdminJobSchedule;
+import alfio.repository.system.AdminJobQueueRepository;
+import alfio.util.ClockProvider;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.support.TransactionTemplate;
+
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import static alfio.model.system.AdminJobSchedule.Status.EXECUTED;
+import static java.util.stream.Collectors.*;
+
+@Transactional
+<span class="fc" id="L45">@Slf4j</span>
+public class AdminJobManager {
+
+    static final int MAX_ATTEMPTS = 17; // will retry for approximately 36h
+<span class="fc" id="L49">    private static final Set&lt;String&gt; ADMIN_JOBS = EnumSet.complementOf(EnumSet.of(JobName.EXECUTE_EXTENSION))</span>
+<span class="fc" id="L50">        .stream()</span>
+<span class="fc" id="L51">        .map(Enum::name)</span>
+<span class="fc" id="L52">        .collect(toSet());</span>
+<span class="fc" id="L53">    private static final Set&lt;String&gt; EXTENSIONS_JOB = Set.of(JobName.EXECUTE_EXTENSION.name());</span>
+    private final Map&lt;JobName, List&lt;AdminJobExecutor&gt;&gt; executorsByJobId;
+    private final AdminJobQueueRepository adminJobQueueRepository;
+    private final TransactionTemplate nestedTransactionTemplate;
+    private final Set&lt;String&gt; executedStatuses;
+    private final Set&lt;String&gt; notExecutedStatuses;
+    private final ClockProvider clockProvider;
+
+    public AdminJobManager(List&lt;AdminJobExecutor&gt; jobExecutors,
+                           AdminJobQueueRepository adminJobQueueRepository,
+                           PlatformTransactionManager transactionManager,
+<span class="fc" id="L64">                           ClockProvider clockProvider) {</span>
+
+<span class="fc" id="L66">        this.executorsByJobId = jobExecutors.stream()</span>
+<span class="fc" id="L67">            .flatMap(je -&gt; je.getJobNames().stream().map(n -&gt; Pair.of(n, je)))</span>
+<span class="fc" id="L68">            .collect(groupingBy(Pair::getLeft, () -&gt; new EnumMap&lt;&gt;(JobName.class), mapping(Pair::getValue, toList())));</span>
+<span class="fc" id="L69">        this.adminJobQueueRepository = adminJobQueueRepository;</span>
+<span class="fc" id="L70">        this.nestedTransactionTemplate = new TransactionTemplate(transactionManager, new DefaultTransactionDefinition(TransactionDefinition.PROPAGATION_NESTED));</span>
+<span class="fc" id="L71">        var executed = EnumSet.of(EXECUTED);</span>
+<span class="fc" id="L72">        this.executedStatuses = executed.stream().map(Enum::name).collect(toSet());</span>
+<span class="fc" id="L73">        this.notExecutedStatuses = EnumSet.complementOf(executed).stream().map(Enum::name).collect(toSet());</span>
+<span class="fc" id="L74">        this.clockProvider = clockProvider;</span>
+<span class="fc" id="L75">    }</span>
+
+    @Scheduled(fixedDelay = 1000L)
+    void processPendingExtensionRetry() {
+<span class="fc" id="L79">        log.trace(&quot;Processing pending extensions retry&quot;);</span>
+<span class="fc" id="L80">        processPendingExtensionRetry(ZonedDateTime.now(clockProvider.getClock()));</span>
+<span class="fc" id="L81">        log.trace(&quot;done processing pending extensions retry&quot;);</span>
+<span class="fc" id="L82">    }</span>
+
+    // internal method invoked by tests
+    void processPendingExtensionRetry(ZonedDateTime timestamp) {
+<span class="fc" id="L86">        internalProcessPendingSchedules(adminJobQueueRepository.loadPendingSchedules(EXTENSIONS_JOB, timestamp));</span>
+<span class="fc" id="L87">    }</span>
+
+    @Scheduled(fixedDelay = 60 * 1000)
+    void processPendingRequests() {
+<span class="fc" id="L91">        log.trace(&quot;Processing pending requests&quot;);</span>
+<span class="fc" id="L92">        internalProcessPendingSchedules(adminJobQueueRepository.loadPendingSchedules(ADMIN_JOBS, ZonedDateTime.now(clockProvider.getClock())));</span>
+<span class="fc" id="L93">        log.trace(&quot;done processing pending requests&quot;);</span>
+<span class="fc" id="L94">    }</span>
+
+    private void internalProcessPendingSchedules(List&lt;AdminJobSchedule&gt; pendingSchedules) {
+<span class="fc" id="L97">        pendingSchedules.stream()</span>
+<span class="fc" id="L98">            .map(this::processPendingRequest)</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">            .filter(p -&gt; !p.getRight().isEmpty())</span>
+<span class="fc" id="L100">            .forEach(scheduleWithResults -&gt; {</span>
+<span class="fc" id="L101">                var schedule = scheduleWithResults.getLeft();</span>
+<span class="fc" id="L102">                var partitionedResults = scheduleWithResults.getRight().stream().collect(Collectors.partitioningBy(Result::isSuccess));</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">                if(!partitionedResults.get(false).isEmpty()) {</span>
+<span class="fc" id="L104">                    partitionedResults.get(false).forEach(r -&gt; log.warn(&quot;Processing failed for {}: {}&quot;, schedule.getJobName(), r.getErrors()));</span>
+<span class="pc bpc" id="L105" title="2 of 4 branches missed.">                    if (schedule.getJobName() != JobName.EXECUTE_EXTENSION || schedule.getAttempts() &gt; MAX_ATTEMPTS) {</span>
+<span class="nc" id="L106">                        adminJobQueueRepository.updateSchedule(schedule.getId(), AdminJobSchedule.Status.FAILED, ZonedDateTime.now(clockProvider.getClock()), Map.of());</span>
+                    } else {
+<span class="fc" id="L108">                        var nextExecution = getNextExecution(schedule.getAttempts());</span>
+<span class="fc" id="L109">                        var extensionName = schedule.getMetadata().get(&quot;extensionName&quot;);</span>
+<span class="fc" id="L110">                        log.debug(&quot;scheduling failed extension {} to be executed at {}&quot;, extensionName, nextExecution);</span>
+<span class="fc" id="L111">                        adminJobQueueRepository.scheduleRetry(schedule.getId(), nextExecution);</span>
+<span class="fc" id="L112">                    }</span>
+                } else {
+<span class="fc" id="L114">                    partitionedResults.get(true).forEach(result -&gt; {</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">                        if(result.getData() != null) {</span>
+<span class="fc" id="L116">                            log.trace(&quot;Message from {}: {}&quot;, schedule.getJobName(), result.getData());</span>
+                        }
+<span class="fc" id="L118">                    });</span>
+<span class="fc" id="L119">                    adminJobQueueRepository.updateSchedule(schedule.getId(), EXECUTED, ZonedDateTime.now(clockProvider.getClock()), Map.of());</span>
+                }
+<span class="fc" id="L121">            });</span>
+<span class="fc" id="L122">    }</span>
+
+    static ZonedDateTime getNextExecution(int currentAttempt) {
+<span class="fc" id="L125">        return ZonedDateTime.now(ClockProvider.clock())</span>
+<span class="fc" id="L126">            .plusSeconds((long) Math.pow(2, currentAttempt + 1D));</span>
+    }
+
+    @Scheduled(cron = &quot;#{environment.acceptsProfiles('dev') ? '0 * * * * *' : '0 0 0 * * *'}&quot;)
+    void cleanupExpiredRequests() {
+<span class="fc" id="L131">        log.trace(&quot;Cleanup expired requests&quot;);</span>
+<span class="fc" id="L132">        ZonedDateTime now = ZonedDateTime.now(clockProvider.getClock());</span>
+<span class="fc" id="L133">        int deleted = adminJobQueueRepository.removePastSchedules(now.minusDays(1), executedStatuses);</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">        if(deleted &gt; 0) {</span>
+<span class="nc" id="L135">            log.trace(&quot;Deleted {} executed jobs&quot;, deleted);</span>
+        }
+<span class="fc" id="L137">        deleted = adminJobQueueRepository.removePastSchedules(now.minusWeeks(1), notExecutedStatuses);</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">        if(deleted &gt; 0) {</span>
+<span class="nc" id="L139">            log.warn(&quot;Deleted {} NOT executed jobs&quot;, deleted);</span>
+        }
+<span class="fc" id="L141">    }</span>
+
+    public boolean scheduleExecution(JobName jobName, Map&lt;String, Object&gt; metadata) {
+<span class="nc" id="L144">        return scheduleExecution(jobName, metadata, ZonedDateTime.now(clockProvider.getClock()).truncatedTo(ChronoUnit.MINUTES));</span>
+    }
+
+    public boolean scheduleExecution(JobName jobName, Map&lt;String, Object&gt; metadata, ZonedDateTime executionTime) {
+<span class="nc" id="L148">        return executionScheduler(jobName, metadata, executionTime).apply(adminJobQueueRepository);</span>
+    }
+
+    private Pair&lt;AdminJobSchedule, List&lt;Result&lt;String&gt;&gt;&gt; processPendingRequest(AdminJobSchedule schedule) {
+<span class="fc" id="L152">        return Pair.of(schedule, executorsByJobId.getOrDefault(schedule.getJobName(), List.of())</span>
+<span class="fc" id="L153">            .stream()</span>
+<span class="fc" id="L154">            .map(s -&gt; {</span>
+                try {
+<span class="fc" id="L156">                    return Result.success(nestedTransactionTemplate.execute(status -&gt; s.process(schedule)));</span>
+<span class="fc" id="L157">                } catch (Exception ex) {</span>
+<span class="fc" id="L158">                    return Result.&lt;String&gt;error(ErrorCode.custom(&quot;exception&quot;, ex.getMessage()));</span>
+                }
+            })
+<span class="fc" id="L161">            .collect(Collectors.toList()));</span>
+    }
+
+    public static Function&lt;AdminJobQueueRepository, Boolean&gt; executionScheduler(JobName jobName, Map&lt;String, Object&gt; metadata, ZonedDateTime executionTime) {
+<span class="fc" id="L165">        return adminJobQueueRepository -&gt; {</span>
+            try {
+<span class="fc" id="L167">                int result = adminJobQueueRepository.schedule(jobName, executionTime, metadata);</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">                if (result == 0) {</span>
+<span class="nc" id="L169">                    log.trace(&quot;Possible duplication detected while inserting {}&quot;, jobName);</span>
+                }
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">                return result == 1;</span>
+<span class="nc" id="L172">            } catch (DataIntegrityViolationException ex) {</span>
+<span class="nc" id="L173">                log.trace(&quot;Integrity violation&quot;, ex);</span>
+<span class="nc" id="L174">                return false;</span>
+            }
+        };
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

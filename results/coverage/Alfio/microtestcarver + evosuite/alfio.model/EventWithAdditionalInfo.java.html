@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EventWithAdditionalInfo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">EventWithAdditionalInfo.java</span></div><h1>EventWithAdditionalInfo.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import alfio.manager.support.extension.ExtensionCapability;
+import alfio.model.metadata.AlfioMetadata;
+import alfio.model.modification.StatisticsContainer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.Delegate;
+
+import java.math.BigDecimal;
+import java.util.*;
+
+@AllArgsConstructor
+@Getter
+public class EventWithAdditionalInfo implements StatisticsContainer, PriceContainer {
+
+    @Delegate(excludes = {EventHiddenFieldContainer.class, PriceContainer.class})
+    @JsonIgnore
+    private final Event event;
+
+    private final List&lt;TicketCategoryWithAdditionalInfo&gt; ticketCategories;
+
+    @Delegate(excludes = {Event.class})
+    @JsonIgnore
+    private final EventStatistic eventStatistic;
+
+    private final Map&lt;String, String&gt; description;
+
+    private final BigDecimal grossIncome;
+    private final AlfioMetadata metadata;
+    private final List&lt;UUID&gt; linkedSubscriptions;
+
+    private final Set&lt;ExtensionCapabilitySummary&gt; supportedCapabilities;
+
+    @JsonIgnore
+    public Event getEvent() {
+<span class="nc" id="L54">        return event;</span>
+    }
+
+    @JsonIgnore
+    public EventStatistic getEventStatistic() {
+<span class="nc" id="L59">       return eventStatistic;</span>
+    }
+
+    @Override
+    @JsonIgnore
+    public int getSrcPriceCts() {
+<span class="nc" id="L65">        return event.getSrcPriceCts();</span>
+    }
+
+    @Override
+    public String getCurrencyCode() {
+<span class="nc" id="L70">        return getCurrency();</span>
+    }
+
+    @Override
+    @JsonIgnore
+    public Optional&lt;BigDecimal&gt; getOptionalVatPercentage() {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        return getVatStatus() != VatStatus.NONE ? Optional.ofNullable(event.getVat()) : Optional.empty();</span>
+    }
+
+    @Override
+    public VatStatus getVatStatus() {
+<span class="nc" id="L81">        return event.getVatStatus();</span>
+    }
+
+    public BigDecimal getVatPercentage() {
+<span class="nc" id="L85">        return getVatPercentageOrZero();</span>
+    }
+
+    public BigDecimal getVat() {
+<span class="nc" id="L89">        return getVAT();</span>
+    }
+
+    public boolean isAddCategoryEnabled() {
+<span class="nc" id="L93">        return ticketCategories.stream()</span>
+<span class="nc" id="L94">            .mapToInt(TicketCategoryWithAdditionalInfo::getMaxTickets)</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">            .sum() &lt; getAvailableSeats();</span>
+    }
+
+    public boolean isContainingUnboundedCategories() {
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        return getTicketCategories().stream().anyMatch(t -&gt; !t.isBounded());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

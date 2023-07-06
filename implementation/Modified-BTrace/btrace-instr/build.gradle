@@ -1,0 +1,66 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+
+plugins {
+    id 'java'
+}
+
+dependencies {
+    implementation libs.slf4j
+    implementation libs.asm
+    implementation libs.asm.tree
+    implementation libs.autoService
+    implementation libs.jctools
+    implementation project(':btrace-core')
+    implementation project(':btrace-services-api')
+    implementation project(':btrace-runtime')
+    implementation project(':btrace-compiler')
+    implementation project(':btrace-statsd')
+
+    testImplementation libs.asm.util
+    testImplementation libs.slf4j.simple
+    testImplementation libs.junit.jupiter
+    testImplementation project(':btrace-client')
+}
+
+compileTestJava {
+    sourceCompatibility = 8
+    targetCompatibility = 8
+    options.fork = true
+    options.forkOptions.executable = "${project.property("JAVA_8_HOME")}/bin/javac"
+}
+
+task compileTestProbes {
+    dependsOn compileTestJava
+    doLast {
+        def path = project(':btrace-instr').sourceSets.main.runtimeClasspath
+
+        def loader = new URLClassLoader(path.collect { f -> f.toURL() } as URL[])
+        def compiler = loader.loadClass('org.openjdk.btrace.compiler.Compiler')
+        def rtCp = sourceSets.main.runtimeClasspath
+
+        def args = ["-cp", rtCp.plus(files(buildDir.toPath().resolve("classes/java/test"), buildDir.toPath().resolve("classes/java/java11_dummy"))).getAsPath(), "-d", buildDir.toPath().resolve("classes")]
+
+        def files = fileTree(dir: "src/test/btrace", include: '**/*.java', exclude: 'verifier/**/*.java').findAll {
+            it != null
+        }.collect { it }
+
+        args.addAll(files)
+
+        compiler.main(args as String[])
+    }
+}
+
+test {
+    dependsOn cleanTest
+    inputs.files compileTestProbes.outputs
+    testLogging.showStandardStreams = true
+
+    def props = new Properties()
+    props.load(Files.newInputStream(Paths.get(System.getenv("JAVA_HOME"), "release")))
+    if (props.getProperty("JAVA_VERSION")?.contains("1.8")) {
+        jvmArgs "-Dproject.version=${project.version}"
+    } else {
+        jvmArgs '-XX:+IgnoreUnrecognizedVMOptions', '--add-opens', 'java.base/jdk.internal.reflect=ALL-UNNAMED', '--add-exports', 'java.base/jdk.internal.reflect=ALL-UNNAMED', "-Dproject.version=${project.version}"
+    }
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasePremiumCalculationRuleList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pricing-service</a> &gt; <a href="index.source.html" class="el_package">pl.altkom.asc.lab.micronaut.poc.pricing.domain</a> &gt; <span class="el_source">BasePremiumCalculationRuleList.java</span></div><h1>BasePremiumCalculationRuleList.java</h1><pre class="source lang-java linenums">package pl.altkom.asc.lab.micronaut.poc.pricing.domain;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class BasePremiumCalculationRuleList {
+
+    private List&lt;BasePremiumCalculationRule&gt; basePriceCalculationRules;
+
+<span class="fc" id="L11">    BasePremiumCalculationRuleList(List&lt;BasePremiumCalculationRule&gt; basePriceCalculationRules) {</span>
+<span class="fc" id="L12">        this.basePriceCalculationRules = basePriceCalculationRules;</span>
+<span class="fc" id="L13">    }</span>
+
+    public void addBasePriceRule(String coverCode, String applyIfFormula, String basePriceFormula) {
+<span class="fc" id="L16">        BasePremiumCalculationRule rule = new BasePremiumCalculationRule(coverCode, applyIfFormula, basePriceFormula);</span>
+<span class="fc" id="L17">        basePriceCalculationRules.add(rule);</span>
+<span class="fc" id="L18">    }</span>
+
+
+    BigDecimal calculateBasePriceFor(Cover cover, Calculation calculation) {
+<span class="nc" id="L22">        return getRulesFor(cover.getCode())</span>
+<span class="nc" id="L23">                .stream()</span>
+<span class="nc" id="L24">                .filter(r -&gt; r.applies(calculation))</span>
+<span class="nc" id="L25">                .map(r -&gt; r.calculateBasePrice(calculation))</span>
+<span class="nc" id="L26">                .findFirst()</span>
+<span class="nc" id="L27">                .orElse(null);</span>
+    }
+
+    private List&lt;BasePremiumCalculationRule&gt; getRulesFor(String coverCode) {
+<span class="nc" id="L31">        return basePriceCalculationRules</span>
+<span class="nc" id="L32">                .stream()</span>
+<span class="nc" id="L33">                .filter(r -&gt; r.getCoverCode().equals(coverCode))</span>
+<span class="nc" id="L34">                .collect(Collectors.toList());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,142 @@
+### BTrace Log: 08/05/2023, 13:32
+
+public org.springframework.http.ResponseEntity org.springframework.samples.petclinic.rest.controller.OwnerRestController#listOwners(java.lang.String):{
+Args: []
+
+Fields: [{
+    hash: 43c59b0c,
+    name: clinicService,
+    type: org.springframework.samples.petclinic.service.ClinicService,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.springframework.samples.petclinic.service.ClinicServiceImpl@32121140,
+}, {
+    hash: 1abf951a,
+    name: ownerMapper,
+    type: org.springframework.samples.petclinic.mapper.OwnerMapper,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.springframework.samples.petclinic.mapper.OwnerMapperImpl@1abf951a,
+}, {
+    hash: 7bde704a,
+    name: petMapper,
+    type: org.springframework.samples.petclinic.mapper.PetMapper,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.springframework.samples.petclinic.mapper.PetMapperImpl@7bde704a,
+}, {
+    hash: 18b58c77,
+    name: visitMapper,
+    type: org.springframework.samples.petclinic.mapper.VisitMapper,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.springframework.samples.petclinic.mapper.VisitMapperImpl@18b58c77,
+}, ]
+
+interface java.util.Collection org.springframework.samples.petclinic.service.ClinicService#findAllOwners[43c59b0c]
+Args: []
+public java.util.Collection org.springframework.samples.petclinic.service.ClinicServiceImpl#findAllOwners:{
+Args: []
+
+Fields: [{
+    hash: 171282f0,
+    name: petRepository,
+    type: org.springframework.samples.petclinic.repository.PetRepository,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.springframework.samples.petclinic.repository.springdatajpa.SpringDataPetRepositoryImpl@2d34866a,
+}, {
+    hash: 2444b003,
+    name: vetRepository,
+    type: org.springframework.samples.petclinic.repository.VetRepository,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.springframework.data.jpa.repository.support.SimpleJpaRepository@461b9625,
+}, {
+    hash: 492b2abe,
+    name: ownerRepository,
+    type: org.springframework.samples.petclinic.repository.OwnerRepository,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.springframework.data.jpa.repository.support.SimpleJpaRepository@406cc913,
+}, {
+    hash: 79d24859,
+    name: visitRepository,
+    type: org.springframework.samples.petclinic.repository.VisitRepository,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.springframework.samples.petclinic.repository.springdatajpa.SpringDataVisitRepositoryImpl@29d81c22,
+}, {
+    hash: 75fc1cfb,
+    name: specialtyRepository,
+    type: org.springframework.samples.petclinic.repository.SpecialtyRepository,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.springframework.samples.petclinic.repository.springdatajpa.SpringDataSpecialtyRepositoryImpl@3e4636c3,
+}, {
+    hash: 5c031c3d,
+    name: petTypeRepository,
+    type: org.springframework.samples.petclinic.repository.PetTypeRepository,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.springframework.samples.petclinic.repository.springdatajpa.SpringDataPetTypeRepositoryImpl@680937c9,
+}, ]
+
+interface java.util.Collection org.springframework.samples.petclinic.repository.OwnerRepository#findAll[492b2abe]
+Args: []
+
+Return: {
+    hash: a1f00d9,
+    name: null,
+    type: java.util.ArrayList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@a1f00d9,
+}
+}:
+
+interface java.util.List org.springframework.samples.petclinic.mapper.OwnerMapper#toOwnerDtoCollection(java.util.Collection)[1abf951a]
+Args: [{
+    hash: a1f00d9,
+    name: null,
+    type: java.util.ArrayList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@a1f00d9,
+}, ]
+
+Return: {
+    hash: 6b0bff8,
+    name: null,
+    type: org.springframework.http.ResponseEntity,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.springframework.http.ResponseEntity@6b0bff8,
+}
+}:

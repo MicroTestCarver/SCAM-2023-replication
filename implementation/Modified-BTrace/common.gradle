@@ -1,0 +1,94 @@
+//
+// This file is to be applied to every subproject.
+//
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+project.group = 'org.openjdk.btrace'
+project.version = '2.3.0-SNAPSHOT'
+
+sourceCompatibility = '8'
+targetCompatibility = '8'
+
+if (!project.hasProperty("JAVA_8_HOME")) {
+    project.ext.setProperty("JAVA_8_HOME", System.getenv("JAVA_8_HOME"))
+}
+if (!project.hasProperty("JAVA_9_HOME")) {
+    project.ext.setProperty("JAVA_9_HOME", System.getenv("JAVA_9_HOME"))
+}
+if (!project.hasProperty("JAVA_11_HOME")) {
+    project.ext.setProperty("JAVA_11_HOME", System.getenv("JAVA_11_HOME"))
+}
+if (!project.hasProperty("JAVA_16_HOME")) {
+    project.ext.setProperty("JAVA_16_HOME", System.getenv("JAVA_16_HOME"))
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+compileJava {
+    options.fork = true
+    options.forkOptions.executable = "${project.property("JAVA_8_HOME")}/bin/javac"
+}
+
+repositories {
+    mavenCentral()
+    // You may define additional repositories, or even remove "mavenCentral()".
+    // Read more about repositories here:
+    //   http://www.gradle.org/docs/current/userguide/dependency_management.html#sec:repositories
+}
+
+dependencies {
+    // Adding dependencies here will add the dependencies to each subproject.
+	testImplementation libs.junit.jupiter
+}
+
+String mavenArtifactId = name
+
+javadoc {
+    options.addStringOption('Xdoclint:all,-missing', '-quiet')
+    executable = "${JAVA_8_HOME}/bin/javadoc"
+    failOnError true
+}
+
+task sourcesJar(type: Jar, dependsOn: classes, description: 'Creates a jar from the source files.') {
+    archiveClassifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    archiveClassifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives jar
+    archives sourcesJar
+    archives javadocJar
+}
+
+task createFolders(description: 'Creates the source folders if they do not exist.') doLast {
+    sourceSets*.allSource*.srcDirs*.each { File srcDir ->
+        if (!srcDir.isDirectory()) {
+            println "Creating source folder: ${srcDir}"
+            srcDir.mkdirs()
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+    // Always run tests, even when nothing changed.
+    dependsOn 'cleanTest'
+
+    // Show test results.
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}

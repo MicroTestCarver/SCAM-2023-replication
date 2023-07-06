@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SubscriptionDescriptorWithAdditionalInfo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.controller.api.v2.model</a> &gt; <span class="el_source">SubscriptionDescriptorWithAdditionalInfo.java</span></div><h1>SubscriptionDescriptorWithAdditionalInfo.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.controller.api.v2.model;
+
+import alfio.controller.support.Formatters;
+import alfio.model.PriceContainer;
+import alfio.model.PurchaseContext;
+import alfio.model.subscription.SubscriptionDescriptor;
+import alfio.util.MonetaryUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+
+import java.util.List;
+import java.util.Map;
+
+@AllArgsConstructor
+public class SubscriptionDescriptorWithAdditionalInfo implements ApiPurchaseContext {
+    private final SubscriptionDescriptor subscriptionDescriptor;
+    private final InvoicingConfiguration invoicingConfiguration;
+    private final AnalyticsConfiguration analyticsConfiguration;
+    private final EventWithAdditionalInfo.CaptchaConfiguration captchaConfiguration;
+
+    //payment related information
+    private final String bankAccount;
+    private final List&lt;String&gt; bankAccountOwner;
+    //
+
+    private final String organizationEmail;
+    private final String organizationName;
+
+    private final DatesWithTimeZoneOffset salePeriod;
+    private final Map&lt;String, String&gt; formattedOnSaleFrom;
+    private final Map&lt;String, String&gt; formattedOnSaleTo;
+    private final String timeZone;
+    private final Map&lt;String, String&gt; formattedValidFrom;
+    private final Map&lt;String, String&gt; formattedValidTo;
+    private final Integer numAvailable;
+
+    @Override
+    public InvoicingConfiguration getInvoicingConfiguration() {
+<span class="nc" id="L55">        return invoicingConfiguration;</span>
+    }
+
+    @Override
+    public EventWithAdditionalInfo.AssignmentConfiguration getAssignmentConfiguration() {
+<span class="nc" id="L60">        return new EventWithAdditionalInfo.AssignmentConfiguration(false, false, false);</span>
+    }
+
+    @Override
+    public AnalyticsConfiguration getAnalyticsConfiguration() {
+<span class="nc" id="L65">        return analyticsConfiguration;</span>
+    }
+
+    @Override
+    public boolean isFree() {
+<span class="nc" id="L70">        return subscriptionDescriptor.isFreeOfCharge();</span>
+    }
+
+    @Override
+    public String getCurrency() {
+<span class="nc" id="L75">        return subscriptionDescriptor.getCurrency();</span>
+    }
+
+    public String getVat() {
+<span class="nc" id="L79">        return subscriptionDescriptor.getVat().toString();</span>
+    }
+
+    @Override
+    @JsonIgnore
+    public PurchaseContext purchaseContext() {
+<span class="nc" id="L85">        return subscriptionDescriptor;</span>
+    }
+
+    @Override
+    public EventWithAdditionalInfo.CaptchaConfiguration getCaptchaConfiguration() {
+<span class="nc" id="L90">        return captchaConfiguration;</span>
+    }
+
+    @Override
+    public boolean isVatIncluded() {
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        return subscriptionDescriptor.getVatStatus() == PriceContainer.VatStatus.INCLUDED;</span>
+    }
+
+    @Override
+    public String getPrivacyPolicyUrl() {
+<span class="nc" id="L100">        return purchaseContext().getPrivacyPolicyLinkOrNull();</span>
+    }
+
+    @Override
+    public String getTermsAndConditionsUrl() {
+<span class="nc" id="L105">        return purchaseContext().getTermsAndConditionsUrl();</span>
+    }
+
+    @Override
+    public String getFileBlobId() {
+<span class="nc" id="L110">        return subscriptionDescriptor.getFileBlobId();</span>
+    }
+
+    @Override
+    public Map&lt;String, String&gt; getDescription() {
+<span class="nc" id="L115">        return Formatters.applyCommonMark(subscriptionDescriptor.getDescription());</span>
+    }
+
+    public Map&lt;String, String&gt; getTitle() {
+<span class="nc" id="L119">        return subscriptionDescriptor.getTitle();</span>
+    }
+
+    @Override
+    public String getBankAccount() {
+<span class="nc" id="L124">        return bankAccount;</span>
+    }
+
+    @Override
+    public List&lt;String&gt; getBankAccountOwner() {
+<span class="nc" id="L129">        return bankAccountOwner;</span>
+    }
+
+    @Override
+    public String getOrganizationEmail() {
+<span class="nc" id="L134">        return organizationEmail;</span>
+    }
+
+    @Override
+    public String getOrganizationName() {
+<span class="nc" id="L139">        return organizationName;</span>
+    }
+
+    public String getFormattedPrice() {
+<span class="nc" id="L143">        return MonetaryUtil.formatCents(subscriptionDescriptor.getPrice(), subscriptionDescriptor.getCurrency());</span>
+    }
+
+    public DatesWithTimeZoneOffset getSalePeriod() {
+<span class="nc" id="L147">        return salePeriod;</span>
+    }
+
+    public Map&lt;String, String&gt; getFormattedOnSaleFrom() {
+<span class="nc" id="L151">        return formattedOnSaleFrom;</span>
+    }
+
+    public Map&lt;String, String&gt; getFormattedOnSaleTo() {
+<span class="nc" id="L155">        return formattedOnSaleTo;</span>
+    }
+
+    public String getTimeZone() {
+<span class="nc" id="L159">        return timeZone;</span>
+    }
+
+    public SubscriptionDescriptor.SubscriptionValidityType getValidityType() {
+<span class="nc" id="L163">        return subscriptionDescriptor.getValidityType();</span>
+    }
+
+    public SubscriptionDescriptor.SubscriptionUsageType getUsageType() {
+<span class="nc" id="L167">        return subscriptionDescriptor.getUsageType();</span>
+    }
+
+    public SubscriptionDescriptor.SubscriptionTimeUnit getValidityTimeUnit() {
+<span class="nc" id="L171">        return subscriptionDescriptor.getValidityTimeUnit();</span>
+    }
+
+    public Integer getValidityUnits() {
+<span class="nc" id="L175">        return subscriptionDescriptor.getValidityUnits();</span>
+    }
+
+    public Map&lt;String, String&gt; getFormattedValidFrom() {
+<span class="nc" id="L179">        return formattedValidFrom;</span>
+    }
+
+    public Map&lt;String, String&gt; getFormattedValidTo() {
+<span class="nc" id="L183">        return formattedValidTo;</span>
+    }
+
+    public Integer getMaxEntries() {
+<span class="nc bnc" id="L187" title="All 2 branches missed.">        return subscriptionDescriptor.getMaxEntries() &gt; 0 ? subscriptionDescriptor.getMaxEntries() : null;</span>
+    }
+
+    @Override
+    public boolean isCanApplySubscriptions() {
+<span class="nc" id="L192">        return false;//cannot buy a subscription with another subscription</span>
+    }
+
+    public Integer getNumAvailable() {
+<span class="nc" id="L196">        return numAvailable;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

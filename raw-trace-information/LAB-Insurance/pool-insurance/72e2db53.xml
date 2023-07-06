@@ -1,0 +1,14 @@
+<list>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+    <code>EUR</code>
+    <label>Europe</label>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+    <code>WORLD</code>
+    <label>World</label>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+    <code>PL</code>
+    <label>Poland</label>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+</list>

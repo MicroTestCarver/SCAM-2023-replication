@@ -1,0 +1,25 @@
+<org.springframework.validation.BeanPropertyBindingResult>
+  <nestedPath></nestedPath>
+  <nestedPathStack class="java.util.ArrayDeque" serialization="custom">
+    <unserializable-parents/>
+    <java.util.ArrayDeque>
+      <default/>
+      <int>0</int>
+    </java.util.ArrayDeque>
+  </nestedPathStack>
+  <objectName>owner</objectName>
+  <messageCodesResolver class="org.springframework.validation.DefaultMessageCodesResolver">
+    <prefix></prefix>
+    <formatter class="org.springframework.validation.DefaultMessageCodesResolver$Format">PREFIX_ERROR_CODE</formatter>
+  </messageCodesResolver>
+  <errors/>
+  <fieldTypes/>
+  <fieldValues/>
+  <suppressedFields/>
+  <target class="org.springframework.samples.petclinic.owner.Owner">
+    <lastName></lastName>
+    <pets/>
+  </target>
+  <autoGrowNestedPaths>true</autoGrowNestedPaths>
+  <autoGrowCollectionLimit>256</autoGrowCollectionLimit>
+</org.springframework.validation.BeanPropertyBindingResult>

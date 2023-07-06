@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CalculatePriceHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pricing-service</a> &gt; <a href="index.source.html" class="el_package">pl.altkom.asc.lab.micronaut.poc.pricing.commands</a> &gt; <span class="el_source">CalculatePriceHandler.java</span></div><h1>CalculatePriceHandler.java</h1><pre class="source lang-java linenums">package pl.altkom.asc.lab.micronaut.poc.pricing.commands;
+
+import pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation;
+import pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff;
+import pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariffs;
+import pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand;
+import pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceResult;
+import pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.dto.QuestionAnswer;
+
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.inject.Singleton;
+
+import io.micronaut.transaction.annotation.ReadOnly;
+import lombok.RequiredArgsConstructor;
+
+@Singleton
+<span class="nc" id="L19">@RequiredArgsConstructor</span>
+public class CalculatePriceHandler {
+
+    private final Tariffs tariffs;
+
+    @ReadOnly
+    public CalculatePriceResult handle(CalculatePriceCommand calculatePriceCommand) {
+<span class="nc" id="L26">        Tariff tariff = tariffs.getByCode(calculatePriceCommand.getProductCode());</span>
+<span class="nc" id="L27">        Calculation calculation = tariff.calculatePrice(toCalculation(calculatePriceCommand));</span>
+
+<span class="nc" id="L29">        return resultFromCalculation(calculation);</span>
+    }
+
+    public Calculation toCalculation(CalculatePriceCommand calculatePriceCommand) {
+<span class="nc" id="L33">        return new Calculation(</span>
+<span class="nc" id="L34">                calculatePriceCommand.getProductCode(),</span>
+<span class="nc" id="L35">                calculatePriceCommand.getPolicyFrom(),</span>
+<span class="nc" id="L36">                calculatePriceCommand.getPolicyTo(),</span>
+<span class="nc" id="L37">                calculatePriceCommand.getSelectedCovers(),</span>
+<span class="nc" id="L38">                calculatePriceCommand.getAnswers().stream()</span>
+<span class="nc" id="L39">                        .collect(Collectors.toMap(QuestionAnswer::getQuestionCode, QuestionAnswer::getAnswer))</span>
+        );
+    }
+
+    private CalculatePriceResult resultFromCalculation(Calculation calculation) {
+<span class="nc" id="L44">        return new CalculatePriceResult(</span>
+<span class="nc" id="L45">                calculation.getTotalPremium(),</span>
+<span class="nc" id="L46">                calculation.getCovers().entrySet().stream()</span>
+<span class="nc" id="L47">                        .collect(Collectors.toMap(Map.Entry::getKey, e -&gt; e.getValue().getPrice()))</span>
+        );
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

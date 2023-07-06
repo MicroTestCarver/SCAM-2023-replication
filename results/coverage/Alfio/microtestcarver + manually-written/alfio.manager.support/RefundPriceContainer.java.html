@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RefundPriceContainer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.manager.support</a> &gt; <span class="el_source">RefundPriceContainer.java</span></div><h1>RefundPriceContainer.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.manager.support;
+
+import alfio.model.PriceContainer;
+
+import java.math.BigDecimal;
+import java.util.Optional;
+
+
+public class RefundPriceContainer implements PriceContainer {
+
+    private final int priceCts;
+    private final String currencyCode;
+    private final BigDecimal vatPercentage;
+    private final VatStatus vatStatus;
+
+    public RefundPriceContainer(int priceCts,
+                                String currencyCode,
+                                VatStatus reservationVatStatus,
+<span class="nc" id="L35">                                BigDecimal vatPercentage) {</span>
+<span class="nc" id="L36">        this.priceCts = priceCts;</span>
+<span class="nc" id="L37">        this.currencyCode = currencyCode;</span>
+<span class="nc" id="L38">        this.vatPercentage = vatPercentage;</span>
+<span class="nc" id="L39">        this.vatStatus = determineRefundVatStatus(reservationVatStatus);</span>
+<span class="nc" id="L40">    }</span>
+
+    @Override
+    public int getSrcPriceCts() {
+<span class="nc" id="L44">        return priceCts;</span>
+    }
+
+    @Override
+    public String getCurrencyCode() {
+<span class="nc" id="L49">        return currencyCode;</span>
+    }
+
+    @Override
+    public Optional&lt;BigDecimal&gt; getOptionalVatPercentage() {
+<span class="nc" id="L54">        return Optional.ofNullable(vatPercentage);</span>
+    }
+
+    @Override
+    public VatStatus getVatStatus() {
+<span class="nc" id="L59">        return vatStatus;</span>
+    }
+
+    private static VatStatus determineRefundVatStatus(VatStatus reservationVatStatus) {
+<span class="nc bnc" id="L63" title="All 5 branches missed.">        switch (reservationVatStatus) {</span>
+            case NOT_INCLUDED_NOT_CHARGED:
+            case INCLUDED_NOT_CHARGED:
+<span class="nc" id="L66">                return VatStatus.NOT_INCLUDED_NOT_CHARGED;</span>
+            case NOT_INCLUDED_EXEMPT:
+            case INCLUDED_EXEMPT:
+<span class="nc" id="L69">                return VatStatus.NOT_INCLUDED_EXEMPT;</span>
+            case INCLUDED:
+            case NOT_INCLUDED:
+<span class="nc" id="L72">                return VatStatus.INCLUDED;</span>
+            case NONE:
+<span class="nc" id="L74">                return VatStatus.NONE;</span>
+            default:
+<span class="nc" id="L76">                throw new IllegalStateException(&quot;Vat status &quot;+reservationVatStatus+ &quot; not mapped&quot;);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

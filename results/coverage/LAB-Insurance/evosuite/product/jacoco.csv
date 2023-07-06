@@ -1,0 +1,14 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+product-service,pl.altkom.asc.lab.micronaut.poc.product.service.infrastructure.adapters.db,ProductsRepository,42,0,0,0,15,0,6,0,6,0
+product-service,pl.altkom.asc.lab.micronaut.poc.product.service.init,DataLoader,77,0,8,0,11,0,10,0,6,0
+product-service,pl.altkom.asc.lab.micronaut.poc.product.service.init,DemoProductsFactory,0,357,0,0,0,30,0,5,0,5
+product-service,pl.altkom.asc.lab.micronaut.poc.product.service,ProductApplication,9,0,0,0,3,0,2,0,2,0
+product-service,pl.altkom.asc.lab.micronaut.poc.product.service.infrastructure.adapters.web,ProductsAssembler,159,0,12,0,44,0,17,0,11,0
+product-service,pl.altkom.asc.lab.micronaut.poc.product.service.infrastructure.adapters.web,ProductsController,19,0,0,0,3,0,3,0,3,0
+product-service,pl.altkom.asc.lab.micronaut.poc.product.service.domain,ChoiceQuestion,6,29,0,0,2,4,2,2,2,2
+product-service,pl.altkom.asc.lab.micronaut.poc.product.service.domain,Choice,44,9,10,0,11,4,9,1,4,1
+product-service,pl.altkom.asc.lab.micronaut.poc.product.service.domain,DateQuestion,9,0,0,0,3,0,2,0,2,0
+product-service,pl.altkom.asc.lab.micronaut.poc.product.service.domain,Question,0,24,0,0,0,9,0,5,0,5
+product-service,pl.altkom.asc.lab.micronaut.poc.product.service.domain,Cover,18,18,0,0,6,7,6,1,6,1
+product-service,pl.altkom.asc.lab.micronaut.poc.product.service.domain,Product,41,71,1,1,14,21,5,9,4,9
+product-service,pl.altkom.asc.lab.micronaut.poc.product.service.domain,NumericQuestion,3,6,0,0,1,2,1,1,1,1

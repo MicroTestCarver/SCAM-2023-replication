@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicketReservationInvoicingAdditionalInfo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">TicketReservationInvoicingAdditionalInfo.java</span></div><h1>TicketReservationInvoicingAdditionalInfo.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+public class TicketReservationInvoicingAdditionalInfo {
+
+    private final ItalianEInvoicing italianEInvoicing;
+
+    public boolean isEmpty() {
+<span class="pc bpc" id="L29" title="1 of 4 branches missed.">        return italianEInvoicing == null || italianEInvoicing.isEmpty();</span>
+    }
+
+    public boolean getEmpty() {
+<span class="fc" id="L33">        return isEmpty();</span>
+    }
+
+    //
+    // https://github.com/alfio-event/alf.io/issues/573
+    //
+    @Getter
+    @AllArgsConstructor
+    public static class ItalianEInvoicing {
+
+<span class="fc" id="L43">        public enum ReferenceType {</span>
+<span class="fc" id="L44">            ADDRESSEE_CODE, /* Codice destinatario */</span>
+<span class="fc" id="L45">            PEC, /* (pec = email) */</span>
+<span class="fc" id="L46">            NONE</span>
+        }
+
+        private final String fiscalCode;
+        private final ReferenceType referenceType;
+        private final String addresseeCode;
+        private final String pec;
+        private final boolean splitPayment;
+
+        public String getReferenceTypeAsString() {
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">            return referenceType == null ? &quot;&quot; : referenceType.toString();</span>
+        }
+
+        public String getReference() {
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">            if(referenceType == ReferenceType.ADDRESSEE_CODE) {</span>
+<span class="nc" id="L61">                return addresseeCode;</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">            } else if(referenceType == ReferenceType.PEC) {</span>
+<span class="nc" id="L63">                return pec;</span>
+            }
+<span class="fc" id="L65">            return null;</span>
+        }
+
+        public boolean isEmpty() {
+<span class="pc bpc" id="L69" title="7 of 8 branches missed.">            return fiscalCode == null</span>
+                &amp;&amp; referenceType == null
+                &amp;&amp; addresseeCode == null
+                &amp;&amp; pec == null;
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

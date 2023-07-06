@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdditionalService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">AdditionalService.java</span></div><h1>AdditionalService.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import alfio.util.ClockProvider;
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import lombok.Getter;
+import org.springframework.security.crypto.codec.Hex;
+
+import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Optional;
+
+@Getter
+public class AdditionalService {
+
+
+<span class="nc" id="L37">    public enum VatType {</span>
+<span class="nc" id="L38">        INHERITED,</span>
+<span class="nc" id="L39">        NONE,</span>
+<span class="nc" id="L40">        CUSTOM_INCLUDED,</span>
+<span class="nc" id="L41">        CUSTOM_EXCLUDED</span>
+    }
+
+<span class="nc" id="L44">    public enum AdditionalServiceType {</span>
+<span class="nc" id="L45">        DONATION, SUPPLEMENT</span>
+    }
+
+<span class="nc" id="L48">    public enum SupplementPolicy {</span>
+<span class="nc" id="L49">        MANDATORY_ONE_FOR_TICKET,</span>
+<span class="nc" id="L50">        OPTIONAL_UNLIMITED_AMOUNT,</span>
+<span class="nc" id="L51">        OPTIONAL_MAX_AMOUNT_PER_TICKET {</span>
+            @Override
+            public boolean isValid(int quantity, AdditionalService as, int ticketsCount) {
+<span class="nc bnc" id="L54" title="All 2 branches missed.">                return quantity &lt;= ticketsCount*as.getMaxQtyPerOrder();</span>
+            }
+        },
+<span class="nc" id="L57">        OPTIONAL_MAX_AMOUNT_PER_RESERVATION {</span>
+            @Override
+            public boolean isValid(int quantity, AdditionalService as, int selectionCount) {
+<span class="nc bnc" id="L60" title="All 2 branches missed.">                return quantity &lt; as.getMaxQtyPerOrder();</span>
+            }
+        };
+
+        public boolean isValid(int quantity, AdditionalService as, int selectionCount) {
+<span class="nc" id="L65">            return true;</span>
+        }
+    }
+
+    private final int id;
+    private final int eventId;
+    private final boolean fixPrice;
+    private final int ordinal;
+    private final int availableQuantity;
+    private final int maxQtyPerOrder;
+    private final ZonedDateTime utcInception;
+    private final ZonedDateTime utcExpiration;
+    private final BigDecimal vat;
+    private final VatType vatType;
+    private final AdditionalServiceType type;
+    private final SupplementPolicy supplementPolicy;
+
+    private final Integer srcPriceCts;
+    private final String currencyCode;
+
+    public AdditionalService(@Column(&quot;id&quot;) int id,
+                             @Column(&quot;event_id_fk&quot;) int eventId,
+                             @Column(&quot;fix_price&quot;) boolean fixPrice,
+                             @Column(&quot;ordinal&quot;) int ordinal,
+                             @Column(&quot;available_qty&quot;) int availableQuantity,
+                             @Column(&quot;max_qty_per_order&quot;) int maxQtyPerOrder,
+                             @Column(&quot;inception_ts&quot;) ZonedDateTime utcInception,
+                             @Column(&quot;expiration_ts&quot;) ZonedDateTime utcExpiration,
+                             @Column(&quot;vat&quot;) BigDecimal vat,
+                             @Column(&quot;vat_type&quot;) VatType vatType,
+                             @Column(&quot;src_price_cts&quot;) Integer srcPriceCts,
+                             @Column(&quot;service_type&quot;) AdditionalServiceType type,
+                             @Column(&quot;supplement_policy&quot;) SupplementPolicy supplementPolicy,
+<span class="nc" id="L98">                             @Column(&quot;currency_code&quot;) String currencyCode) {</span>
+<span class="nc" id="L99">        this.id = id;</span>
+<span class="nc" id="L100">        this.eventId = eventId;</span>
+<span class="nc" id="L101">        this.fixPrice = fixPrice;</span>
+<span class="nc" id="L102">        this.ordinal = ordinal;</span>
+<span class="nc" id="L103">        this.availableQuantity = availableQuantity;</span>
+<span class="nc" id="L104">        this.maxQtyPerOrder = maxQtyPerOrder;</span>
+<span class="nc" id="L105">        this.utcInception = utcInception;</span>
+<span class="nc" id="L106">        this.utcExpiration = utcExpiration;</span>
+<span class="nc" id="L107">        this.vat = vat;</span>
+<span class="nc" id="L108">        this.vatType = vatType;</span>
+<span class="nc" id="L109">        this.srcPriceCts = srcPriceCts;</span>
+<span class="nc" id="L110">        this.type = type;</span>
+<span class="nc" id="L111">        this.supplementPolicy = supplementPolicy;</span>
+<span class="nc" id="L112">        this.currencyCode = currencyCode;</span>
+<span class="nc" id="L113">    }</span>
+
+    public ZonedDateTime getInception(ZoneId zoneId) {
+<span class="nc" id="L116">        return Optional.ofNullable(utcInception).map(i -&gt; i.withZoneSameInstant(zoneId)).orElseGet(() -&gt; ZonedDateTime.now(ClockProvider.clock().withZone(zoneId)).minus(1L, ChronoUnit.HOURS));</span>
+    }
+
+    public ZonedDateTime getExpiration(ZoneId zoneId) {
+<span class="nc" id="L120">        return Optional.ofNullable(utcExpiration).map(i -&gt; i.withZoneSameInstant(zoneId)).orElseGet(() -&gt; ZonedDateTime.now(ClockProvider.clock().withZone(zoneId)).plus(1L, ChronoUnit.HOURS));</span>
+    }
+
+    public boolean getSaleable() {
+<span class="nc" id="L124">        ZonedDateTime now = ZonedDateTime.now(ClockProvider.clock());</span>
+<span class="nc bnc" id="L125" title="All 4 branches missed.">        return getUtcInception().isBefore(now) &amp;&amp; getUtcExpiration().isAfter(now);</span>
+    }
+
+    public String getChecksum() {
+        try {
+<span class="nc" id="L130">            MessageDigest digest = MessageDigest.getInstance(&quot;SHA-256&quot;);</span>
+<span class="nc" id="L131">            digest.update(Boolean.toString(fixPrice).getBytes(StandardCharsets.UTF_8));</span>
+<span class="nc" id="L132">            digest.update(Integer.toString(ordinal).getBytes(StandardCharsets.UTF_8));</span>
+<span class="nc" id="L133">            digest.update(Integer.toString(availableQuantity).getBytes(StandardCharsets.UTF_8));</span>
+<span class="nc" id="L134">            digest.update(Integer.toString(maxQtyPerOrder).getBytes(StandardCharsets.UTF_8));</span>
+<span class="nc" id="L135">            digest.update(utcInception.toString().getBytes(StandardCharsets.UTF_8));</span>
+<span class="nc" id="L136">            digest.update(utcExpiration.toString().getBytes(StandardCharsets.UTF_8));</span>
+<span class="nc" id="L137">            digest.update(Optional.ofNullable(vat).map(BigDecimal::toString).orElse(&quot;&quot;).getBytes(StandardCharsets.UTF_8));</span>
+<span class="nc" id="L138">            digest.update(vatType.name().getBytes(StandardCharsets.UTF_8));</span>
+<span class="nc" id="L139">            digest.update(type.name().getBytes(StandardCharsets.UTF_8));</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">            if (supplementPolicy != null) {</span>
+<span class="nc" id="L141">                digest.update(supplementPolicy.name().getBytes(StandardCharsets.UTF_8));</span>
+            }
+<span class="nc" id="L143">            return new String(Hex.encode(digest.digest()));</span>
+<span class="nc" id="L144">        } catch (NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L145">            throw new IllegalStateException(e);</span>
+        }
+    }
+
+    public static PriceContainer.VatStatus getVatStatus(VatType vatType, PriceContainer.VatStatus eventVatStatus) {
+<span class="nc bnc" id="L150" title="All 5 branches missed.">        switch (vatType) {</span>
+            case INHERITED:
+<span class="nc" id="L152">                return eventVatStatus;</span>
+            case NONE:
+<span class="nc" id="L154">                return PriceContainer.VatStatus.NONE;</span>
+            case CUSTOM_EXCLUDED:
+<span class="nc" id="L156">                return PriceContainer.VatStatus.NOT_INCLUDED;</span>
+            case CUSTOM_INCLUDED:
+<span class="nc" id="L158">                return PriceContainer.VatStatus.INCLUDED;</span>
+            default:
+<span class="nc" id="L160">                return PriceContainer.VatStatus.NOT_INCLUDED;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

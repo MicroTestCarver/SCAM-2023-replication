@@ -1,0 +1,68 @@
+plugins {
+  id 'java'
+  alias(libs.plugins.jmh)
+}
+
+description 'A JMH benchmark to assert the overhead imposed by various types of BTrace instrumentation.'
+
+def env = System.getenv()
+def javaHome = env['JAVA_HOME']
+
+configurations {
+  compilerDeps
+}
+
+dependencies {
+  implementation project(path: ":btrace-dist", configuration: "shadow")
+  implementation project(":btrace-compiler")
+  jmh project(":btrace-instr")
+  jmh project(":btrace-runtime")
+  jmh project(":btrace-statsd")
+  jmh libs.jmh
+  jmh libs.jmh.annprocess
+  compilerDeps project(path: ":btrace-dist", configuration: "shadow")
+  compilerDeps project(":btrace-compiler")
+}
+
+task btracec(type: JavaExec) {
+  group 'Build'
+  inputs.files 'src/main/resources/scripts'
+  outputs.dir "${buildDir}/classes/java/main"
+
+  environment('BTRACE_HOME', "$projectDir")
+  classpath configurations.compilerDeps
+  mainClass = 'org.openjdk.btrace.compiler.Compiler'
+  args '-d'
+  args "${buildDir}/classes/java/main/"
+  args '-packext'
+  args 'btclass'
+  args fileTree(dir: "src/jmh/btrace", include: 'TraceScript.java')
+}
+jmhClasses.dependsOn btracec
+
+jmhJar {
+  include 'META-INF/BenchmarkList'
+  include 'META-INF/CompilerHints'
+  include 'org/jctools/**/*'
+  include 'org/objectweb/asm/**'
+  include 'org/openjdk/jmh/**'
+  include 'org/openjdk/btrace/bench/**/*.class'
+  include "org/openjdk/btrace/core/**"
+  include "org/openjdk/btrace/instr/**"
+  include 'org/openjdk/btrace/generated/**/*'
+  include 'org/openjdk/btrace/runtime/**'
+  include 'org/openjdk/btrace/services/**'
+  include "joptsimple/**"
+  include "org/apache/**"
+  include '*.btclass'
+  include 'jmh*'
+}
+
+jmh {
+  duplicateClassesStrategy = DuplicatesStrategy.WARN
+  jvmArgsAppend = ["-Djmh.basedir=${project.buildDir.getParent()}", "-Dproject.version=${project.version}"]
+//  jmhVersion = '1.27'
+  includes = ['org.openjdk.btrace.bench.ClassFilterBenchmark']
+  verbosity = 'EXTRA'
+}
+

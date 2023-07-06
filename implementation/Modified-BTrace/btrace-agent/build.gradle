@@ -1,0 +1,10 @@
+dependencies {
+    implementation libs.slf4j
+    implementation libs.asm
+
+    implementation files("${JAVA_8_HOME}/lib/tools.jar")
+    implementation project(':btrace-core')
+    implementation project(':btrace-services-api')
+    implementation project(':btrace-runtime')
+    implementation project(':btrace-instr')
+}

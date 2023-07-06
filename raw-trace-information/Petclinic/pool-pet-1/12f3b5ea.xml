@@ -1,0 +1,57 @@
+<org.hibernate.collection.internal.PersistentBag>
+  <isTempSession>false</isTempSession>
+  <initialized>true</initialized>
+  <owner class="org.springframework.samples.petclinic.owner.Owner">
+    <id>3</id>
+    <firstName>Eduardo</firstName>
+    <lastName>Rodriquez</lastName>
+    <address>2693 Commerce St.</address>
+    <city>McFarland</city>
+    <telephone>6085558763</telephone>
+    <pets class="org.hibernate.collection.internal.PersistentBag" reference="../.."/>
+  </owner>
+  <cachedSize>-1</cachedSize>
+  <role>org.springframework.samples.petclinic.owner.Owner.pets</role>
+  <key class="int">3</key>
+  <dirty>false</dirty>
+  <elementRemoved>false</elementRemoved>
+  <storedSnapshot class="list">
+    <org.springframework.samples.petclinic.owner.Pet>
+      <id>3</id>
+      <name>Rosy</name>
+      <birthDate>2001-04-17</birthDate>
+      <type>
+        <id>3</id>
+        <name>bird</name>
+      </type>
+      <visits class="org.hibernate.collection.internal.PersistentSet">
+        <isTempSession>false</isTempSession>
+        <initialized>true</initialized>
+        <owner class="org.springframework.samples.petclinic.owner.Pet" reference="../.."/>
+        <cachedSize>-1</cachedSize>
+        <role>org.springframework.samples.petclinic.owner.Pet.visits</role>
+        <key class="int">3</key>
+        <dirty>false</dirty>
+        <elementRemoved>false</elementRemoved>
+        <storedSnapshot class="map">
+          <entry>
+            <org.springframework.samples.petclinic.owner.Visit>
+              <id>3</id>
+              <date>2009-06-04</date>
+              <description>neutered</description>
+            </org.springframework.samples.petclinic.owner.Visit>
+            <org.springframework.samples.petclinic.owner.Visit reference="../org.springframework.samples.petclinic.owner.Visit"/>
+          </entry>
+        </storedSnapshot>
+        <allowLoadOutsideTransaction>false</allowLoadOutsideTransaction>
+        <set class="linked-hash-set">
+          <org.springframework.samples.petclinic.owner.Visit reference="../../storedSnapshot/entry/org.springframework.samples.petclinic.owner.Visit"/>
+        </set>
+      </visits>
+    </org.springframework.samples.petclinic.owner.Pet>
+  </storedSnapshot>
+  <allowLoadOutsideTransaction>false</allowLoadOutsideTransaction>
+  <bag>
+    <org.springframework.samples.petclinic.owner.Pet reference="../../storedSnapshot/org.springframework.samples.petclinic.owner.Pet"/>
+  </bag>
+</org.hibernate.collection.internal.PersistentBag>

@@ -1,0 +1,4 @@
+<org.springframework.samples.petclinic.owner.PetType>
+  <id>1</id>
+  <name>cat</name>
+</org.springframework.samples.petclinic.owner.PetType>

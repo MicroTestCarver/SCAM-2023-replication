@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdditionalServiceItem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">AdditionalServiceItem.java</span></div><h1>AdditionalServiceItem.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import lombok.Getter;
+
+import java.time.ZonedDateTime;
+
+@Getter
+public class AdditionalServiceItem {
+
+<span class="fc" id="L27">    public enum AdditionalServiceItemStatus {</span>
+<span class="fc" id="L28">        FREE, PENDING, TO_BE_PAID, ACQUIRED, CANCELLED, CHECKED_IN, EXPIRED, INVALIDATED, RELEASED</span>
+    }
+
+    private final int id;
+    private final String uuid;
+    private final ZonedDateTime utcCreation;
+    private final ZonedDateTime utcLastModified;
+    private final String ticketsReservationUuid;
+    private final int additionalServiceId;
+    private final AdditionalServiceItemStatus status;
+    private final int eventId;
+
+    private final Integer srcPriceCts;
+    private final Integer finalPriceCts;
+    private final Integer vatCts;
+    private final Integer discountCts;
+    private final String  currencyCode;
+
+    public AdditionalServiceItem(@Column(&quot;id&quot;) int id,
+                                 @Column(&quot;uuid&quot;) String uuid,
+                                 @Column(&quot;creation&quot;) ZonedDateTime utcCreation,
+                                 @Column(&quot;last_modified&quot;) ZonedDateTime utcLastModified,
+                                 @Column(&quot;tickets_reservation_uuid&quot;) String ticketsReservationUuid,
+                                 @Column(&quot;additional_service_id_fk&quot;) int additionalServiceId,
+                                 @Column(&quot;status&quot;) AdditionalServiceItemStatus status,
+                                 @Column(&quot;event_id_fk&quot;) int eventId,
+                                 @Column(&quot;src_price_cts&quot;) Integer srcPriceCts,
+                                 @Column(&quot;final_price_cts&quot;) Integer finalPriceCts,
+                                 @Column(&quot;vat_cts&quot;) Integer vatCts,
+                                 @Column(&quot;discount_cts&quot;) Integer discountCts,
+<span class="fc" id="L58">                                 @Column(&quot;currency_code&quot;) String currencyCode) {</span>
+<span class="fc" id="L59">        this.id = id;</span>
+<span class="fc" id="L60">        this.uuid = uuid;</span>
+<span class="fc" id="L61">        this.utcCreation = utcCreation;</span>
+<span class="fc" id="L62">        this.utcLastModified = utcLastModified;</span>
+<span class="fc" id="L63">        this.ticketsReservationUuid = ticketsReservationUuid;</span>
+<span class="fc" id="L64">        this.additionalServiceId = additionalServiceId;</span>
+<span class="fc" id="L65">        this.status = status;</span>
+<span class="fc" id="L66">        this.eventId = eventId;</span>
+<span class="fc" id="L67">        this.srcPriceCts = srcPriceCts;</span>
+<span class="fc" id="L68">        this.finalPriceCts = finalPriceCts;</span>
+<span class="fc" id="L69">        this.vatCts = vatCts;</span>
+<span class="fc" id="L70">        this.discountCts = discountCts;</span>
+<span class="fc" id="L71">        this.currencyCode = currencyCode;</span>
+<span class="fc" id="L72">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,33 @@
+<org.hibernate.collection.internal.PersistentSet>
+  <isTempSession>false</isTempSession>
+  <initialized>true</initialized>
+  <owner class="org.springframework.samples.petclinic.owner.Pet">
+    <id>3</id>
+    <name>Rosy</name>
+    <birthDate>2001-04-17</birthDate>
+    <type>
+      <id>3</id>
+      <name>bird</name>
+    </type>
+    <visits class="org.hibernate.collection.internal.PersistentSet" reference="../.."/>
+  </owner>
+  <cachedSize>-1</cachedSize>
+  <role>org.springframework.samples.petclinic.owner.Pet.visits</role>
+  <key class="int">3</key>
+  <dirty>false</dirty>
+  <elementRemoved>false</elementRemoved>
+  <storedSnapshot class="map">
+    <entry>
+      <org.springframework.samples.petclinic.owner.Visit>
+        <id>3</id>
+        <date>2009-06-04</date>
+        <description>neutered</description>
+      </org.springframework.samples.petclinic.owner.Visit>
+      <org.springframework.samples.petclinic.owner.Visit reference="../org.springframework.samples.petclinic.owner.Visit"/>
+    </entry>
+  </storedSnapshot>
+  <allowLoadOutsideTransaction>false</allowLoadOutsideTransaction>
+  <set class="linked-hash-set">
+    <org.springframework.samples.petclinic.owner.Visit reference="../../storedSnapshot/entry/org.springframework.samples.petclinic.owner.Visit"/>
+  </set>
+</org.hibernate.collection.internal.PersistentSet>

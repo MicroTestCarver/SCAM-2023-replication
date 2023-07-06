@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DiscountMarkupRule.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pricing-service</a> &gt; <a href="index.source.html" class="el_package">pl.altkom.asc.lab.micronaut.poc.pricing.domain</a> &gt; <span class="el_source">DiscountMarkupRule.java</span></div><h1>DiscountMarkupRule.java</h1><pre class="source lang-java linenums">package pl.altkom.asc.lab.micronaut.poc.pricing.domain;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.mvel2.MVEL;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
+
+@Entity
+@DiscriminatorColumn(name = &quot;type&quot;)
+@Table(name = &quot;discount_markup_rule&quot;)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+<span class="fc" id="L14">@NoArgsConstructor</span>
+@Getter
+public abstract class DiscountMarkupRule {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+<span class="nc" id="L20">    private Long id;</span>
+
+    @ManyToOne
+    @JoinColumn(name = &quot;tariff_id&quot;)
+<span class="nc" id="L24">    protected Tariff tariff;</span>
+
+    @Column(name = &quot;apply_if_formula&quot;)
+<span class="nc" id="L27">    protected String applyIfFormula;</span>
+
+    @Column(name = &quot;param_value&quot;)
+<span class="nc" id="L30">    protected BigDecimal paramValue;</span>
+
+    boolean applies(Calculation calculation) {
+<span class="pc bpc" id="L33" title="2 of 4 branches missed.">        return applyIfFormula == null || applyIfFormula.isEmpty()</span>
+<span class="nc" id="L34">                ? true</span>
+<span class="fc" id="L35">                : MVEL.eval(applyIfFormula, calculation.toMap(), Boolean.class);</span>
+    }
+
+    public abstract Calculation apply(Calculation calculation);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

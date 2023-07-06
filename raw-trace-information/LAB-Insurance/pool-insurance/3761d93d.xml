@@ -1,0 +1,7 @@
+<list>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto>
+    <code>NUM_OF_CLAIM</code>
+    <index>3</index>
+    <text>Number of claims in last 5 years</text>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto>
+</list>

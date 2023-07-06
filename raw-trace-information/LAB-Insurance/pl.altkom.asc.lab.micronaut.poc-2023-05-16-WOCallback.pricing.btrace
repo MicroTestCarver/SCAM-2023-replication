@@ -1,0 +1,5211 @@
+### BTrace Log: 16/05/2023, 11:01
+
+public pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceResult pl.altkom.asc.lab.micronaut.poc.pricing.commands.CalculatePriceHandler#handle(pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand):{
+Args: [{
+    hash: 214dae74,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand@214dae74,
+}, ]
+
+Fields: [{
+    hash: 6ef92936,
+    name: $interceptors,
+    type: io.micronaut.aop.Interceptor[][],
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: [[Lio.micronaut.aop.Interceptor;@6ef92936,
+}, {
+    hash: 3ed987e,
+    name: $proxyMethods,
+    type: io.micronaut.inject.ExecutableMethod[],
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: [Lio.micronaut.inject.ExecutableMethod;@3ed987e,
+}, {
+    hash: 18cbc3c2,
+    name: tariffs,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariffs,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariffs$Intercepted@18cbc3c2,
+}, ]
+
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#getProductCode[214dae74]
+interface pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariffs#getByCode(java.lang.String)[18cbc3c2]
+Args: [{
+    hash: 5957856c,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, ]
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#<init>:{
+Args: []
+
+Fields: [{
+    hash: 0,
+    name: id,
+    type: java.lang.Long,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: discountMarkupRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRule>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+special pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation pl.altkom.asc.lab.micronaut.poc.pricing.commands.CalculatePriceHandler#toCalculation(pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand)[384c5a91]
+Args: [{
+    hash: 214dae74,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand@214dae74,
+}, ]
+
+private pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation pl.altkom.asc.lab.micronaut.poc.pricing.commands.CalculatePriceHandler#toCalculation(pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand):{
+Args: [{
+    hash: 214dae74,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand@214dae74,
+}, ]
+
+Fields: [{
+    hash: 6ef92936,
+    name: $interceptors,
+    type: io.micronaut.aop.Interceptor[][],
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: [[Lio.micronaut.aop.Interceptor;@6ef92936,
+}, {
+    hash: 3ed987e,
+    name: $proxyMethods,
+    type: io.micronaut.inject.ExecutableMethod[],
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: [Lio.micronaut.inject.ExecutableMethod;@3ed987e,
+}, {
+    hash: 18cbc3c2,
+    name: tariffs,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariffs,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariffs$Intercepted@18cbc3c2,
+}, ]
+
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#getProductCode[214dae74]
+virtual java.time.LocalDate pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#getPolicyFrom[214dae74]
+virtual java.time.LocalDate pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#getPolicyTo[214dae74]
+virtual java.util.List pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#getSelectedCovers[214dae74]
+virtual java.util.List pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceCommand#getAnswers[214dae74]
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#<init>(java.lang.String, java.time.LocalDate, java.time.LocalDate, java.lang.Iterable, java.util.Map):{
+Args: [{
+    hash: 5957856c,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 5dd8a50b,
+    name: null,
+    type: java.time.LocalDate,
+    index: 1,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5dd8a50b,
+}, {
+    hash: 5bcb0949,
+    name: null,
+    type: java.time.LocalDate,
+    index: 2,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5bcb0949,
+}, {
+    hash: 51bc1611,
+    name: null,
+    type: java.util.ArrayList,
+    index: 3,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@51bc1611,
+}, {
+    hash: 57f7eff2,
+    name: null,
+    type: java.util.HashMap,
+    index: 4,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@57f7eff2,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: totalPremium,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: covers,
+    type: java.util.Map<java.lang.String, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: subject,
+    type: java.util.Map<java.lang.String, java.lang.Object>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+interface void java.lang.Iterable#forEach(java.util.function.Consumer)[51bc1611]
+Args: [{
+    hash: 9859a58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation$$Lambda$1019/0x0000000800b57c20,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation$$Lambda$1019/0x0000000800b57c20@9859a58,
+}, ]
+
+private void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#zeroPrice(java.lang.String):{
+Args: [{
+    hash: 2abeb68c,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, ]
+
+Fields: [{
+    hash: 5957856c,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 5dd8a50b,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5dd8a50b,
+}, {
+    hash: 5bcb0949,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5bcb0949,
+}, {
+    hash: 18c1f1cd,
+    name: totalPremium,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, {
+    hash: c9b2694,
+    name: covers,
+    type: java.util.Map<java.lang.String, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}, {
+    hash: 4eb1df92,
+    name: subject,
+    type: java.util.Map<java.lang.String, java.lang.Object>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@4eb1df92,
+}, ]
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#<init>(java.lang.String, java.math.BigDecimal):{
+Args: [{
+    hash: 2abeb68c,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, {
+    hash: 18c1f1cd,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 1,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+private void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#zeroPrice(java.lang.String):{
+Args: [{
+    hash: 11261513,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, ]
+
+Fields: [{
+    hash: 5957856c,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 5dd8a50b,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5dd8a50b,
+}, {
+    hash: 5bcb0949,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5bcb0949,
+}, {
+    hash: 18c1f1cd,
+    name: totalPremium,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, {
+    hash: c9b2694,
+    name: covers,
+    type: java.util.Map<java.lang.String, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}, {
+    hash: 4eb1df92,
+    name: subject,
+    type: java.util.Map<java.lang.String, java.lang.Object>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@4eb1df92,
+}, ]
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#<init>(java.lang.String, java.math.BigDecimal):{
+Args: [{
+    hash: 11261513,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, {
+    hash: 18c1f1cd,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 1,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+private void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#zeroPrice(java.lang.String):{
+Args: [{
+    hash: 5b142577,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, ]
+
+Fields: [{
+    hash: 5957856c,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 5dd8a50b,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5dd8a50b,
+}, {
+    hash: 5bcb0949,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5bcb0949,
+}, {
+    hash: 18c1f1cd,
+    name: totalPremium,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, {
+    hash: c9b2694,
+    name: covers,
+    type: java.util.Map<java.lang.String, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}, {
+    hash: 4eb1df92,
+    name: subject,
+    type: java.util.Map<java.lang.String, java.lang.Object>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@4eb1df92,
+}, ]
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#<init>(java.lang.String, java.math.BigDecimal):{
+Args: [{
+    hash: 5b142577,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, {
+    hash: 18c1f1cd,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 1,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+private void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#zeroPrice(java.lang.String):{
+Args: [{
+    hash: 1d7901e6,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, ]
+
+Fields: [{
+    hash: 5957856c,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 5dd8a50b,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5dd8a50b,
+}, {
+    hash: 5bcb0949,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5bcb0949,
+}, {
+    hash: 18c1f1cd,
+    name: totalPremium,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, {
+    hash: c9b2694,
+    name: covers,
+    type: java.util.Map<java.lang.String, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}, {
+    hash: 4eb1df92,
+    name: subject,
+    type: java.util.Map<java.lang.String, java.lang.Object>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@4eb1df92,
+}, ]
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#<init>(java.lang.String, java.math.BigDecimal):{
+Args: [{
+    hash: 1d7901e6,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, {
+    hash: 18c1f1cd,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 1,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+Return: {
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}
+}:
+virtual pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#calculatePrice(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation)[4dacb2d6]
+Args: [{
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+public pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#calculatePrice(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation):{
+Args: [{
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+Fields: [{
+    hash: 5b081ac4,
+    name: id,
+    type: java.lang.Long,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 6,
+}, {
+    hash: 1c5e9f2d,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: ba88493,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, {
+    hash: f02fe17,
+    name: discountMarkupRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@f02fe17,
+}, ]
+
+special void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#calcBasePrices(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation)[4dacb2d6]
+Args: [{
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+private void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#calcBasePrices(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation):{
+Args: [{
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+Fields: [{
+    hash: 5b081ac4,
+    name: id,
+    type: java.lang.Long,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 6,
+}, {
+    hash: 1c5e9f2d,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: ba88493,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, {
+    hash: f02fe17,
+    name: discountMarkupRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@f02fe17,
+}, ]
+
+virtual java.util.Map pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#getCovers[34a07b58]
+public java.util.Map pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#getCovers:{
+Args: []
+
+Fields: [{
+    hash: 5957856c,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 5dd8a50b,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5dd8a50b,
+}, {
+    hash: 5bcb0949,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5bcb0949,
+}, {
+    hash: 18c1f1cd,
+    name: totalPremium,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, {
+    hash: c9b2694,
+    name: covers,
+    type: java.util.Map<java.lang.String, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}, {
+    hash: 57f7eff2,
+    name: subject,
+    type: java.util.Map<java.lang.String, java.lang.Object>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@57f7eff2,
+}, ]
+
+Return: {
+    hash: c9b2694,
+    name: null,
+    type: java.util.HashMap,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}
+}:
+virtual pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#rules[4dacb2d6]
+public pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#rules:{
+Args: []
+
+Fields: [{
+    hash: 5b081ac4,
+    name: id,
+    type: java.lang.Long,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 6,
+}, {
+    hash: 1c5e9f2d,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: ba88493,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, {
+    hash: f02fe17,
+    name: discountMarkupRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@f02fe17,
+}, ]
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#<init>(java.util.List):{
+Args: [{
+    hash: ba88493,
+    name: null,
+    type: org.hibernate.collection.internal.PersistentBag,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+Return: {
+    hash: 52a18582,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList@52a18582,
+}
+}:
+virtual java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#calculateBasePriceFor(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation)[52a18582]
+Args: [{
+    hash: 25fe1f27,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover@25fe1f27,
+}, {
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 1,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#calculateBasePriceFor(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation):{
+Args: [{
+    hash: 25fe1f27,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover@25fe1f27,
+}, {
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 1,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+Fields: [{
+    hash: ba88493,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, ]
+
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[25fe1f27]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 5b142577,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 5b142577,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}
+}:
+special java.util.List pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#getRulesFor(java.lang.String)[52a18582]
+Args: [{
+    hash: 5b142577,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, ]
+
+private java.util.List pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#getRulesFor(java.lang.String):{
+Args: [{
+    hash: 5b142577,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, ]
+
+Fields: [{
+    hash: ba88493,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, ]
+
+Return: {
+    hash: cb1950a,
+    name: null,
+    type: java.util.ArrayList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@cb1950a,
+}
+}:
+public java.util.Map pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#toMap:{
+Args: []
+
+Fields: [{
+    hash: 5957856c,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 5dd8a50b,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5dd8a50b,
+}, {
+    hash: 5bcb0949,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5bcb0949,
+}, {
+    hash: 18c1f1cd,
+    name: totalPremium,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, {
+    hash: c9b2694,
+    name: covers,
+    type: java.util.Map<java.lang.String, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}, {
+    hash: 57f7eff2,
+    name: subject,
+    type: java.util.Map<java.lang.String, java.lang.Object>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@57f7eff2,
+}, ]
+
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[25fe1f27]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 5b142577,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 5b142577,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[2faa5dff]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 1d7901e6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 1d7901e6,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[23dd887f]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 2abeb68c,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 2abeb68c,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[34e358d1]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 11261513,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 11261513,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}
+}:
+Return: {
+    hash: 3741819d,
+    name: null,
+    type: java.util.HashMap,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@3741819d,
+}
+}:
+Return: {
+    hash: 5b90b5d5,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@5b90b5d5,
+}
+}:
+virtual void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#setPrice(java.math.BigDecimal)[25fe1f27]
+Args: [{
+    hash: 5b90b5d5,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@5b90b5d5,
+}, ]
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#setPrice(java.math.BigDecimal):{
+Args: [{
+    hash: 5b90b5d5,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@5b90b5d5,
+}, ]
+
+Fields: [{
+    hash: 5b142577,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+virtual pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#rules[4dacb2d6]
+public pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#rules:{
+Args: []
+
+Fields: [{
+    hash: 5b081ac4,
+    name: id,
+    type: java.lang.Long,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 6,
+}, {
+    hash: 1c5e9f2d,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: ba88493,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, {
+    hash: f02fe17,
+    name: discountMarkupRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@f02fe17,
+}, ]
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#<init>(java.util.List):{
+Args: [{
+    hash: ba88493,
+    name: null,
+    type: org.hibernate.collection.internal.PersistentBag,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+Return: {
+    hash: 25df5d2b,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList@25df5d2b,
+}
+}:
+virtual java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#calculateBasePriceFor(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation)[25df5d2b]
+Args: [{
+    hash: 2faa5dff,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover@2faa5dff,
+}, {
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 1,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#calculateBasePriceFor(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation):{
+Args: [{
+    hash: 2faa5dff,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover@2faa5dff,
+}, {
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 1,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+Fields: [{
+    hash: ba88493,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, ]
+
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[2faa5dff]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 1d7901e6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 1d7901e6,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}
+}:
+special java.util.List pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#getRulesFor(java.lang.String)[25df5d2b]
+Args: [{
+    hash: 1d7901e6,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, ]
+
+private java.util.List pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#getRulesFor(java.lang.String):{
+Args: [{
+    hash: 1d7901e6,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, ]
+
+Fields: [{
+    hash: ba88493,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, ]
+
+Return: {
+    hash: 5c978219,
+    name: null,
+    type: java.util.ArrayList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@5c978219,
+}
+}:
+public java.util.Map pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#toMap:{
+Args: []
+
+Fields: [{
+    hash: 5957856c,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 5dd8a50b,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5dd8a50b,
+}, {
+    hash: 5bcb0949,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5bcb0949,
+}, {
+    hash: 18c1f1cd,
+    name: totalPremium,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, {
+    hash: c9b2694,
+    name: covers,
+    type: java.util.Map<java.lang.String, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}, {
+    hash: 57f7eff2,
+    name: subject,
+    type: java.util.Map<java.lang.String, java.lang.Object>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@57f7eff2,
+}, ]
+
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[25fe1f27]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 5b142577,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, {
+    hash: 5b90b5d5,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@5b90b5d5,
+}, ]
+
+Return: {
+    hash: 5b142577,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[2faa5dff]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 1d7901e6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 1d7901e6,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[23dd887f]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 2abeb68c,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 2abeb68c,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[34e358d1]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 11261513,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 11261513,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}
+}:
+Return: {
+    hash: 1c15ee65,
+    name: null,
+    type: java.util.HashMap,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@1c15ee65,
+}
+}:
+Return: {
+    hash: 20ae1dc6,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@20ae1dc6,
+}
+}:
+virtual void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#setPrice(java.math.BigDecimal)[2faa5dff]
+Args: [{
+    hash: 20ae1dc6,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@20ae1dc6,
+}, ]
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#setPrice(java.math.BigDecimal):{
+Args: [{
+    hash: 20ae1dc6,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@20ae1dc6,
+}, ]
+
+Fields: [{
+    hash: 1d7901e6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+virtual pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#rules[4dacb2d6]
+public pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#rules:{
+Args: []
+
+Fields: [{
+    hash: 5b081ac4,
+    name: id,
+    type: java.lang.Long,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 6,
+}, {
+    hash: 1c5e9f2d,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: ba88493,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, {
+    hash: f02fe17,
+    name: discountMarkupRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@f02fe17,
+}, ]
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#<init>(java.util.List):{
+Args: [{
+    hash: ba88493,
+    name: null,
+    type: org.hibernate.collection.internal.PersistentBag,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+Return: {
+    hash: 6c997eb9,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList@6c997eb9,
+}
+}:
+virtual java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#calculateBasePriceFor(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation)[6c997eb9]
+Args: [{
+    hash: 23dd887f,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover@23dd887f,
+}, {
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 1,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#calculateBasePriceFor(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation):{
+Args: [{
+    hash: 23dd887f,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover@23dd887f,
+}, {
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 1,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+Fields: [{
+    hash: ba88493,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, ]
+
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[23dd887f]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 2abeb68c,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 2abeb68c,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}
+}:
+special java.util.List pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#getRulesFor(java.lang.String)[6c997eb9]
+Args: [{
+    hash: 2abeb68c,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, ]
+
+private java.util.List pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#getRulesFor(java.lang.String):{
+Args: [{
+    hash: 2abeb68c,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, ]
+
+Fields: [{
+    hash: ba88493,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, ]
+
+Return: {
+    hash: 3328dfd3,
+    name: null,
+    type: java.util.ArrayList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@3328dfd3,
+}
+}:
+public java.util.Map pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#toMap:{
+Args: []
+
+Fields: [{
+    hash: 5957856c,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 5dd8a50b,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5dd8a50b,
+}, {
+    hash: 5bcb0949,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5bcb0949,
+}, {
+    hash: 18c1f1cd,
+    name: totalPremium,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, {
+    hash: c9b2694,
+    name: covers,
+    type: java.util.Map<java.lang.String, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}, {
+    hash: 57f7eff2,
+    name: subject,
+    type: java.util.Map<java.lang.String, java.lang.Object>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@57f7eff2,
+}, ]
+
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[25fe1f27]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 5b142577,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, {
+    hash: 5b90b5d5,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@5b90b5d5,
+}, ]
+
+Return: {
+    hash: 5b142577,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[2faa5dff]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 1d7901e6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, {
+    hash: 20ae1dc6,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@20ae1dc6,
+}, ]
+
+Return: {
+    hash: 1d7901e6,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[23dd887f]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 2abeb68c,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 2abeb68c,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[34e358d1]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 11261513,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 11261513,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}
+}:
+Return: {
+    hash: 4d5f98ce,
+    name: null,
+    type: java.util.HashMap,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@4d5f98ce,
+}
+}:
+Return: {
+    hash: 78d8b951,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@78d8b951,
+}
+}:
+virtual void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#setPrice(java.math.BigDecimal)[23dd887f]
+Args: [{
+    hash: 78d8b951,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@78d8b951,
+}, ]
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#setPrice(java.math.BigDecimal):{
+Args: [{
+    hash: 78d8b951,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@78d8b951,
+}, ]
+
+Fields: [{
+    hash: 2abeb68c,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+virtual pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#rules[4dacb2d6]
+public pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#rules:{
+Args: []
+
+Fields: [{
+    hash: 5b081ac4,
+    name: id,
+    type: java.lang.Long,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 6,
+}, {
+    hash: 1c5e9f2d,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: ba88493,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, {
+    hash: f02fe17,
+    name: discountMarkupRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@f02fe17,
+}, ]
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#<init>(java.util.List):{
+Args: [{
+    hash: ba88493,
+    name: null,
+    type: org.hibernate.collection.internal.PersistentBag,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+Return: {
+    hash: 10bdc4ea,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList@10bdc4ea,
+}
+}:
+virtual java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#calculateBasePriceFor(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation)[10bdc4ea]
+Args: [{
+    hash: 34e358d1,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover@34e358d1,
+}, {
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 1,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#calculateBasePriceFor(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation):{
+Args: [{
+    hash: 34e358d1,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover@34e358d1,
+}, {
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 1,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+Fields: [{
+    hash: ba88493,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, ]
+
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[34e358d1]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 11261513,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 11261513,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}
+}:
+special java.util.List pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#getRulesFor(java.lang.String)[10bdc4ea]
+Args: [{
+    hash: 11261513,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, ]
+
+private java.util.List pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList#getRulesFor(java.lang.String):{
+Args: [{
+    hash: 11261513,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, ]
+
+Fields: [{
+    hash: ba88493,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, ]
+
+Return: {
+    hash: 5ec5cc55,
+    name: null,
+    type: java.util.ArrayList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@5ec5cc55,
+}
+}:
+public java.util.Map pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#toMap:{
+Args: []
+
+Fields: [{
+    hash: 5957856c,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 5dd8a50b,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5dd8a50b,
+}, {
+    hash: 5bcb0949,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5bcb0949,
+}, {
+    hash: 18c1f1cd,
+    name: totalPremium,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, {
+    hash: c9b2694,
+    name: covers,
+    type: java.util.Map<java.lang.String, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}, {
+    hash: 57f7eff2,
+    name: subject,
+    type: java.util.Map<java.lang.String, java.lang.Object>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@57f7eff2,
+}, ]
+
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[25fe1f27]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 5b142577,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, {
+    hash: 5b90b5d5,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@5b90b5d5,
+}, ]
+
+Return: {
+    hash: 5b142577,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[2faa5dff]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 1d7901e6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, {
+    hash: 20ae1dc6,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@20ae1dc6,
+}, ]
+
+Return: {
+    hash: 1d7901e6,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[23dd887f]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 2abeb68c,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, {
+    hash: 78d8b951,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@78d8b951,
+}, ]
+
+Return: {
+    hash: 2abeb68c,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[34e358d1]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 11261513,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 11261513,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}
+}:
+Return: {
+    hash: 532b2939,
+    name: null,
+    type: java.util.HashMap,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@532b2939,
+}
+}:
+Return: {
+    hash: d23b55a,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@d23b55a,
+}
+}:
+virtual void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#setPrice(java.math.BigDecimal)[34e358d1]
+Args: [{
+    hash: d23b55a,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@d23b55a,
+}, ]
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#setPrice(java.math.BigDecimal):{
+Args: [{
+    hash: d23b55a,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@d23b55a,
+}, ]
+
+Fields: [{
+    hash: 11261513,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, {
+    hash: 18c1f1cd,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+special void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#applyDiscounts(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation)[4dacb2d6]
+Args: [{
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+private void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#applyDiscounts(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation):{
+Args: [{
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+Fields: [{
+    hash: 5b081ac4,
+    name: id,
+    type: java.lang.Long,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 6,
+}, {
+    hash: 1c5e9f2d,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: ba88493,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, {
+    hash: f02fe17,
+    name: discountMarkupRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@f02fe17,
+}, ]
+
+virtual pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRuleList pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#discountMarkupRules[4dacb2d6]
+public pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRuleList pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#discountMarkupRules:{
+Args: []
+
+Fields: [{
+    hash: 5b081ac4,
+    name: id,
+    type: java.lang.Long,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 6,
+}, {
+    hash: 1c5e9f2d,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: ba88493,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, {
+    hash: f02fe17,
+    name: discountMarkupRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@f02fe17,
+}, ]
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRuleList#<init>(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff, java.util.List):{
+Args: [{
+    hash: 4dacb2d6,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff@4dacb2d6,
+}, {
+    hash: f02fe17,
+    name: null,
+    type: org.hibernate.collection.internal.PersistentBag,
+    index: 1,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@f02fe17,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: tariff,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: discountMarkupRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRule>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+Return: {
+    hash: 26423577,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRuleList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRuleList@26423577,
+}
+}:
+virtual void pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRuleList#apply(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation)[26423577]
+Args: [{
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRuleList#apply(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation):{
+Args: [{
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+Fields: [{
+    hash: 4dacb2d6,
+    name: tariff,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff@4dacb2d6,
+}, {
+    hash: f02fe17,
+    name: discountMarkupRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@f02fe17,
+}, ]
+
+public java.util.Map pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#toMap:{
+Args: []
+
+Fields: [{
+    hash: 5957856c,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 5dd8a50b,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5dd8a50b,
+}, {
+    hash: 5bcb0949,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5bcb0949,
+}, {
+    hash: 18c1f1cd,
+    name: totalPremium,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, {
+    hash: c9b2694,
+    name: covers,
+    type: java.util.Map<java.lang.String, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}, {
+    hash: 57f7eff2,
+    name: subject,
+    type: java.util.Map<java.lang.String, java.lang.Object>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@57f7eff2,
+}, ]
+
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[25fe1f27]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 5b142577,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, {
+    hash: 5b90b5d5,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@5b90b5d5,
+}, ]
+
+Return: {
+    hash: 5b142577,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[2faa5dff]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 1d7901e6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, {
+    hash: 20ae1dc6,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@20ae1dc6,
+}, ]
+
+Return: {
+    hash: 1d7901e6,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[23dd887f]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 2abeb68c,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, {
+    hash: 78d8b951,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@78d8b951,
+}, ]
+
+Return: {
+    hash: 2abeb68c,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[34e358d1]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 11261513,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, {
+    hash: d23b55a,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@d23b55a,
+}, ]
+
+Return: {
+    hash: 11261513,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}
+}:
+Return: {
+    hash: 49f4283b,
+    name: null,
+    type: java.util.HashMap,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@49f4283b,
+}
+}:
+public java.util.Map pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#getCovers:{
+Args: []
+
+Fields: [{
+    hash: 5957856c,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 5dd8a50b,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5dd8a50b,
+}, {
+    hash: 5bcb0949,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5bcb0949,
+}, {
+    hash: 18c1f1cd,
+    name: totalPremium,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, {
+    hash: c9b2694,
+    name: covers,
+    type: java.util.Map<java.lang.String, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}, {
+    hash: 57f7eff2,
+    name: subject,
+    type: java.util.Map<java.lang.String, java.lang.Object>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@57f7eff2,
+}, ]
+
+Return: {
+    hash: c9b2694,
+    name: null,
+    type: java.util.HashMap,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 5b142577,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, {
+    hash: 5b90b5d5,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@5b90b5d5,
+}, ]
+
+Return: {
+    hash: 5b90b5d5,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@5b90b5d5,
+}
+}:
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#setPrice(java.math.BigDecimal):{
+Args: [{
+    hash: 4762ab69,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@4762ab69,
+}, ]
+
+Fields: [{
+    hash: 5b142577,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, {
+    hash: 5b90b5d5,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@5b90b5d5,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 1d7901e6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, {
+    hash: 20ae1dc6,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@20ae1dc6,
+}, ]
+
+Return: {
+    hash: 20ae1dc6,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@20ae1dc6,
+}
+}:
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#setPrice(java.math.BigDecimal):{
+Args: [{
+    hash: 788ffed2,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@788ffed2,
+}, ]
+
+Fields: [{
+    hash: 1d7901e6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, {
+    hash: 20ae1dc6,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@20ae1dc6,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 2abeb68c,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, {
+    hash: 78d8b951,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@78d8b951,
+}, ]
+
+Return: {
+    hash: 78d8b951,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@78d8b951,
+}
+}:
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#setPrice(java.math.BigDecimal):{
+Args: [{
+    hash: 3a148dae,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@3a148dae,
+}, ]
+
+Fields: [{
+    hash: 2abeb68c,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, {
+    hash: 78d8b951,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@78d8b951,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 11261513,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, {
+    hash: d23b55a,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@d23b55a,
+}, ]
+
+Return: {
+    hash: d23b55a,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@d23b55a,
+}
+}:
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#setPrice(java.math.BigDecimal):{
+Args: [{
+    hash: 7efa60bc,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7efa60bc,
+}, ]
+
+Fields: [{
+    hash: 11261513,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, {
+    hash: d23b55a,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@d23b55a,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+public java.util.Map pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#toMap:{
+Args: []
+
+Fields: [{
+    hash: 5957856c,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 5dd8a50b,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5dd8a50b,
+}, {
+    hash: 5bcb0949,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5bcb0949,
+}, {
+    hash: 18c1f1cd,
+    name: totalPremium,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, {
+    hash: c9b2694,
+    name: covers,
+    type: java.util.Map<java.lang.String, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}, {
+    hash: 57f7eff2,
+    name: subject,
+    type: java.util.Map<java.lang.String, java.lang.Object>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@57f7eff2,
+}, ]
+
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[25fe1f27]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 5b142577,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, {
+    hash: 4762ab69,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@4762ab69,
+}, ]
+
+Return: {
+    hash: 5b142577,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[2faa5dff]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 1d7901e6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, {
+    hash: 788ffed2,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@788ffed2,
+}, ]
+
+Return: {
+    hash: 1d7901e6,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[23dd887f]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 2abeb68c,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, {
+    hash: 3a148dae,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@3a148dae,
+}, ]
+
+Return: {
+    hash: 2abeb68c,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}
+}:
+virtual java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode[34e358d1]
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getCode:{
+Args: []
+
+Fields: [{
+    hash: 11261513,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, {
+    hash: 7efa60bc,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7efa60bc,
+}, ]
+
+Return: {
+    hash: 11261513,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}
+}:
+Return: {
+    hash: 7cd68fa8,
+    name: null,
+    type: java.util.HashMap,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@7cd68fa8,
+}
+}:
+public java.util.Map pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#getCovers:{
+Args: []
+
+Fields: [{
+    hash: 5957856c,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 5dd8a50b,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5dd8a50b,
+}, {
+    hash: 5bcb0949,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5bcb0949,
+}, {
+    hash: 18c1f1cd,
+    name: totalPremium,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, {
+    hash: c9b2694,
+    name: covers,
+    type: java.util.Map<java.lang.String, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}, {
+    hash: 57f7eff2,
+    name: subject,
+    type: java.util.Map<java.lang.String, java.lang.Object>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@57f7eff2,
+}, ]
+
+Return: {
+    hash: c9b2694,
+    name: null,
+    type: java.util.HashMap,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 5b142577,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, {
+    hash: 4762ab69,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@4762ab69,
+}, ]
+
+Return: {
+    hash: 4762ab69,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@4762ab69,
+}
+}:
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#setPrice(java.math.BigDecimal):{
+Args: [{
+    hash: 79fa20c,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@79fa20c,
+}, ]
+
+Fields: [{
+    hash: 5b142577,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, {
+    hash: 4762ab69,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@4762ab69,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 1d7901e6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, {
+    hash: 788ffed2,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@788ffed2,
+}, ]
+
+Return: {
+    hash: 788ffed2,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@788ffed2,
+}
+}:
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#setPrice(java.math.BigDecimal):{
+Args: [{
+    hash: 7136b420,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7136b420,
+}, ]
+
+Fields: [{
+    hash: 1d7901e6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, {
+    hash: 788ffed2,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@788ffed2,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 2abeb68c,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, {
+    hash: 3a148dae,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@3a148dae,
+}, ]
+
+Return: {
+    hash: 3a148dae,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@3a148dae,
+}
+}:
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#setPrice(java.math.BigDecimal):{
+Args: [{
+    hash: 72926d2b,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@72926d2b,
+}, ]
+
+Fields: [{
+    hash: 2abeb68c,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, {
+    hash: 3a148dae,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@3a148dae,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 11261513,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, {
+    hash: 7efa60bc,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7efa60bc,
+}, ]
+
+Return: {
+    hash: 7efa60bc,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7efa60bc,
+}
+}:
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#setPrice(java.math.BigDecimal):{
+Args: [{
+    hash: 59977f67,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@59977f67,
+}, ]
+
+Fields: [{
+    hash: 11261513,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, {
+    hash: 7efa60bc,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7efa60bc,
+}, ]
+
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+special void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#buildResponse(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation)[4dacb2d6]
+Args: [{
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+private void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff#buildResponse(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation):{
+Args: [{
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+Fields: [{
+    hash: 5b081ac4,
+    name: id,
+    type: java.lang.Long,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 6,
+}, {
+    hash: 1c5e9f2d,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: ba88493,
+    name: basePriceCalculationRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@ba88493,
+}, {
+    hash: f02fe17,
+    name: discountMarkupRules,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.pricing.domain.DiscountMarkupRule>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.hibernate.collection.internal.PersistentBag@f02fe17,
+}, ]
+
+virtual void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#updateTotal[34a07b58]
+public void pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#updateTotal:{
+Args: []
+
+Fields: [{
+    hash: 5957856c,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 5dd8a50b,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5dd8a50b,
+}, {
+    hash: 5bcb0949,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5bcb0949,
+}, {
+    hash: 18c1f1cd,
+    name: totalPremium,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@18c1f1cd,
+}, {
+    hash: c9b2694,
+    name: covers,
+    type: java.util.Map<java.lang.String, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}, {
+    hash: 57f7eff2,
+    name: subject,
+    type: java.util.Map<java.lang.String, java.lang.Object>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@57f7eff2,
+}, ]
+
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 5b142577,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, {
+    hash: 79fa20c,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@79fa20c,
+}, ]
+
+Return: {
+    hash: 79fa20c,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@79fa20c,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 5b142577,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, {
+    hash: 79fa20c,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@79fa20c,
+}, ]
+
+Return: {
+    hash: 79fa20c,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@79fa20c,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 1d7901e6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, {
+    hash: 7136b420,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7136b420,
+}, ]
+
+Return: {
+    hash: 7136b420,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7136b420,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 1d7901e6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, {
+    hash: 7136b420,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7136b420,
+}, ]
+
+Return: {
+    hash: 7136b420,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7136b420,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 2abeb68c,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, {
+    hash: 72926d2b,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@72926d2b,
+}, ]
+
+Return: {
+    hash: 72926d2b,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@72926d2b,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 2abeb68c,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, {
+    hash: 72926d2b,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@72926d2b,
+}, ]
+
+Return: {
+    hash: 72926d2b,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@72926d2b,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 11261513,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, {
+    hash: 59977f67,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@59977f67,
+}, ]
+
+Return: {
+    hash: 59977f67,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@59977f67,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 11261513,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, {
+    hash: 59977f67,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@59977f67,
+}, ]
+
+Return: {
+    hash: 59977f67,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@59977f67,
+}
+}:
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+Return: {
+    hash: 16ea051d,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@16ea051d,
+}
+}:
+Return: {
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}
+}:
+special pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceResult pl.altkom.asc.lab.micronaut.poc.pricing.commands.CalculatePriceHandler#resultFromCalculation(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation)[384c5a91]
+Args: [{
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+private pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceResult pl.altkom.asc.lab.micronaut.poc.pricing.commands.CalculatePriceHandler#resultFromCalculation(pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation):{
+Args: [{
+    hash: 34a07b58,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation@34a07b58,
+}, ]
+
+Fields: [{
+    hash: 6ef92936,
+    name: $interceptors,
+    type: io.micronaut.aop.Interceptor[][],
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: [[Lio.micronaut.aop.Interceptor;@6ef92936,
+}, {
+    hash: 3ed987e,
+    name: $proxyMethods,
+    type: io.micronaut.inject.ExecutableMethod[],
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: [Lio.micronaut.inject.ExecutableMethod;@3ed987e,
+}, {
+    hash: 18cbc3c2,
+    name: tariffs,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariffs,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariffs$Intercepted@18cbc3c2,
+}, ]
+
+virtual java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#getTotalPremium[34a07b58]
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#getTotalPremium:{
+Args: []
+
+Fields: [{
+    hash: 5957856c,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 5dd8a50b,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5dd8a50b,
+}, {
+    hash: 5bcb0949,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5bcb0949,
+}, {
+    hash: 7828d52,
+    name: totalPremium,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7828d52,
+}, {
+    hash: c9b2694,
+    name: covers,
+    type: java.util.Map<java.lang.String, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}, {
+    hash: 57f7eff2,
+    name: subject,
+    type: java.util.Map<java.lang.String, java.lang.Object>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@57f7eff2,
+}, ]
+
+Return: {
+    hash: 7828d52,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7828d52,
+}
+}:
+virtual java.util.Map pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#getCovers[34a07b58]
+public java.util.Map pl.altkom.asc.lab.micronaut.poc.pricing.domain.Calculation#getCovers:{
+Args: []
+
+Fields: [{
+    hash: 5957856c,
+    name: productCode,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FAI",
+}, {
+    hash: 5dd8a50b,
+    name: policyFrom,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5dd8a50b,
+}, {
+    hash: 5bcb0949,
+    name: policyTo,
+    type: java.time.LocalDate,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.time.LocalDate@5bcb0949,
+}, {
+    hash: 7828d52,
+    name: totalPremium,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7828d52,
+}, {
+    hash: c9b2694,
+    name: covers,
+    type: java.util.Map<java.lang.String, pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}, {
+    hash: 57f7eff2,
+    name: subject,
+    type: java.util.Map<java.lang.String, java.lang.Object>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@57f7eff2,
+}, ]
+
+Return: {
+    hash: c9b2694,
+    name: null,
+    type: java.util.HashMap,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.HashMap@c9b2694,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 5b142577,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C3",
+}, {
+    hash: 79fa20c,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@79fa20c,
+}, ]
+
+Return: {
+    hash: 79fa20c,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@79fa20c,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 1d7901e6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C4",
+}, {
+    hash: 7136b420,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7136b420,
+}, ]
+
+Return: {
+    hash: 7136b420,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@7136b420,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 2abeb68c,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C1",
+}, {
+    hash: 72926d2b,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@72926d2b,
+}, ]
+
+Return: {
+    hash: 72926d2b,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@72926d2b,
+}
+}:
+public java.math.BigDecimal pl.altkom.asc.lab.micronaut.poc.pricing.domain.Cover#getPrice:{
+Args: []
+
+Fields: [{
+    hash: 11261513,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "C2",
+}, {
+    hash: 59977f67,
+    name: price,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@59977f67,
+}, ]
+
+Return: {
+    hash: 59977f67,
+    name: null,
+    type: java.math.BigDecimal,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.math.BigDecimal@59977f67,
+}
+}:
+Return: {
+    hash: 75ca3f84,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceResult,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceResult@75ca3f84,
+}
+}:
+Return: {
+    hash: 75ca3f84,
+    name: null,
+    type: pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceResult,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: pl.altkom.asc.lab.micronaut.poc.pricing.service.api.v1.commands.calculateprice.CalculatePriceResult@75ca3f84,
+}
+}:

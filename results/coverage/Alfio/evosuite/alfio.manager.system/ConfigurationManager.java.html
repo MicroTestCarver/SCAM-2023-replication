@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConfigurationManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.manager.system</a> &gt; <span class="el_source">ConfigurationManager.java</span></div><h1>ConfigurationManager.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.manager.system;
+
+import alfio.config.Initializer;
+import alfio.controller.api.v2.model.AlfioInfo;
+import alfio.controller.api.v2.model.AnalyticsConfiguration;
+import alfio.controller.api.v2.user.support.PurchaseContextInfoBuilder;
+import alfio.manager.system.ConfigurationLevels.CategoryLevel;
+import alfio.manager.system.ConfigurationLevels.EventLevel;
+import alfio.manager.system.ConfigurationLevels.OrganizationLevel;
+import alfio.manager.user.UserManager;
+import alfio.model.Configurable;
+import alfio.model.EventAndOrganizationId;
+import alfio.model.PurchaseContext;
+import alfio.model.TicketReservation;
+import alfio.model.modification.ConfigurationModification;
+import alfio.model.system.Configuration;
+import alfio.model.system.Configuration.*;
+import alfio.model.system.ConfigurationKeyValuePathLevel;
+import alfio.model.system.ConfigurationKeys;
+import alfio.model.system.ConfigurationPathLevel;
+import alfio.model.transaction.PaymentMethod;
+import alfio.model.transaction.PaymentProxy;
+import alfio.model.user.User;
+import alfio.repository.EventRepository;
+import alfio.repository.system.ConfigurationRepository;
+import com.github.benmanes.caffeine.cache.Cache;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.collections4.IterableUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.http.HttpSession;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import static alfio.model.system.ConfigurationKeys.*;
+import static alfio.model.system.ConfigurationPathLevel.*;
+import static java.util.stream.Collectors.toList;
+
+@Transactional
+@Log4j2
+@RequiredArgsConstructor
+public class ConfigurationManager {
+
+    private static final Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt; ORGANIZATION_CONFIGURATION = collectConfigurationKeysByCategory(ORGANIZATION);
+    private static final Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt; EVENT_CONFIGURATION = collectConfigurationKeysByCategory(ConfigurationPathLevel.EVENT);
+    private static final Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt; CATEGORY_CONFIGURATION = collectConfigurationKeysByCategory(ConfigurationPathLevel.TICKET_CATEGORY);
+
+    private final ConfigurationRepository configurationRepository;
+    private final UserManager userManager;
+    private final EventRepository eventRepository;
+    private final ExternalConfiguration externalConfiguration;
+    private final Environment environment;
+    private final Cache&lt;Set&lt;ConfigurationKeys&gt;, Map&lt;ConfigurationKeys, MaybeConfiguration&gt;&gt; oneMinuteCache;
+
+    //TODO: refactor, not the most beautiful code, find a better solution...
+    private Optional&lt;Configuration&gt; findByConfigurationPathAndKey(ConfigurationPath path, ConfigurationKeys key) {
+        var keyAsString = key.getValue();
+        var configList = new ArrayList&lt;&gt;(externalConfiguration.load(keyAsString));
+        switch (path.pathLevel()) {
+            case SYSTEM:
+                configList.addAll(configurationRepository.findByKeyAtSystemLevel(keyAsString));
+                return selectPath(configList);
+            case ORGANIZATION: {
+                OrganizationConfigurationPath o = (OrganizationConfigurationPath) path;
+                configList.addAll(configurationRepository.findByOrganizationAndKey(o.getId(), key.getValue()));
+                return selectPath(configList);
+            }
+            case EVENT: {
+                EventConfigurationPath o = (EventConfigurationPath) path;
+                configList.addAll(configurationRepository.findByEventAndKey(o.getOrganizationId(),
+                    o.getId(), keyAsString));
+                return selectPath(configList);
+            }
+            case TICKET_CATEGORY: {
+                TicketCategoryConfigurationPath o = (TicketCategoryConfigurationPath) path;
+                configList.addAll(configurationRepository.findByTicketCategoryAndKey(o.getOrganizationId(),
+                    o.getEventId(), o.getId(), keyAsString));
+                return selectPath(configList);
+            }
+            default:
+                throw new IllegalStateException(&quot;Can't reach here&quot;);
+        }
+    }
+
+    /**
+     * Select the most &quot;precise&quot; configuration in the given list.
+     *
+     * @param conf
+     * @return
+     */
+    private Optional&lt;Configuration&gt; selectPath(List&lt;Configuration&gt; conf) {
+        return conf.size() == 1 ? Optional.of(conf.get(0)) : conf.stream().max(Comparator.comparing(Configuration::getConfigurationPathLevel));
+    }
+
+    // begin SYSTEM related configuration methods
+
+    public void saveConfig(ConfigurationPathKey pathKey, String value) {
+        ConfigurationPath path = pathKey.getPath();
+        switch (path.pathLevel()) {
+            case SYSTEM:
+                saveSystemConfiguration(pathKey.getKey(), value);
+                break;
+            case ORGANIZATION:
+                OrganizationConfigurationPath orgPath = (OrganizationConfigurationPath) path;
+                saveOrganizationConfiguration(orgPath.getId(), pathKey.getKey().name(), value);
+                break;
+            case EVENT:
+                EventConfigurationPath eventPath = (EventConfigurationPath) path;
+                saveEventConfiguration(eventPath.getId(), eventPath.getOrganizationId(), pathKey.getKey().name(), value);
+                break;
+            default:
+                throw new IllegalStateException(&quot;can't reach here&quot;);
+        }
+    }
+
+    public void saveAllSystemConfiguration(List&lt;ConfigurationModification&gt; list) {
+        list.forEach(c -&gt; saveSystemConfiguration(ConfigurationKeys.fromString(c.getKey()), c.getValue()));
+    }
+
+    private void saveOrganizationConfiguration(int organizationId, String key, String optionValue) {
+        Optional&lt;String&gt; value = evaluateValue(key, optionValue);
+        Optional&lt;Configuration&gt; existing = configurationRepository.findByKeyAtOrganizationLevel(organizationId, key);
+        if (value.isEmpty()) {
+            configurationRepository.deleteOrganizationLevelByKey(key, organizationId);
+        } else if (existing.isPresent()) {
+            configurationRepository.updateOrganizationLevel(organizationId, key, value.get());
+        } else {
+            configurationRepository.insertOrganizationLevel(organizationId, key, value.get(), ConfigurationKeys.fromString(key).getDescription());
+        }
+    }
+
+    public void saveAllOrganizationConfiguration(int organizationId, List&lt;ConfigurationModification&gt; list, String username) {
+        Validate.isTrue(userManager.isOwnerOfOrganization(userManager.findUserByUsername(username), organizationId), &quot;Cannot update settings, user is not owner&quot;);
+        list.stream()
+            .filter(ConfigurationManager::toBeSaved)
+            .forEach(c -&gt; saveOrganizationConfiguration(organizationId, c.getKey(), c.getValue()));
+    }
+
+    private void saveEventConfiguration(int eventId, int organizationId, String key, String optionValue) {
+        Optional&lt;Configuration&gt; existing = configurationRepository.findByKeyAtEventLevel(eventId, organizationId, key);
+        Optional&lt;String&gt; value = evaluateValue(key, optionValue);
+        if(value.isEmpty()) {
+            configurationRepository.deleteEventLevelByKey(key, eventId);
+        } else if (existing.isPresent()) {
+            configurationRepository.updateEventLevel(eventId, organizationId, key, value.get());
+        } else {
+            configurationRepository.insertEventLevel(organizationId, eventId, key, value.get(), ConfigurationKeys.fromString(key).getDescription());
+        }
+    }
+
+    public void saveAllEventConfiguration(int eventId, int organizationId, List&lt;ConfigurationModification&gt; list, String username) {
+        User user = userManager.findUserByUsername(username);
+        Validate.isTrue(userManager.isOwnerOfOrganization(user, organizationId), &quot;Cannot update settings, user is not owner&quot;);
+        EventAndOrganizationId event = eventRepository.findEventAndOrganizationIdById(eventId);
+        Validate.notNull(event, &quot;event does not exist&quot;);
+        if(organizationId != event.getOrganizationId()) {
+            Validate.isTrue(userManager.isOwnerOfOrganization(user, event.getOrganizationId()), &quot;Cannot update settings, user is not owner of event&quot;);
+        }
+        list.stream()
+            .filter(ConfigurationManager::toBeSaved)
+            .forEach(c -&gt; saveEventConfiguration(eventId, organizationId, c.getKey(), c.getValue()));
+    }
+
+    public void saveCategoryConfiguration(int categoryId, int eventId, List&lt;ConfigurationModification&gt; list, String username) {
+        User user = userManager.findUserByUsername(username);
+        EventAndOrganizationId event = eventRepository.findEventAndOrganizationIdById(eventId);
+        Validate.notNull(event, &quot;event does not exist&quot;);
+        Validate.isTrue(userManager.isOwnerOfOrganization(user, event.getOrganizationId()), &quot;Cannot update settings, user is not owner of event&quot;);
+        list.stream()
+            .filter(ConfigurationManager::toBeSaved)
+            .forEach(c -&gt; {
+                Optional&lt;Configuration&gt; existing = configurationRepository.findByKeyAtCategoryLevel(eventId, event.getOrganizationId(), categoryId, c.getKey());
+                Optional&lt;String&gt; value = evaluateValue(c.getKey(), c.getValue());
+                if(value.isEmpty()) {
+                    configurationRepository.deleteCategoryLevelByKey(c.getKey(), eventId, categoryId);
+                } else if (existing.isPresent()) {
+                    configurationRepository.updateCategoryLevel(eventId, event.getOrganizationId(), categoryId, c.getKey(), value.get());
+                } else {
+                    configurationRepository.insertTicketCategoryLevel(event.getOrganizationId(), eventId, categoryId, c.getKey(), value.get(), ConfigurationKeys.fromString(c.getKey()).getDescription());
+                }
+            });
+    }
+
+    private Optional&lt;String&gt; evaluateValue(String key, String value) {
+        if(ConfigurationKeys.fromString(key).isBooleanComponentType()) {
+            return Optional.ofNullable(StringUtils.trimToNull(value));
+        }
+        return Optional.of(Objects.requireNonNull(value));
+    }
+
+    private Optional&lt;Boolean&gt; getThreeStateValue(String value) {
+        return Optional.ofNullable(StringUtils.trimToNull(value)).map(Boolean::parseBoolean);
+    }
+
+    public void saveSystemConfiguration(ConfigurationKeys key, String value) {
+        Optional&lt;Configuration&gt; conf = findByConfigurationPathAndKey(Configuration.system(), key);
+        if(key.isBooleanComponentType()) {
+            Optional&lt;Boolean&gt; state = getThreeStateValue(value);
+            if(conf.isPresent()) {
+                if(state.isPresent()) {
+                    configurationRepository.update(key.getValue(), value);
+                } else {
+                    configurationRepository.deleteByKey(key.getValue());
+                }
+            } else {
+                state.ifPresent(v -&gt; configurationRepository.insert(key.getValue(), v.toString(), key.getDescription()));
+            }
+        } else {
+            Optional&lt;String&gt; valueOpt = Optional.ofNullable(value);
+            if(conf.isEmpty() || conf.get().getConfigurationPathLevel() == EXTERNAL) {
+                valueOpt.ifPresent(v -&gt; configurationRepository.insert(key.getValue(), v, key.getDescription()));
+            } else {
+                configurationRepository.update(key.getValue(), value);
+            }
+        }
+    }
+
+    /**
+     * Checks if the basic options have been already configured:
+     * &lt;ul&gt;
+     *     &lt;li&gt;Google maps' api keys&lt;/li&gt;
+     *     &lt;li&gt;Base application URL&lt;/li&gt;
+     *     &lt;li&gt;E-Mail&lt;/li&gt;
+     * &lt;/ul&gt;
+     * @return {@code true} if there are missing options, {@code true} otherwise
+     */
+    public boolean isBasicConfigurationNeeded() {
+        return ConfigurationKeys.basic().stream()
+            .anyMatch(key -&gt; {
+                boolean absent = externalConfiguration.getSingle(key.getValue())
+                    .or(() -&gt; configurationRepository.findOptionalByKey(key.getValue())).isEmpty();
+                if (absent) {
+                    log.warn(&quot;cannot find a value for &quot; + key.getValue());
+                }
+                return absent;
+            });
+    }
+
+    private Predicate&lt;Configuration&gt; checkActualConfigurationLevel(boolean isAdmin, ConfigurationPathLevel level) {
+        return conf -&gt; isAdmin || conf.getConfigurationKey().supports(level);
+    }
+
+    public Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt; loadOrganizationConfig(int organizationId, String username) {
+        User user = userManager.findUserByUsername(username);
+        if(!userManager.isOwnerOfOrganization(user, organizationId)) {
+            return Collections.emptyMap();
+        }
+        boolean isAdmin = userManager.isAdmin(user);
+        Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt; existing = configurationRepository.findOrganizationConfiguration(organizationId).stream().filter(checkActualConfigurationLevel(isAdmin, ORGANIZATION)).sorted().collect(groupByCategory());
+        String paymentMethodsBlacklist = getFor(ConfigurationKeys.PAYMENT_METHODS_BLACKLIST, new OrganizationLevel(organizationId)).getValueOrDefault(&quot;&quot;);
+        Map&lt;SettingCategory, List&lt;Configuration&gt;&gt; result = groupByCategory(isAdmin ? union(SYSTEM, ORGANIZATION) : ORGANIZATION_CONFIGURATION, existing);
+        List&lt;SettingCategory&gt; toBeRemoved = PaymentProxy.availableProxies()
+            .stream()
+            .filter(pp -&gt; paymentMethodsBlacklist.contains(pp.getKey()))
+            .flatMap(pp -&gt; pp.getSettingCategories().stream())
+            .collect(toList());
+
+        if(toBeRemoved.isEmpty()) {
+            return result;
+        } else {
+            return result.entrySet().stream()
+                .filter(entry -&gt; !toBeRemoved.contains(entry.getKey()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        }
+    }
+
+    public String getSingleConfigForOrganization(int organizationId, String keyAsString, String username) {
+        User user = userManager.findUserByUsername(username);
+        if(!userManager.isOwnerOfOrganization(user, organizationId)) {
+            return null;
+        }
+        var key = safeValueOf(keyAsString);
+        return getFirstConfigurationResult(configurationRepository.findByOrganizationAndKey(organizationId, key.name()), keyAsString);
+    }
+
+    public String getSingleConfigForEvent(int eventId, String keyAsString, String username) {
+        User user = userManager.findUserByUsername(username);
+        EventAndOrganizationId event = eventRepository.findEventAndOrganizationIdById(eventId);
+        int organizationId = event.getOrganizationId();
+        if(!userManager.isOwnerOfOrganization(user, organizationId)) {
+            return null;
+        }
+        var key = safeValueOf(keyAsString);
+        return getFirstConfigurationResult(configurationRepository.findByEventAndKey(organizationId, eventId, key.name()), keyAsString);
+    }
+
+    private String getFirstConfigurationResult(List&lt;Configuration&gt; results, String keyAsString) {
+        return Objects.requireNonNull(results).stream()
+            .findFirst()
+            .map(Configuration::getValue)
+            .or(() -&gt; externalConfiguration.getSingle(keyAsString).map(Configuration::getValue))
+            .orElse(null);
+    }
+
+    public Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt; loadEventConfig(int eventId, String username) {
+        User user = userManager.findUserByUsername(username);
+        EventAndOrganizationId event = eventRepository.findEventAndOrganizationIdById(eventId);
+        int organizationId = event.getOrganizationId();
+        if(!userManager.isOwnerOfOrganization(user, organizationId)) {
+            return Collections.emptyMap();
+        }
+        boolean isAdmin = userManager.isAdmin(user);
+        Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt; existing = configurationRepository.findEventConfiguration(organizationId, eventId).stream().filter(checkActualConfigurationLevel(isAdmin, EVENT)).sorted().collect(groupByCategory());
+        boolean offlineCheckInEnabled = areBooleanSettingsEnabledForEvent(ALFIO_PI_INTEGRATION_ENABLED, OFFLINE_CHECKIN_ENABLED).test(event);
+        return removeAlfioPISettingsIfNeeded(offlineCheckInEnabled, groupByCategory(isAdmin ? union(SYSTEM, EVENT) : EVENT_CONFIGURATION, existing));
+    }
+
+    public Predicate&lt;EventAndOrganizationId&gt; areBooleanSettingsEnabledForEvent(ConfigurationKeys... keys) {
+        return event -&gt; getFor(Set.of(keys), event.getConfigurationLevel()).entrySet().stream().allMatch(kv -&gt; kv.getValue().getValueAsBooleanOrDefault());
+    }
+
+    private static Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt; removeAlfioPISettingsIfNeeded(boolean offlineCheckInEnabled, Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt; settings) {
+        if(offlineCheckInEnabled) {
+            return settings;
+        }
+        return settings.entrySet().stream()
+            .filter(e -&gt; e.getKey() != ConfigurationKeys.SettingCategory.ALFIO_PI)
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    static Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt; union(ConfigurationPathLevel... levels) {
+        List&lt;Configuration&gt; configurations = Arrays.stream(levels)
+            .sorted(ConfigurationPathLevel.COMPARATOR.reversed())
+            .flatMap(l -&gt; ConfigurationKeys.byPathLevel(l).stream().map(mapEmptyKeys(l)))
+            .sorted((c1, c2) -&gt; new CompareToBuilder().append(c2.getConfigurationPathLevel(), c1.getConfigurationPathLevel()).append(c1.getConfigurationKey(), c2.getConfigurationKey()).toComparison())
+            .collect(ArrayList::new, (List&lt;Configuration&gt; list, Configuration conf) -&gt; {
+                int existing = (int) list.stream().filter(c -&gt; c.getConfigurationKey() == conf.getConfigurationKey()).count();
+                if (existing == 0) {
+                    list.add(conf);
+                }
+            }, (l1, l2) -&gt; {
+            });
+        return configurations.stream().collect(groupByCategory());
+    }
+
+    public Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt; loadCategoryConfig(int eventId, int categoryId, String username) {
+        User user = userManager.findUserByUsername(username);
+        EventAndOrganizationId event = eventRepository.findEventAndOrganizationIdById(eventId);
+        int organizationId = event.getOrganizationId();
+        if(!userManager.isOwnerOfOrganization(user, organizationId)) {
+            return Collections.emptyMap();
+        }
+        Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt; existing = configurationRepository.findCategoryConfiguration(organizationId, eventId, categoryId).stream().sorted().collect(groupByCategory());
+        return groupByCategory(CATEGORY_CONFIGURATION, existing);
+    }
+
+    private Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt; groupByCategory(Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt; all, Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt; existing) {
+        return all.entrySet().stream()
+            .map(e -&gt; {
+                ConfigurationKeys.SettingCategory key = e.getKey();
+                Set&lt;Configuration&gt; entries = new TreeSet&lt;&gt;(e.getValue());
+                if(existing.containsKey(key)) {
+                    List&lt;Configuration&gt; configurations = existing.get(key).stream().filter(Predicate.not(Configuration::isInternal)).collect(Collectors.toList());
+                    configurations.forEach(entries::remove);
+                    entries.addAll(configurations);
+                }
+                return Pair.of(key, new ArrayList&lt;&gt;(entries));
+            })
+            .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+    }
+
+    public Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt; loadAllSystemConfigurationIncludingMissing(String username) {
+        if(!userManager.isAdmin(userManager.findUserByUsername(username))) {
+            return Collections.emptyMap();
+        }
+        final List&lt;Configuration&gt; existing = configurationRepository.findSystemConfiguration()
+                .stream()
+                .filter(c -&gt; !ConfigurationKeys.fromString(c.getKey()).isInternal())
+                .collect(toList());
+        final List&lt;Configuration&gt; missing = Arrays.stream(ConfigurationKeys.visible())
+                .filter(k -&gt; existing.stream().noneMatch(c -&gt; c.getKey().equals(k.getValue())))
+                .map(mapEmptyKeys(ConfigurationPathLevel.SYSTEM))
+                .collect(toList());
+        List&lt;Configuration&gt; result = new ArrayList&lt;&gt;(existing);
+        result.addAll(missing);
+        return result.stream().sorted().collect(groupByCategory());
+    }
+
+    private static Collector&lt;Configuration, ?, Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt;&gt; groupByCategory() {
+        return Collectors.groupingBy(c -&gt; c.getConfigurationKey().getCategory());
+    }
+
+    private static Function&lt;ConfigurationKeys, Configuration&gt; mapEmptyKeys(ConfigurationPathLevel level) {
+        return k -&gt; new Configuration(-1, k.getValue(), null, level);
+    }
+
+    public void deleteKey(String key) {
+        configurationRepository.deleteByKey(key);
+    }
+
+    public void deleteOrganizationLevelByKey(String key, int organizationId, String username) {
+        Validate.isTrue(userManager.isOwnerOfOrganization(userManager.findUserByUsername(username), organizationId), &quot;User is not owner of the organization. Therefore, delete is not allowed.&quot;);
+        configurationRepository.deleteOrganizationLevelByKey(key, organizationId);
+    }
+
+    public void deleteEventLevelByKey(String key, int eventId, String username) {
+        EventAndOrganizationId event = eventRepository.findEventAndOrganizationIdById(eventId);
+        Validate.notNull(event, &quot;Wrong event id&quot;);
+        Validate.isTrue(userManager.isOwnerOfOrganization(userManager.findUserByUsername(username), event.getOrganizationId()), &quot;User is not owner of the organization. Therefore, delete is not allowed.&quot;);
+        configurationRepository.deleteEventLevelByKey(key, eventId);
+    }
+
+    public void deleteCategoryLevelByKey(String key, int eventId, int categoryId, String username) {
+        EventAndOrganizationId event = eventRepository.findEventAndOrganizationIdById(eventId);
+        Validate.notNull(event, &quot;Wrong event id&quot;);
+        Validate.isTrue(userManager.isOwnerOfOrganization(userManager.findUserByUsername(username), event.getOrganizationId()), &quot;User is not owner of the organization. Therefore, delete is not allowed.&quot;);
+        configurationRepository.deleteCategoryLevelByKey(key, eventId, categoryId);
+    }
+
+    private static Map&lt;ConfigurationKeys.SettingCategory, List&lt;Configuration&gt;&gt; collectConfigurationKeysByCategory(ConfigurationPathLevel pathLevel) {
+        return ConfigurationKeys.byPathLevel(pathLevel)
+            .stream()
+            .map(mapEmptyKeys(pathLevel))
+            .sorted()
+            .collect(groupByCategory());
+    }
+
+    public String getShortReservationID(Configurable configurable, TicketReservation reservation) {
+        var conf = getFor(Set.of(USE_INVOICE_NUMBER_AS_ID, PARTIAL_RESERVATION_ID_LENGTH), configurable.getConfigurationLevel());
+        if(conf.get(USE_INVOICE_NUMBER_AS_ID).getValueAsBooleanOrDefault() &amp;&amp; reservation.getHasInvoiceNumber()) {
+            return reservation.getInvoiceNumber();
+        }
+        return StringUtils.substring(reservation.getId(), 0, conf.get(PARTIAL_RESERVATION_ID_LENGTH).getValueAsIntOrDefault(8)).toUpperCase();
+    }
+
+    public String getPublicReservationID(Configurable configurable, TicketReservation reservation) {
+        if(getFor(USE_INVOICE_NUMBER_AS_ID, configurable.getConfigurationLevel()).getValueAsBooleanOrDefault() &amp;&amp; reservation.getHasInvoiceNumber()) {
+            return reservation.getInvoiceNumber();
+        }
+        return reservation.getId();
+    }
+
+    public boolean hasAllConfigurationsForInvoice(Configurable configurable) {
+        var r = getFor(Set.of(INVOICE_ADDRESS, VAT_NR), configurable.getConfigurationLevel());
+        return hasAllConfigurationsForInvoice(r);
+    }
+
+    /**
+     * @param configurationValues note: require keys INVOICE_ADDRESS, VAT_NR
+     * @return
+     */
+    public boolean hasAllConfigurationsForInvoice(Map&lt;ConfigurationKeys, MaybeConfiguration&gt; configurationValues) {
+        Validate.isTrue(configurationValues.containsKey(INVOICE_ADDRESS) &amp;&amp; configurationValues.containsKey(VAT_NR));
+        return configurationValues.get(INVOICE_ADDRESS).isPresent() &amp;&amp; configurationValues.get(VAT_NR).isPresent();
+    }
+
+    public boolean isRecaptchaForOfflinePaymentAndFreeEnabled(Map&lt;ConfigurationKeys, MaybeConfiguration&gt; configurationValues) {
+        Validate.isTrue(configurationValues.containsKey(ENABLE_CAPTCHA_FOR_OFFLINE_PAYMENTS) &amp;&amp; configurationValues.containsKey(RECAPTCHA_API_KEY));
+        return configurationValues.get(ENABLE_CAPTCHA_FOR_OFFLINE_PAYMENTS).getValueAsBooleanOrDefault() &amp;&amp;
+            configurationValues.get(RECAPTCHA_API_KEY).getValueOrNull() != null;
+    }
+
+    public boolean isRecaptchaForOfflinePaymentAndFreeEnabled(ConfigurationLevel configurationLevel) {
+        var conf = getFor(Set.of(ENABLE_CAPTCHA_FOR_OFFLINE_PAYMENTS, RECAPTCHA_API_KEY), configurationLevel);
+        return isRecaptchaForOfflinePaymentAndFreeEnabled(conf);
+    }
+
+    // https://github.com/alfio-event/alf.io/issues/573
+    public boolean canGenerateReceiptOrInvoiceToCustomer(Configurable configurable) {
+        return !isItalianEInvoicingEnabled(configurable);
+    }
+
+    public boolean canGenerateReceiptOrInvoiceToCustomer(Map&lt;ConfigurationKeys, MaybeConfiguration&gt; configurationValues) {
+        return !isItalianEInvoicingEnabled(configurationValues);
+    }
+
+    public boolean isInvoiceOnly(Configurable configurable) {
+        var res = getFor(Set.of(GENERATE_ONLY_INVOICE, ENABLE_ITALY_E_INVOICING), configurable.getConfigurationLevel());
+        return isInvoiceOnly(res);
+    }
+
+    /**
+     * @param configurationValues note: require the key GENERATE_ONLY_INVOICE and ENABLE_ITALY_E_INVOICING to be present
+     * @return
+     */
+    public boolean isInvoiceOnly(Map&lt;ConfigurationKeys, MaybeConfiguration&gt; configurationValues) {
+        Validate.isTrue(configurationValues.containsKey(GENERATE_ONLY_INVOICE) &amp;&amp; configurationValues.containsKey(ENABLE_ITALY_E_INVOICING));
+        return configurationValues.get(GENERATE_ONLY_INVOICE).getValueAsBooleanOrDefault() || configurationValues.get(ENABLE_ITALY_E_INVOICING).getValueAsBooleanOrDefault();
+    }
+
+    public boolean isItalianEInvoicingEnabled(Configurable configurable) {
+        return isItalianEInvoicingEnabled(configurable.getConfigurationLevel());
+    }
+
+    public boolean isItalianEInvoicingEnabled(ConfigurationLevel configurationLevel) {
+        var res = getFor(List.of(ENABLE_ITALY_E_INVOICING), configurationLevel);
+        return isItalianEInvoicingEnabled(res);
+    }
+
+    public boolean isItalianEInvoicingEnabled(Map&lt;ConfigurationKeys, MaybeConfiguration&gt; configurationValues) {
+        Validate.isTrue(configurationValues.containsKey(ENABLE_ITALY_E_INVOICING));
+        return configurationValues.get(ENABLE_ITALY_E_INVOICING).getValueAsBooleanOrDefault();
+    }
+
+    //
+
+    public MaybeConfiguration getForSystem(ConfigurationKeys key) {
+        return getFor(Set.of(key), ConfigurationLevel.system()).get(key);
+    }
+
+    public MaybeConfiguration getFor(ConfigurationKeys key, ConfigurationLevel configurationLevel) {
+        return getFor(Set.of(key), configurationLevel).get(key);
+    }
+
+    public Map&lt;ConfigurationKeys, MaybeConfiguration&gt; getFor(Collection&lt;ConfigurationKeys&gt; keys, ConfigurationLevel configurationLevel) {
+        var keysAsString = keys.stream().map(ConfigurationKeys::getValue).collect(Collectors.toSet());
+        List&lt;ConfigurationKeyValuePathLevel&gt; found = new ArrayList&lt;&gt;(externalConfiguration.getAll(keysAsString));
+        switch(configurationLevel.getPathLevel()) {
+            case SYSTEM:
+                found.addAll(configurationRepository.findByKeysAtSystemLevel(keysAsString));
+                break;
+            case ORGANIZATION:
+                found.addAll(configurationRepository.findByOrganizationAndKeys(((OrganizationLevel)configurationLevel).organizationId, keysAsString));
+                break;
+            case EVENT:
+                var eventLevel = (EventLevel) configurationLevel;
+                found.addAll(configurationRepository.findByEventAndKeys(eventLevel.organizationId, eventLevel.eventId, keysAsString));
+                break;
+            case TICKET_CATEGORY:
+                var categoryLevel = (CategoryLevel) configurationLevel;
+                found.addAll(configurationRepository.findByTicketCategoryAndKeys(categoryLevel.organizationId, categoryLevel.eventId, categoryLevel.categoryId, keysAsString));
+                break;
+            default:
+                break;
+        }
+        return buildKeyConfigurationMapResult(keys, found);
+    }
+
+    private Map&lt;ConfigurationKeys, MaybeConfiguration&gt; buildKeyConfigurationMapResult(Collection&lt;ConfigurationKeys&gt; keys, List&lt;ConfigurationKeyValuePathLevel&gt; found) {
+        var res = new EnumMap&lt;ConfigurationKeys, MaybeConfiguration&gt;(ConfigurationKeys.class);
+
+        for (var k : keys) {
+            res.put(k, new MaybeConfiguration(k));
+        }
+
+        for (var c : found) {
+            res.get(c.getConfigurationKey()).ifPresentOrElse(alreadyPresent -&gt; {
+                //override mechanism, if a configuration path is more precise that the one already present, we will replace it
+                if (alreadyPresent.getConfigurationPathLevel().getPriority() &lt; c.getConfigurationPathLevel().getPriority()) {
+                    res.put(c.getConfigurationKey(), new MaybeConfiguration(c.getConfigurationKey(), c));
+                }
+            }, () -&gt; res.put(c.getConfigurationKey(), new MaybeConfiguration(c.getConfigurationKey(), c)));
+        }
+
+        return res;
+    }
+
+    public List&lt;PaymentMethod&gt; getBlacklistedMethodsForReservation(PurchaseContext p, Collection&lt;Integer&gt; categoryIds) {
+        return p.event().map(e -&gt; {
+            if(categoryIds.size() &gt; 1) {
+                Map&lt;Integer, String&gt; blacklistForCategories = configurationRepository.getAllCategoriesAndValueWith(e.getOrganizationId(), e.getId(), PAYMENT_METHODS_BLACKLIST);
+                return categoryIds.stream()
+                    .filter(blacklistForCategories::containsKey)
+                    .flatMap(id -&gt; Arrays.stream(blacklistForCategories.get(id).split(&quot;,&quot;)))
+                    .map(name -&gt; PaymentProxy.valueOf(name).getPaymentMethod())
+                    .collect(toList());
+            } else if (categoryIds.size() &gt; 0) {
+                    return configurationRepository.findByKeyAtCategoryLevel(e.getId(), e.getOrganizationId(), IterableUtils.get(categoryIds, 0), PAYMENT_METHODS_BLACKLIST.name())
+                        .map(v -&gt; Arrays.stream(v.getValue().split(&quot;,&quot;)).map(name -&gt; PaymentProxy.valueOf(name).getPaymentMethod()).collect(toList()))
+                        .orElse(List.of());
+            } else {
+                return List.&lt;PaymentMethod&gt;of();
+            }
+        }).orElse(List.of());
+    }
+
+    private static boolean toBeSaved(ConfigurationModification c) {
+        return Optional.ofNullable(c.getId()).orElse(-1) &gt; -1 || !StringUtils.isBlank(c.getValue());
+    }
+
+    public static class MaybeConfiguration {
+        @SuppressWarnings(&quot;OptionalUsedAsFieldOrParameterType&quot;)
+        private final Optional&lt;ConfigurationKeyValuePathLevel&gt; configuration;
+        private final ConfigurationKeys key;
+
+<span class="nc" id="L603">        public MaybeConfiguration(ConfigurationKeys key) {</span>
+<span class="nc" id="L604">            this.key = key;</span>
+<span class="nc" id="L605">            this.configuration = Optional.empty();</span>
+<span class="nc" id="L606">        }</span>
+
+<span class="nc" id="L608">        public MaybeConfiguration(ConfigurationKeys key, ConfigurationKeyValuePathLevel configuration) {</span>
+<span class="nc" id="L609">            this.configuration = Optional.ofNullable(configuration);</span>
+<span class="nc" id="L610">            this.key = key;</span>
+<span class="nc" id="L611">        }</span>
+
+        void ifPresentOrElse(Consumer&lt;? super ConfigurationKeyValuePathLevel&gt; action, Runnable emptyAction) {
+<span class="nc" id="L614">            configuration.ifPresentOrElse(action, emptyAction);</span>
+<span class="nc" id="L615">        }</span>
+
+        public boolean isPresent() {
+<span class="nc" id="L618">            return configuration.isPresent();</span>
+        }
+
+        public boolean isEmpty() {
+<span class="nc" id="L622">            return configuration.isEmpty();</span>
+        }
+
+        public Optional&lt;String&gt; getValue() {
+<span class="nc" id="L626">            return configuration.map(ConfigurationKeyValuePathLevel::getValue);</span>
+        }
+
+        public String getValueOrNull() {
+<span class="nc" id="L630">            return getValue().orElse(null);</span>
+        }
+
+        public String getValueOrDefault(String defaultValue) {
+<span class="nc" id="L634">            return getValue().orElse(defaultValue);</span>
+        }
+
+        public boolean getValueAsBooleanOrDefault() {
+<span class="nc" id="L638">            return getValue().map(Boolean::parseBoolean)</span>
+<span class="nc" id="L639">                .orElseGet(() -&gt; Boolean.parseBoolean(Objects.requireNonNull(key.getDefaultValue())));</span>
+        }
+
+        public int getValueAsIntOrDefault(int defaultValue) {
+<span class="nc" id="L643">            return getValue().flatMap(v -&gt; {</span>
+                try {
+<span class="nc" id="L645">                    return Optional.of(Integer.parseInt(v));</span>
+<span class="nc" id="L646">                } catch(NumberFormatException ex) {</span>
+<span class="nc" id="L647">                    return Optional.empty();</span>
+                }
+<span class="nc" id="L649">            }).orElse(defaultValue);</span>
+        }
+
+        public ConfigurationPathLevel getConfigurationPathLevelOrDefault(ConfigurationPathLevel defaultValue) {
+<span class="nc" id="L653">            return configuration.map(ConfigurationKeyValuePathLevel::getConfigurationPathLevel).orElse(defaultValue);</span>
+        }
+
+        public String getRequiredValue() {
+<span class="nc" id="L657">            return getValue().orElseThrow(() -&gt; new IllegalArgumentException(&quot;Mandatory configuration key &quot; + key + &quot; not present&quot;));</span>
+        }
+    }
+
+    /**
+     * Fetch all ticket_category_id, value that are present at the ticket category level with a given configuration key
+     *
+     * @param event
+     * @param key
+     * @return
+     */
+    public Map&lt;Integer, String&gt; getAllCategoriesAndValueWith(EventAndOrganizationId event, ConfigurationKeys key) {
+        return configurationRepository.getAllCategoriesAndValueWith(event.getOrganizationId(), event.getId(), key);
+    }
+
+    public AlfioInfo getInfo(HttpSession session) {
+        var demoMode = environment.acceptsProfiles(Profiles.of(Initializer.PROFILE_DEMO));
+        var devMode = environment.acceptsProfiles(Profiles.of(Initializer.PROFILE_DEV));
+        var prodMode = environment.acceptsProfiles(Profiles.of(Initializer.PROFILE_LIVE));
+
+
+        var options = EnumSet.of(
+            GOOGLE_ANALYTICS_ANONYMOUS_MODE,
+            GOOGLE_ANALYTICS_KEY,
+            GLOBAL_PRIVACY_POLICY,
+            GLOBAL_TERMS,
+            ENABLE_ITALY_E_INVOICING,
+            ENABLE_CUSTOMER_REFERENCE,
+            VAT_NUMBER_IS_REQUIRED,
+            GENERATE_ONLY_INVOICE,
+            INVOICE_ADDRESS,
+            VAT_NR,
+            ENABLE_EU_VAT_DIRECTIVE,
+            COUNTRY_OF_BUSINESS,
+            ENABLE_REVERSE_CHARGE_IN_PERSON,
+            ENABLE_REVERSE_CHARGE_ONLINE,
+            ANNOUNCEMENT_BANNER_CONTENT);
+        var conf = getFor(options, ConfigurationLevel.system());
+
+        var analyticsConf = AnalyticsConfiguration.build(conf, session);
+
+        return new AlfioInfo(demoMode,
+            devMode,
+            prodMode,
+            analyticsConf,
+            conf.get(GLOBAL_PRIVACY_POLICY).getValueOrNull(),
+            conf.get(GLOBAL_TERMS).getValueOrNull(),
+            PurchaseContextInfoBuilder.invoicingInfo(this, conf),
+            StringUtils.trimToNull(conf.get(ANNOUNCEMENT_BANNER_CONTENT).getValueOrNull()));
+    }
+
+    public Map&lt;ConfigurationKeys, ConfigurationManager.MaybeConfiguration&gt; getPublicOpenIdConfiguration() {
+        return oneMinuteCache.get(EnumSet.of(OPENID_PUBLIC_ENABLED, OPENID_CONFIGURATION_JSON),
+            k -&gt; getFor(k, ConfigurationLevel.system()));
+    }
+
+    public boolean isPublicOpenIdEnabled() {
+        return getPublicOpenIdConfiguration().get(OPENID_PUBLIC_ENABLED).getValueAsBooleanOrDefault();
+    }
+
+    public String baseUrl(PurchaseContext purchaseContext) {
+        var configurationLevel = purchaseContext.event().map(ConfigurationLevel::event)
+            .orElseGet(() -&gt; ConfigurationLevel.organization(purchaseContext.getOrganizationId()));
+        return StringUtils.removeEnd(getFor(BASE_URL, configurationLevel).getRequiredValue(), &quot;/&quot;);
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

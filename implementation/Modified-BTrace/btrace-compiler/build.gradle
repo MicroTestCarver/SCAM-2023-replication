@@ -1,0 +1,12 @@
+dependencies {
+    // https://mvnrepository.com/artifact/org.ow2.asm/asm
+    implementation libs.asm
+    implementation libs.asm.util
+
+    implementation files("${JAVA_8_HOME}/lib/tools.jar")
+    implementation project(path: ':btrace-core')
+    implementation project(path: ':btrace-runtime')
+    runtimeOnly project(path: ':btrace-instr')
+
+    testImplementation project(path: ':btrace-instr')
+}

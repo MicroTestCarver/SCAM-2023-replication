@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ObjectDiffUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.util</a> &gt; <span class="el_source">ObjectDiffUtil.java</span></div><h1>ObjectDiffUtil.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.util;
+
+import alfio.model.Ticket;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.springframework.beans.BeanUtils;
+import org.springframework.util.ReflectionUtils;
+
+import java.util.*;
+import java.util.stream.Stream;
+
+/**
+ * Replace https://github.com/SQiShER/java-object-diff . As our use case is way more restricted and limited.
+ */
+<span class="nc" id="L32">public class ObjectDiffUtil {</span>
+
+    public static List&lt;Change&gt; diff(Map&lt;String, String&gt; before, Map&lt;String, String&gt; after) {
+<span class="fc" id="L35">        return diffUntyped(before, after, &quot;/{&quot;, &quot;}&quot;);</span>
+    }
+
+    private static String formatPropertyName(String k, String propertyNameBefore, String propertyNameAfter) {
+<span class="fc" id="L39">        return propertyNameBefore + k + propertyNameAfter;</span>
+    }
+
+    private static List&lt;Change&gt; diffUntyped(Map&lt;String, ?&gt; before, Map&lt;String, ?&gt; after, String propertyNameBefore, String propertyNameAfter) {
+<span class="fc" id="L43">        var removed = new HashSet&lt;&gt;(before.keySet());</span>
+<span class="fc" id="L44">        removed.removeAll(after.keySet());</span>
+
+<span class="fc" id="L46">        var added = new HashSet&lt;&gt;(after.keySet());</span>
+<span class="fc" id="L47">        added.removeAll(before.keySet());</span>
+
+<span class="fc" id="L49">        var changedOrUntouched = new HashSet&lt;&gt;(after.keySet());</span>
+<span class="fc" id="L50">        changedOrUntouched.removeAll(removed);</span>
+<span class="fc" id="L51">        changedOrUntouched.removeAll(added);</span>
+
+<span class="fc" id="L53">        var changes = new ArrayList&lt;Change&gt;();</span>
+
+<span class="fc" id="L55">        removed.stream().map(k -&gt; new Change(formatPropertyName(k, propertyNameBefore, propertyNameAfter), State.REMOVED, before.get(k), null)).forEach(changes::add);</span>
+<span class="fc" id="L56">        added.stream().map(k -&gt; new Change(formatPropertyName(k, propertyNameBefore, propertyNameAfter), State.ADDED, null, after.get(k))).forEach(changes::add);</span>
+<span class="fc" id="L57">        changedOrUntouched.forEach(k -&gt; {</span>
+<span class="fc" id="L58">            var beforeValue = before.get(k);</span>
+<span class="fc" id="L59">            var afterValue = after.get(k);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            if(!Objects.equals(beforeValue, afterValue)) {</span>
+<span class="fc" id="L61">                changes.add(new Change(formatPropertyName(k, propertyNameBefore, propertyNameAfter), State.CHANGED, beforeValue, afterValue));</span>
+            }
+<span class="fc" id="L63">        });</span>
+<span class="fc" id="L64">        changes.sort(Change::compareTo);</span>
+<span class="fc" id="L65">        return changes;</span>
+    }
+
+    public static List&lt;Change&gt; diff(Ticket before, Ticket after) {
+<span class="fc" id="L69">        return diff(before, after, Ticket.class);</span>
+    }
+
+    public static &lt;T&gt; List&lt;Change&gt; diff(T before, T after, Class&lt;T&gt; objectType) {
+<span class="fc" id="L73">        var beforeAsMap = new HashMap&lt;String, Object&gt;();</span>
+<span class="fc" id="L74">        var afterAsMap = new HashMap&lt;String, Object&gt;();</span>
+<span class="fc" id="L75">        Stream.of(BeanUtils.getPropertyDescriptors(objectType)).forEach(propertyDescriptor -&gt; {</span>
+<span class="fc" id="L76">            var method = propertyDescriptor.getReadMethod();</span>
+<span class="fc" id="L77">            var name = propertyDescriptor.getName();</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">            if (method != null) {</span>
+<span class="fc" id="L79">                beforeAsMap.put(name, ReflectionUtils.invokeMethod(method, before));</span>
+<span class="fc" id="L80">                afterAsMap.put(name, ReflectionUtils.invokeMethod(method, after));</span>
+            }
+<span class="fc" id="L82">        });</span>
+<span class="fc" id="L83">        return diffUntyped(beforeAsMap, afterAsMap, &quot;/&quot;, &quot;&quot;);</span>
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class Change implements Comparable&lt;Change&gt; {
+        private final String propertyName;
+        private final State state;
+        private final Object oldValue;
+        private final Object newValue;
+
+        @Override
+        public int compareTo(Change change) {
+<span class="fc" id="L96">            return new CompareToBuilder()</span>
+<span class="fc" id="L97">                .append(propertyName, change.propertyName)</span>
+<span class="fc" id="L98">                .append(state.ordinal(), change.state.ordinal())</span>
+<span class="fc" id="L99">                .append(oldValue, change.oldValue)</span>
+<span class="fc" id="L100">                .append(newValue, change.newValue).toComparison();</span>
+        }
+    }
+
+<span class="fc" id="L104">    public enum State {</span>
+<span class="fc" id="L105">        ADDED,</span>
+<span class="fc" id="L106">        CHANGED,</span>
+<span class="fc" id="L107">        REMOVED</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

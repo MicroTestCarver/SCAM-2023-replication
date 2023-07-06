@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PaymentPageInitializeRequestBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.manager.payment.saferpay</a> &gt; <span class="el_source">PaymentPageInitializeRequestBuilder.java</span></div><h1>PaymentPageInitializeRequestBuilder.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.manager.payment.saferpay;
+
+import alfio.manager.payment.PaymentSpecification;
+import alfio.model.transaction.PaymentMethod;
+import com.google.gson.stream.JsonWriter;
+import lombok.SneakyThrows;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.io.StringWriter;
+import java.util.Set;
+
+public class PaymentPageInitializeRequestBuilder {
+    public static final String WEBHOOK_URL_TEMPLATE = &quot;/api/payment/webhook/saferpay/reservation/{reservationId}/success&quot;;
+    public static final String SUCCESS_URL_TEMPLATE = &quot;/{purchaseContextType}/{purchaseContextIdentifier}/reservation/{reservationId}&quot;;
+    public static final String CANCEL_URL_TEMPLATE = &quot;/{purchaseContextType}/{purchaseContextIdentifier}/reservation/{reservationId}/payment/saferpay/cancel&quot;;
+
+<span class="fc" id="L34">    static final Set&lt;String&gt; SUPPORTED_METHODS = Set.of(</span>
+<span class="fc" id="L35">        PaymentMethod.ALIPAY.name(),</span>
+
+        //CREDIT_CARD
+        &quot;AMEX&quot;,
+        &quot;VISA&quot;,
+        &quot;VPAY&quot;,
+        &quot;DINERS&quot;,
+        &quot;BONUS&quot;,
+        &quot;JCB&quot;,
+        &quot;MAESTRO&quot;,
+        &quot;MASTERCARD&quot;,
+        &quot;POSTCARD&quot;,
+
+<span class="fc" id="L48">        PaymentMethod.POSTFINANCE.name(),</span>
+<span class="fc" id="L49">        PaymentMethod.TWINT.name()</span>
+    );
+
+    private String customerId;
+    private String requestId;
+    private int retryIndicator;
+
+    private String terminalId;
+    private String formattedAmount;
+    private String currencyCode;
+    private String orderId;
+    private String description;
+
+    private final String successURL;
+    private final String failureURL;
+    private final String notifyURL;
+
+<span class="fc" id="L66">    public PaymentPageInitializeRequestBuilder(String baseUrl, PaymentSpecification paymentSpecification) {</span>
+<span class="fc" id="L67">        var cleanBaseUrl = StringUtils.removeEnd(baseUrl, &quot;/&quot;);</span>
+<span class="fc" id="L68">        var purchaseContextType = paymentSpecification.getPurchaseContext().getType().getUrlComponent();</span>
+<span class="fc" id="L69">        var purchaseContextIdentifier = paymentSpecification.getPurchaseContext().getPublicIdentifier();</span>
+<span class="fc" id="L70">        var reservationId = paymentSpecification.getReservationId();</span>
+<span class="fc" id="L71">        var eventUrl = cleanBaseUrl + expandUriTemplate(SUCCESS_URL_TEMPLATE, purchaseContextType, purchaseContextIdentifier, reservationId);</span>
+<span class="fc" id="L72">        this.successURL = eventUrl + &quot;/book&quot;;</span>
+<span class="fc" id="L73">        this.failureURL = cleanBaseUrl + expandUriTemplate(CANCEL_URL_TEMPLATE, purchaseContextType, purchaseContextIdentifier, reservationId);</span>
+<span class="fc" id="L74">        this.notifyURL  = cleanBaseUrl + expandUriTemplate(WEBHOOK_URL_TEMPLATE, reservationId);</span>
+<span class="fc" id="L75">    }</span>
+
+    public PaymentPageInitializeRequestBuilder addAuthentication(String customerId, String requestId, String terminalId) {
+<span class="fc" id="L78">        this.customerId = customerId;</span>
+<span class="fc" id="L79">        this.requestId = requestId;</span>
+<span class="fc" id="L80">        this.terminalId = terminalId;</span>
+<span class="fc" id="L81">        return this;</span>
+    }
+
+    public PaymentPageInitializeRequestBuilder addOrderInformation(String orderId,
+                                                                   String formattedAmount,
+                                                                   String currencyCode,
+                                                                   String description,
+                                                                   int numTry) {
+<span class="fc" id="L89">        this.orderId = orderId;</span>
+<span class="fc" id="L90">        this.formattedAmount = formattedAmount;</span>
+<span class="fc" id="L91">        this.currencyCode = currencyCode;</span>
+<span class="fc" id="L92">        this.description = description;</span>
+<span class="fc" id="L93">        this.retryIndicator = numTry;</span>
+<span class="fc" id="L94">        return this;</span>
+    }
+
+<span class="nc" id="L97">    @SneakyThrows</span>
+    public String build() {
+<span class="fc" id="L99">        var out = new StringWriter();</span>
+<span class="fc" id="L100">        var requestHeaderBuilder = new RequestHeaderBuilder(customerId, requestId, retryIndicator);</span>
+<span class="fc" id="L101">        try (var writer = new JsonWriter(out)) {</span>
+            // @formatter:off
+<span class="fc" id="L103">            addPaymentMethods(requestHeaderBuilder.appendTo(writer.beginObject()) //</span>
+<span class="fc" id="L104">                .name(&quot;TerminalId&quot;).value(terminalId) //</span>
+<span class="fc" id="L105">                .name(&quot;Payment&quot;).beginObject() //</span>
+<span class="fc" id="L106">                    .name(&quot;Amount&quot;).beginObject() //</span>
+<span class="fc" id="L107">                        .name(&quot;Value&quot;).value(formattedAmount) //</span>
+<span class="fc" id="L108">                        .name(&quot;CurrencyCode&quot;).value(currencyCode) //</span>
+<span class="fc" id="L109">                    .endObject() //</span>
+<span class="fc" id="L110">                    .name(&quot;OrderId&quot;).value(orderId) //</span>
+<span class="fc" id="L111">                    .name(&quot;Description&quot;).value(description) //</span>
+<span class="fc" id="L112">                .endObject() //</span>
+<span class="fc" id="L113">                .name(&quot;ReturnUrls&quot;).beginObject() //</span>
+<span class="fc" id="L114">                    .name(&quot;Success&quot;).value(successURL) //</span>
+<span class="fc" id="L115">                    .name(&quot;Fail&quot;).value(failureURL) //</span>
+<span class="fc" id="L116">                .endObject() //</span>
+<span class="fc" id="L117">                .name(&quot;Notification&quot;).beginObject() //</span>
+<span class="fc" id="L118">                    .name(&quot;NotifyUrl&quot;).value(notifyURL) //</span>
+<span class="fc" id="L119">                .endObject()) //</span>
+<span class="fc" id="L120">            .endObject();</span>
+            // @formatter:on
+        }
+<span class="fc" id="L123">        return out.toString();</span>
+    }
+
+<span class="nc" id="L126">    @SneakyThrows</span>
+    private JsonWriter addPaymentMethods(JsonWriter writer) {
+<span class="fc" id="L128">        var array = writer.name(&quot;PaymentMethods&quot;).beginArray();</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        for (String method : SUPPORTED_METHODS) {</span>
+<span class="fc" id="L130">            array.value(method);</span>
+<span class="fc" id="L131">        }</span>
+<span class="fc" id="L132">        return array.endArray();</span>
+    }
+
+    private String expandUriTemplate(String template, String reservationId) {
+<span class="fc" id="L136">        return UriComponentsBuilder.fromPath(template).buildAndExpand(reservationId).toUriString();</span>
+    }
+
+    private String expandUriTemplate(String template, String purchaseContextType, String purchaseContextIdentifier, String reservationId) {
+<span class="fc" id="L140">        return UriComponentsBuilder.fromPath(template).buildAndExpand(purchaseContextType, purchaseContextIdentifier, reservationId).toUriString();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

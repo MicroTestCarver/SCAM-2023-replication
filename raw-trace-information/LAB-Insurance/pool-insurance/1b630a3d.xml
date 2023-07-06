@@ -1,0 +1,10 @@
+<list>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+    <code>APT</code>
+    <label>Apartment</label>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+    <code>HOUSE</code>
+    <label>House</label>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+</list>

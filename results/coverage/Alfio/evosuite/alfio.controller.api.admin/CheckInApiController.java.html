@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CheckInApiController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.controller.api.admin</a> &gt; <span class="el_source">CheckInApiController.java</span></div><h1>CheckInApiController.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.controller.api.admin;
+
+import alfio.manager.CheckInManager;
+import alfio.manager.EventManager;
+import alfio.manager.support.CheckInStatistics;
+import alfio.manager.support.TicketAndCheckInResult;
+import alfio.manager.system.ConfigurationManager;
+import alfio.model.EventAndOrganizationId;
+import alfio.model.FullTicketInfo;
+import alfio.model.system.ConfigurationKeys;
+import alfio.util.Json;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.time.DateUtils;
+import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static alfio.util.Wrappers.optionally;
+
+@Log4j2
+@RestController
+@RequestMapping(&quot;/admin/api&quot;)
+@RequiredArgsConstructor
+public class CheckInApiController {
+
+    private static final String ALFIO_TIMESTAMP_HEADER = &quot;Alfio-TIME&quot;;
+    private final CheckInManager checkInManager;
+    private final EventManager eventManager;
+    private final ConfigurationManager configurationManager;
+
+    @Data
+    public static class TicketCode {
+        private String code;
+    }
+
+    @Data
+    public static class TicketIdentifierCode {
+        private String identifier;
+        private String code;
+    }
+    
+    @GetMapping(&quot;/check-in/{eventId}/ticket/{ticketIdentifier}&quot;)
+    public TicketAndCheckInResult findTicketWithUUID(@PathVariable(&quot;eventId&quot;) int eventId, @PathVariable(&quot;ticketIdentifier&quot;) String ticketIdentifier, @RequestParam(&quot;qrCode&quot;) String qrCode) {
+        return checkInManager.evaluateTicketStatus(eventId, ticketIdentifier, Optional.ofNullable(qrCode));
+    }
+
+    @GetMapping(&quot;/check-in/event/{eventName}/ticket/{ticketIdentifier}&quot;)
+    public TicketAndCheckInResult findTicketWithUUID(@PathVariable(&quot;eventName&quot;) String eventName, @PathVariable(&quot;ticketIdentifier&quot;) String ticketIdentifier, @RequestParam(&quot;qrCode&quot;) String qrCode) {
+        return checkInManager.evaluateTicketStatus(eventName, ticketIdentifier, Optional.ofNullable(qrCode));
+    }
+
+    @PostMapping(&quot;/check-in/{eventId}/ticket/{ticketIdentifier}&quot;)
+    public TicketAndCheckInResult checkIn(@PathVariable(&quot;eventId&quot;) int eventId,
+                                          @PathVariable(&quot;ticketIdentifier&quot;) String ticketIdentifier,
+                                          @RequestBody TicketCode ticketCode,
+                                          Principal principal) {
+        return checkInManager.checkIn(eventId, ticketIdentifier, Optional.ofNullable(ticketCode).map(TicketCode::getCode), principal.getName());
+    }
+
+    @PostMapping(&quot;/check-in/event/{eventName}/ticket/{ticketIdentifier}&quot;)
+    public TicketAndCheckInResult checkIn(@PathVariable(&quot;eventName&quot;) String eventName,
+                                          @PathVariable(&quot;ticketIdentifier&quot;) String ticketIdentifier,
+                                          @RequestBody TicketCode ticketCode,
+                                          @RequestParam(value = &quot;offlineUser&quot;, required = false) String offlineUser,
+                                          Principal principal) {
+        String username = principal.getName();
+        String auditUser = StringUtils.defaultIfBlank(offlineUser, username);
+        return checkInManager.checkIn(eventName, ticketIdentifier, Optional.ofNullable(ticketCode).map(TicketCode::getCode), username, auditUser);
+    }
+
+    @PostMapping(&quot;/check-in/event/{eventName}/bulk&quot;)
+    public Map&lt;String, TicketAndCheckInResult&gt; bulkCheckIn(@PathVariable(&quot;eventName&quot;) String eventName,
+                                                           @RequestBody List&lt;TicketIdentifierCode&gt; ticketIdentifierCodes,
+                                                           @RequestParam(value = &quot;offlineUser&quot;, required = false) String offlineUser,
+                                                           @RequestParam(value = &quot;forceCheckInPaymentOnSite&quot;, required = false, defaultValue = &quot;false&quot;) boolean forceCheckInPaymentOnSite,
+                                                           Principal principal) {
+        String username = principal.getName();
+        String auditUser = StringUtils.defaultIfBlank(offlineUser, username);
+        return ticketIdentifierCodes.stream()
+            .distinct()
+            .map(t -&gt; {
+                TicketAndCheckInResult res = checkInManager.checkIn(eventName, t.getIdentifier(),
+                    Optional.ofNullable(t.getCode()),
+                    username, auditUser, forceCheckInPaymentOnSite);
+                return Pair.of(t.identifier, res);
+            })
+            .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+    }
+
+    @PostMapping(&quot;/check-in/{eventId}/ticket/{ticketIdentifier}/manual-check-in&quot;)
+    public boolean manualCheckIn(@PathVariable(&quot;eventId&quot;) int eventId,
+                                 @PathVariable(&quot;ticketIdentifier&quot;) String ticketIdentifier,
+                                 Principal principal) {
+        log.warn(&quot;for event id : {} and ticket : {}, a manual check in has been done&quot;, eventId, ticketIdentifier);
+        return checkInManager.manualCheckIn(eventId, ticketIdentifier, principal.getName());
+    }
+
+    @PostMapping(&quot;/check-in/{eventId}/ticket/{ticketIdentifier}/revert-check-in&quot;)
+    public boolean revertCheckIn(@PathVariable(&quot;eventId&quot;) int eventId,
+                                 @PathVariable(&quot;ticketIdentifier&quot;) String ticketIdentifier,
+                                 Principal principal) {
+        log.warn(&quot;for event id : {} and ticket : {}, a revert of the check in has been done&quot;, eventId, ticketIdentifier);
+        return checkInManager.revertCheckIn(eventId, ticketIdentifier, principal.getName());
+    }
+
+    @PostMapping(&quot;/check-in/event/{eventName}/ticket/{ticketIdentifier}/confirm-on-site-payment&quot;)
+    public TicketAndCheckInResult confirmOnSitePayment(@PathVariable(&quot;eventName&quot;) String eventName,
+                                                       @PathVariable(&quot;ticketIdentifier&quot;) String ticketIdentifier,
+                                                       @RequestBody TicketCode ticketCode,
+                                                       @RequestParam(value = &quot;offlineUser&quot;, required = false) String offlineUser,
+                                                       Principal principal) {
+        String username = principal.getName();
+        String auditUser = StringUtils.defaultIfBlank(offlineUser, username);
+        return checkInManager.confirmOnSitePayment(eventName, ticketIdentifier, Optional.ofNullable(ticketCode).map(TicketCode::getCode), username, auditUser);
+    }
+
+    @GetMapping(&quot;/check-in/event/{eventName}/statistics&quot;)
+    public CheckInStatistics getStatistics(@PathVariable(&quot;eventName&quot;) String eventName, Principal principal) {
+        return checkInManager.getStatistics(eventName, principal.getName());
+    }
+    
+    @PostMapping(&quot;/check-in/{eventId}/ticket/{ticketIdentifier}/confirm-on-site-payment&quot;)
+    public OnSitePaymentConfirmation confirmOnSitePayment(@PathVariable(&quot;eventId&quot;) int eventId, @PathVariable(&quot;ticketIdentifier&quot;) String ticketIdentifier) {
+        return checkInManager.confirmOnSitePayment(ticketIdentifier)
+            .map(s -&gt; new OnSitePaymentConfirmation(true, &quot;ok&quot;))
+            .orElseGet(() -&gt; new OnSitePaymentConfirmation(false, &quot;Ticket with uuid &quot; + ticketIdentifier + &quot; not found&quot;));
+    }
+
+    @GetMapping(&quot;/check-in/{eventId}/ticket-identifiers&quot;)
+    public List&lt;Integer&gt; findAllIdentifiersForAdminCheckIn(@PathVariable(&quot;eventId&quot;) int eventId,
+                                               @RequestParam(value = &quot;changedSince&quot;, required = false) Long changedSince,
+                                               HttpServletResponse response,
+                                               Principal principal) {
+        response.setHeader(ALFIO_TIMESTAMP_HEADER, Long.toString(new Date().getTime()));
+        return checkInManager.getAttendeesIdentifiers(eventId, changedSince == null ? new Date(0) : new Date(changedSince), principal.getName());
+    }
+
+    @PostMapping(&quot;/check-in/{eventId}/tickets&quot;)
+    public List&lt;FullTicketInfo&gt; findAllTicketsForAdminCheckIn(@PathVariable(&quot;eventId&quot;) int eventId,
+                                                              @RequestBody List&lt;Integer&gt; ids,
+                                                              Principal principal) {
+        validateIdList(ids);
+        return checkInManager.getAttendeesInformation(eventId, ids, principal.getName());
+    }
+
+    @GetMapping(&quot;/check-in/{eventName}/label-layout&quot;)
+    public ResponseEntity&lt;LabelLayout&gt; getLabelLayoutForEvent(@PathVariable(&quot;eventName&quot;) String eventName, Principal principal) {
+        return eventManager.getOptionalEventAndOrganizationIdByName(eventName, principal.getName())
+            .filter(checkInManager.isOfflineCheckInAndLabelPrintingEnabled())
+            .map(this::parseLabelLayout)
+            .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.PRECONDITION_FAILED));
+    }
+
+    @GetMapping(&quot;/check-in/{eventName}/offline-identifiers&quot;)
+    public List&lt;Integer&gt; getOfflineIdentifiers(@PathVariable(&quot;eventName&quot;) String eventName,
+                                              @RequestParam(value = &quot;changedSince&quot;, required = false) Long changedSince,
+                                              HttpServletResponse resp,
+                                              Principal principal) {
+        Date since = changedSince == null ? new Date(0) : DateUtils.addSeconds(new Date(changedSince), -1);
+        Optional&lt;List&lt;Integer&gt;&gt; ids = eventManager.getOptionalEventAndOrganizationIdByName(eventName, principal.getName())
+            .filter(checkInManager.isOfflineCheckInEnabled())
+            .map(event -&gt; checkInManager.getAttendeesIdentifiers(event, since, principal.getName()));
+
+        resp.setHeader(ALFIO_TIMESTAMP_HEADER, ids.isPresent() ? Long.toString(new Date().getTime()) : &quot;0&quot;);
+        return ids.orElse(Collections.emptyList());
+    }
+
+    @PostMapping(&quot;/check-in/{eventName}/offline&quot;)
+    public Map&lt;String, String&gt; getOfflineEncryptedInfo(@PathVariable(&quot;eventName&quot;) String eventName,
+                                                       @RequestParam(value = &quot;additionalField&quot;, required = false) List&lt;String&gt; additionalFields,
+                                                       @RequestBody List&lt;Integer&gt; ids,
+                                                       Principal principal) {
+
+        validateIdList(ids);
+        return eventManager.getOptionalByName(eventName, principal.getName())
+            .map(event -&gt; {
+                Set&lt;String&gt; addFields = loadLabelLayout(event)
+                    .map(layout -&gt; {
+                        Set&lt;String&gt; union = new HashSet&lt;&gt;(layout.content.thirdRow);
+                        union.addAll(layout.content.additionalRows);
+                        union.addAll(layout.qrCode.additionalInfo);
+                        if(additionalFields != null &amp;&amp; !additionalFields.isEmpty()) {
+                            union.addAll(additionalFields);
+                        }
+                        return union;
+                    })
+                    .orElseGet(() -&gt; {
+                        if(additionalFields != null &amp;&amp; !additionalFields.isEmpty()) {
+                            return new HashSet&lt;&gt;(additionalFields);
+                        }
+                        return Collections.singleton(&quot;company&quot;);
+                    });
+                return checkInManager.getEncryptedAttendeesInformation(event, addFields, ids);
+            }).orElse(Collections.emptyMap());
+    }
+
+    private static void validateIdList(@RequestBody List&lt;Integer&gt; ids) {
+        Validate.isTrue(ids!= null &amp;&amp; !ids.isEmpty());
+        Validate.isTrue(ids.size() &lt;= 200, &quot;Cannot ask more than 200 ids&quot;);
+    }
+
+    private ResponseEntity&lt;LabelLayout&gt; parseLabelLayout(EventAndOrganizationId event) {
+        return loadLabelLayout(event)
+            .map(ResponseEntity::ok)
+            .orElseGet(() -&gt; new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT));
+    }
+
+    private Optional&lt;LabelLayout&gt; loadLabelLayout(EventAndOrganizationId event) {
+        return configurationManager.getFor(ConfigurationKeys.LABEL_LAYOUT, event.getConfigurationLevel()).getValue()
+            .flatMap(str -&gt; optionally(() -&gt; Json.fromJson(str, LabelLayout.class)));
+    }
+
+    @Data
+    private static class OnSitePaymentConfirmation {
+        private final boolean status;
+        private final String message;
+    }
+
+    @Getter
+    private static class LabelLayout {
+
+        private final QRCode qrCode;
+        private final Content content;
+        private final General general;
+        private final String mediaName;
+
+        @JsonCreator
+        private LabelLayout(@JsonProperty(&quot;qrCode&quot;) QRCode qrCode,
+                            @JsonProperty(&quot;content&quot;) Content content,
+                            @JsonProperty(&quot;general&quot;) General general,
+<span class="nc" id="L260">                            @JsonProperty(&quot;mediaName&quot;) String mediaName) {</span>
+<span class="nc" id="L261">            this.qrCode = qrCode;</span>
+<span class="nc" id="L262">            this.content = content;</span>
+<span class="nc" id="L263">            this.general = general;</span>
+<span class="nc" id="L264">            this.mediaName = mediaName;</span>
+<span class="nc" id="L265">        }</span>
+
+        @Getter
+        private static class QRCode {
+            private final List&lt;String&gt; additionalInfo;
+            private final String infoSeparator;
+
+            @JsonCreator
+            private QRCode(@JsonProperty(&quot;additionalInfo&quot;) List&lt;String&gt; additionalInfo,
+<span class="nc" id="L274">                           @JsonProperty(&quot;infoSeparator&quot;) String infoSeparator) {</span>
+<span class="nc" id="L275">                this.additionalInfo = additionalInfo;</span>
+<span class="nc" id="L276">                this.infoSeparator = infoSeparator;</span>
+<span class="nc" id="L277">            }</span>
+        }
+
+        @Getter
+        private static class Content {
+
+            private final String firstRow;
+            private final String secondRow;
+            private final List&lt;String&gt; thirdRow;
+            private final List&lt;String&gt; additionalRows;
+            private final Boolean checkbox;
+
+            @JsonCreator
+            private Content(@JsonProperty(&quot;firstRow&quot;) String firstRow,
+                            @JsonProperty(&quot;secondRow&quot;) String secondRow,
+                            @JsonProperty(&quot;thirdRow&quot;) List&lt;String&gt; thirdRow,
+                            @JsonProperty(&quot;additionalRows&quot;) List&lt;String&gt; additionalRows,
+<span class="nc" id="L294">                            @JsonProperty(&quot;checkbox&quot;) Boolean checkbox) {</span>
+<span class="nc" id="L295">                this.firstRow = firstRow;</span>
+<span class="nc" id="L296">                this.secondRow = secondRow;</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">                this.thirdRow = thirdRow != null ? thirdRow : List.of();</span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">                this.additionalRows = additionalRows != null ? additionalRows : List.of();</span>
+<span class="nc" id="L299">                this.checkbox = checkbox;</span>
+<span class="nc" id="L300">            }</span>
+        }
+
+        @Getter
+        private static class General {
+            private final boolean printPartialID;
+
+            @JsonCreator
+<span class="nc" id="L308">            private General(@JsonProperty(&quot;printPartialID&quot;) boolean printPartialID) {</span>
+<span class="nc" id="L309">                this.printPartialID = printPartialID;</span>
+<span class="nc" id="L310">            }</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

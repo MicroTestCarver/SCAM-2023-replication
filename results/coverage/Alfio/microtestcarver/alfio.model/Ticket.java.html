@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Ticket.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">Ticket.java</span></div><h1>Ticket.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import alfio.model.support.Array;
+import alfio.util.MonetaryUtil;
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import org.apache.commons.codec.digest.HmacAlgorithms;
+import org.apache.commons.codec.digest.HmacUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import java.time.ZonedDateTime;
+import java.util.*;
+
+@Getter
+public class Ticket implements TicketInfoContainer {
+
+<span class="nc" id="L34">    public enum TicketStatus {</span>
+<span class="nc" id="L35">        FREE, PENDING, TO_BE_PAID, ACQUIRED, CANCELLED, CHECKED_IN, EXPIRED, INVALIDATED, RELEASED, PRE_RESERVED</span>
+    }
+
+<span class="nc" id="L38">    private static final Set&lt;TicketStatus&gt; SOLD_STATUSES = EnumSet.of(TicketStatus.TO_BE_PAID, TicketStatus.ACQUIRED, TicketStatus.CANCELLED, TicketStatus.CHECKED_IN, TicketStatus.RELEASED);</span>
+
+    private final int id;
+    private final String uuid;
+    private final ZonedDateTime creation;
+    private final Integer categoryId;
+    private final int eventId;
+    private final TicketStatus status;
+    private final String ticketsReservationId;
+    private final String fullName;
+    private final String firstName;
+    private final String lastName;
+    private final String email;
+    private final boolean lockedAssignment;
+    private final String userLanguage;
+
+    private final int srcPriceCts;
+    private final int finalPriceCts;
+    private final int vatCts;
+    private final int discountCts;
+    private final String extReference;
+    private final String currencyCode;
+
+    private final List&lt;String&gt; tags;
+    private final UUID subscriptionId;
+    private final PriceContainer.VatStatus vatStatus;
+
+    public Ticket(@JsonProperty(&quot;id&quot;) @Column(&quot;id&quot;) int id,
+                  @JsonProperty(&quot;uuid&quot;) @Column(&quot;uuid&quot;) String uuid,
+                  @JsonProperty(&quot;creation&quot;) @Column(&quot;creation&quot;) ZonedDateTime creation,
+                  @JsonProperty(&quot;categoryId&quot;) @Column(&quot;category_id&quot;) Integer categoryId,
+                  @JsonProperty(&quot;status&quot;) @Column(&quot;status&quot;) String status,
+                  @JsonProperty(&quot;eventId&quot;) @Column(&quot;event_id&quot;) int eventId,
+                  @JsonProperty(&quot;ticketsReservationId&quot;) @Column(&quot;tickets_reservation_id&quot;) String ticketsReservationId,
+                  @JsonProperty(&quot;fullName&quot;) @Column(&quot;full_name&quot;) String fullName,
+                  @JsonProperty(&quot;firstName&quot;) @Column(&quot;first_name&quot;) String firstName,
+                  @JsonProperty(&quot;lastName&quot;) @Column(&quot;last_name&quot;) String lastName,
+                  @JsonProperty(&quot;email&quot;) @Column(&quot;email_address&quot;) String email,
+                  @JsonProperty(&quot;lockedAssignment&quot;) @Column(&quot;locked_assignment&quot;) boolean lockedAssignment,
+                  @JsonProperty(&quot;userLanguage&quot;) @Column(&quot;user_language&quot;) String userLanguage,
+                  @JsonProperty(&quot;srcPriceCts&quot;) @Column(&quot;src_price_cts&quot;) int srcPriceCts,
+                  @JsonProperty(&quot;finalPriceCts&quot;) @Column(&quot;final_price_cts&quot;) int finalPriceCts,
+                  @JsonProperty(&quot;vatCts&quot;) @Column(&quot;vat_cts&quot;) int vatCts,
+                  @JsonProperty(&quot;discountCts&quot;) @Column(&quot;discount_cts&quot;) int discountCts,
+                  @JsonProperty(&quot;extReference&quot;) @Column(&quot;ext_reference&quot;) String extReference,
+                  @JsonProperty(&quot;currencyCode&quot;) @Column(&quot;currency_code&quot;) String currencyCode,
+                  @JsonProperty(&quot;tags&quot;) @Column(&quot;tags&quot;) @Array List&lt;String&gt; tags,
+                  @JsonProperty(&quot;subscriptionId&quot;) @Column(&quot;subscription_id_fk&quot;) UUID subscriptionId,
+<span class="nc" id="L86">                  @JsonProperty(&quot;vatStatus&quot;) @Column(&quot;vat_status&quot;) PriceContainer.VatStatus vatStatus) {</span>
+<span class="nc" id="L87">        this.id = id;</span>
+<span class="nc" id="L88">        this.uuid = uuid;</span>
+<span class="nc" id="L89">        this.creation = creation;</span>
+<span class="nc" id="L90">        this.categoryId = categoryId;</span>
+<span class="nc" id="L91">        this.eventId = eventId;</span>
+
+<span class="nc" id="L93">        this.userLanguage = userLanguage;</span>
+<span class="nc" id="L94">        this.status = TicketStatus.valueOf(status);</span>
+<span class="nc" id="L95">        this.ticketsReservationId = ticketsReservationId;</span>
+<span class="nc" id="L96">        this.fullName = Optional.ofNullable(fullName).orElse(&quot;&quot;);</span>
+<span class="nc" id="L97">        this.firstName = firstName;</span>
+<span class="nc" id="L98">        this.lastName = lastName;</span>
+<span class="nc" id="L99">        this.email = Optional.ofNullable(email).orElse(&quot;&quot;);</span>
+<span class="nc" id="L100">        this.lockedAssignment = lockedAssignment;</span>
+<span class="nc" id="L101">        this.srcPriceCts = srcPriceCts;</span>
+<span class="nc" id="L102">        this.finalPriceCts = finalPriceCts;</span>
+<span class="nc" id="L103">        this.vatCts = vatCts;</span>
+<span class="nc" id="L104">        this.discountCts = discountCts;</span>
+<span class="nc" id="L105">        this.extReference = extReference;</span>
+<span class="nc" id="L106">        this.currencyCode = currencyCode;</span>
+<span class="nc" id="L107">        this.tags = tags;</span>
+<span class="nc" id="L108">        this.subscriptionId = subscriptionId;</span>
+<span class="nc" id="L109">        this.vatStatus = vatStatus;</span>
+<span class="nc" id="L110">    }</span>
+    
+    @Override
+    public boolean getAssigned() {
+<span class="nc bnc" id="L114" title="All 8 branches missed.">        return (StringUtils.isNotBlank(fullName) || (StringUtils.isNotBlank(firstName) &amp;&amp; StringUtils.isNotBlank(lastName))) &amp;&amp; StringUtils.isNotBlank(email);</span>
+    }
+    
+    public boolean getLockedAssignment() {
+<span class="nc" id="L118">        return lockedAssignment;</span>
+    }
+
+    /**
+     * The code is composed with:
+     * 
+     * &lt;pre&gt;uuid + '/' + hmac_sha256_base64((ticketsReservationId + '/' + uuid + '/' + fullName + '/' + email), eventKey)&lt;/pre&gt;
+     * 
+     * @param eventKey
+     * @return
+     */
+    public String ticketCode(String eventKey) {
+<span class="nc" id="L130">        return uuid + '/' + hmacTicketInfo(eventKey);</span>
+    }
+
+    public String hmacTicketInfo(String eventKey) {
+<span class="nc" id="L134">        return hmacSHA256Base64(eventKey, StringUtils.join(new String[]{ticketsReservationId , uuid, getFullName(), email}, '/'));</span>
+    }
+
+    public boolean hasBeenSold() {
+<span class="nc" id="L138">        return SOLD_STATUSES.contains(status);</span>
+    }
+
+    @Override
+    public boolean isCheckedIn() {
+<span class="nc bnc" id="L143" title="All 2 branches missed.">        return status == TicketStatus.CHECKED_IN;</span>
+    }
+
+    public static String hmacSHA256Base64(String key, String code) {
+<span class="nc" id="L147">        return Base64.getEncoder().encodeToString(new HmacUtils(HmacAlgorithms.HMAC_SHA_256, key).hmac(code));</span>
+    }
+
+    public String getFullName() {
+<span class="nc bnc" id="L151" title="All 4 branches missed.">        return (firstName != null &amp;&amp; lastName != null) ? (firstName + &quot; &quot; + lastName) : fullName;</span>
+    }
+
+    public String getFormattedFinalPrice() {
+<span class="nc" id="L155">        return MonetaryUtil.formatCents(finalPriceCts, currencyCode);</span>
+    }
+
+    public String getFormattedNetPrice() {
+<span class="nc" id="L159">        return MonetaryUtil.formatCents(finalPriceCts - vatCts, currencyCode);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

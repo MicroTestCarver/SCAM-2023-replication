@@ -1,0 +1,58 @@
+<org.hibernate.collection.internal.PersistentSet>
+  <isTempSession>false</isTempSession>
+  <initialized>false</initialized>
+  <owner class="pl.altkom.asc.lab.micronaut.poc.policy.domain.PolicyVersion">
+    <id>11</id>
+    <policy>
+      <id>10</id>
+      <number>780d39eb-115f-4c3d-8c72-7ab5cefe0dca</number>
+      <agent>
+        <login>admin</login>
+      </agent>
+      <versions class="org.hibernate.collection.internal.PersistentSet">
+        <isTempSession>false</isTempSession>
+        <initialized>true</initialized>
+        <owner class="pl.altkom.asc.lab.micronaut.poc.policy.domain.Policy" reference="../.."/>
+        <cachedSize>-1</cachedSize>
+        <role>pl.altkom.asc.lab.micronaut.poc.policy.domain.Policy.versions</role>
+        <key class="long">10</key>
+        <dirty>false</dirty>
+        <elementRemoved>false</elementRemoved>
+        <storedSnapshot class="map">
+          <entry>
+            <pl.altkom.asc.lab.micronaut.poc.policy.domain.PolicyVersion reference="../../../../.."/>
+            <pl.altkom.asc.lab.micronaut.poc.policy.domain.PolicyVersion reference="../../../../.."/>
+          </entry>
+        </storedSnapshot>
+        <allowLoadOutsideTransaction>false</allowLoadOutsideTransaction>
+        <set>
+          <pl.altkom.asc.lab.micronaut.poc.policy.domain.PolicyVersion reference="../../../.."/>
+        </set>
+      </versions>
+    </policy>
+    <versionNumber>1</versionNumber>
+    <productCode>FAI</productCode>
+    <policyHolder>
+      <firstName>Amir</firstName>
+      <lastName>jackson</lastName>
+      <pesel>2977</pesel>
+    </policyHolder>
+    <accountNumber>a6fb1630-b99c-4c1f-945c-f99ab9c03232</accountNumber>
+    <coverPeriod>
+      <from>2023-05-17</from>
+      <to>2023-05-31</to>
+    </coverPeriod>
+    <versionValidityPeriod>
+      <from>2023-05-17</from>
+      <to>2023-05-31</to>
+    </versionValidityPeriod>
+    <covers class="org.hibernate.collection.internal.PersistentSet" reference="../.."/>
+    <totalPremiumAmount>300.00</totalPremiumAmount>
+  </owner>
+  <cachedSize>-1</cachedSize>
+  <role>pl.altkom.asc.lab.micronaut.poc.policy.domain.PolicyVersion.covers</role>
+  <key class="long">11</key>
+  <dirty>false</dirty>
+  <elementRemoved>false</elementRemoved>
+  <allowLoadOutsideTransaction>false</allowLoadOutsideTransaction>
+</org.hibernate.collection.internal.PersistentSet>

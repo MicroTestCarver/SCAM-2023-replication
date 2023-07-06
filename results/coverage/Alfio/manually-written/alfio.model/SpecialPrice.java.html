@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpecialPrice.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">SpecialPrice.java</span></div><h1>SpecialPrice.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import lombok.Getter;
+
+import java.time.ZonedDateTime;
+
+@Getter
+public class SpecialPrice {
+
+<span class="fc" id="L27">    public enum Status {</span>
+<span class="fc" id="L28">        WAITING, FREE, PENDING, TAKEN, CANCELLED</span>
+    }
+
+    private final int id;
+    private final String code;
+    private final int priceInCents;
+    private final int ticketCategoryId;
+    private final Status status;
+    private final ZonedDateTime sentTimestamp;
+    private final String recipientName;
+    private final String recipientEmail;
+    private final Integer accessCodeId;
+
+    public SpecialPrice(@Column(&quot;id&quot;) int id,
+                        @Column(&quot;code&quot;) String code,
+                        @Column(&quot;price_cts&quot;) int priceInCents,
+                        @Column(&quot;ticket_category_id&quot;) int ticketCategoryId,
+                        @Column(&quot;status&quot;) String status,
+                        @Column(&quot;sent_ts&quot;) ZonedDateTime sentTimestamp,
+                        @Column(&quot;recipient_name&quot;) String recipientName,
+                        @Column(&quot;recipient_email&quot;) String recipientEmail,
+<span class="fc" id="L49">                        @Column(&quot;access_code_id_fk&quot;) Integer accessCodeId) {</span>
+<span class="fc" id="L50">        this.id = id;</span>
+<span class="fc" id="L51">        this.code = code;</span>
+<span class="fc" id="L52">        this.priceInCents = priceInCents;</span>
+<span class="fc" id="L53">        this.ticketCategoryId = ticketCategoryId;</span>
+<span class="fc" id="L54">        this.status = Status.valueOf(status);</span>
+<span class="fc" id="L55">        this.sentTimestamp = sentTimestamp;</span>
+<span class="fc" id="L56">        this.recipientName = recipientName;</span>
+<span class="fc" id="L57">        this.recipientEmail = recipientEmail;</span>
+<span class="fc" id="L58">        this.accessCodeId = accessCodeId;</span>
+<span class="fc" id="L59">    }</span>
+
+    public boolean notSent() {
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        return sentTimestamp == null;</span>
+    }
+
+
+    @Getter
+    public static class SpecialPriceTicketCategoryId {
+        private final int id;
+        private final int ticketCategoryId;
+
+
+        public SpecialPriceTicketCategoryId(@Column(&quot;id&quot;) int id,
+<span class="fc" id="L73">                                            @Column(&quot;ticket_category_id&quot;) int ticketCategoryId) {</span>
+<span class="fc" id="L74">            this.id = id;</span>
+<span class="fc" id="L75">            this.ticketCategoryId = ticketCategoryId;</span>
+<span class="fc" id="L76">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

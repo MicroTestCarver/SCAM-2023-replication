@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MessageSourceManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.manager.i18n</a> &gt; <span class="el_source">MessageSourceManager.java</span></div><h1>MessageSourceManager.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.manager.i18n;
+
+import alfio.model.Event;
+import alfio.model.PurchaseContext;
+import alfio.repository.system.ConfigurationRepository;
+import alfio.util.CustomResourceBundleMessageSource;
+import alfio.util.LocaleUtil;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.AbstractMessageSource;
+
+import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+<span class="nc" id="L38">@Log4j2</span>
+public class MessageSourceManager {
+
+<span class="nc" id="L41">    private static final Pattern ARGUMENT_FINDER = Pattern.compile(&quot;\\{+(\\d+)}+&quot;);</span>
+    private final CustomResourceBundleMessageSource messageSource;
+    private final ConfigurationRepository configurationRepository;
+
+    public MessageSourceManager(CustomResourceBundleMessageSource messageSource,
+<span class="nc" id="L46">                                ConfigurationRepository configurationRepository) {</span>
+<span class="nc" id="L47">        this.messageSource = messageSource;</span>
+<span class="nc" id="L48">        this.configurationRepository = configurationRepository;</span>
+<span class="nc" id="L49">    }</span>
+
+    public Set&lt;String&gt; getKeys(String basename, Locale locale) {
+<span class="nc" id="L52">        return messageSource.getKeys(basename, locale);</span>
+    }
+
+    public Pair&lt;MessageSource, Map&lt;String, Map&lt;String, String&gt;&gt;&gt; getMessageSourceForPurchaseContextAndOverride(PurchaseContext purchaseContext) {
+<span class="nc" id="L56">        Map&lt;String, Map&lt;String, String&gt;&gt; override = purchaseContext.event()</span>
+<span class="nc" id="L57">            .map(event -&gt; configurationRepository.getEventOverrideMessages(event.getOrganizationId(), event.getId()))</span>
+<span class="nc" id="L58">            .orElseGet(() -&gt; configurationRepository.getOrganizationOverrideMessages(purchaseContext.getOrganizationId()));</span>
+<span class="nc" id="L59">        return Pair.of(new MessageSourceWithOverride(messageSource, override), override);</span>
+    }
+
+    public MessageSource getMessageSourceFor(PurchaseContext purchaseContext) {
+<span class="nc" id="L63">        return getMessageSourceForPurchaseContextAndOverride(purchaseContext).getLeft();</span>
+    }
+
+    public MessageSource getMessageSourceFor(int orgId, int eventId) {
+<span class="nc" id="L67">        var override = configurationRepository.getEventOverrideMessages(orgId, eventId);</span>
+<span class="nc" id="L68">        return new MessageSourceWithOverride(messageSource, override);</span>
+    }
+
+    public MessageSource getRootMessageSource() {
+<span class="nc" id="L72">        return getRootMessageSource(true);</span>
+    }
+
+    public MessageSource getRootMessageSource(boolean withSystemOverride) {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        if (withSystemOverride) {</span>
+<span class="nc" id="L77">            return new MessageSourceWithOverride(messageSource, configurationRepository.getSystemOverrideMessages());</span>
+        } else {
+<span class="nc" id="L79">            return messageSource;</span>
+        }
+    }
+
+<span class="nc" id="L83">    private static final String[] EMPTY_ARRAY = new String[]{};</span>
+
+<span class="nc" id="L85">    private static final Pattern PLACEHOLDER_TO_REPLACE = Pattern.compile(&quot;\\{(\\d+)\\}&quot;);</span>
+
+    private static String convertPlaceholder(String value) {
+<span class="nc" id="L88">        return PLACEHOLDER_TO_REPLACE.matcher(value).replaceAll(&quot;{{$1}}&quot;).replace(&quot;\'\'&quot;, &quot;\'&quot;);</span>
+    }
+
+    public static Map&lt;String, Map&lt;String, String&gt;&gt; convertPlaceholdersForEachLanguage(Map&lt;String, Map&lt;String, String&gt;&gt; bundles) {
+<span class="nc" id="L92">        Map&lt;String, Map&lt;String, String&gt;&gt; res = new HashMap&lt;&gt;(bundles.size());</span>
+<span class="nc" id="L93">        bundles.forEach((l, b) -&gt; res.put(l, convertPlaceholders(b)));</span>
+<span class="nc" id="L94">        return res;</span>
+    }
+
+    private static Map&lt;String, String&gt; convertPlaceholders(Map&lt;String, String&gt; bundle) {
+<span class="nc" id="L98">        Map&lt;String, String&gt; res = new HashMap&lt;&gt;(bundle.size());</span>
+<span class="nc" id="L99">        bundle.forEach((k, v) -&gt; res.put(k, convertPlaceholder(v)));</span>
+<span class="nc" id="L100">        return res;</span>
+    }
+
+    public Map&lt;String, String&gt; getBundleAsMap(String baseName, boolean withSystemOverride, String lang) {
+<span class="nc" id="L104">        var locale = LocaleUtil.forLanguageTag(lang);</span>
+<span class="nc" id="L105">        var messageSource = getRootMessageSource(withSystemOverride);</span>
+<span class="nc" id="L106">        return getKeys(baseName, locale)</span>
+<span class="nc" id="L107">            .stream()</span>
+<span class="nc" id="L108">            .collect(Collectors.toMap(Function.identity(), k -&gt; convertPlaceholder(messageSource.getMessage(k, EMPTY_ARRAY, locale))));</span>
+    }
+
+    private static class MessageSourceWithOverride extends AbstractMessageSource {
+
+        private final CustomResourceBundleMessageSource messageSource;
+        private final Map&lt;String, Map&lt;String, String&gt;&gt; override;
+
+<span class="nc" id="L116">        private MessageSourceWithOverride(CustomResourceBundleMessageSource messageSource, Map&lt;String, Map&lt;String, String&gt;&gt; override) {</span>
+<span class="nc" id="L117">            this.messageSource = messageSource;</span>
+<span class="nc" id="L118">            this.override = override;</span>
+<span class="nc" id="L119">        }</span>
+
+        @Override
+        protected MessageFormat resolveCode(String s, Locale locale) {
+<span class="nc" id="L123">            var language = locale.getLanguage();</span>
+<span class="nc bnc" id="L124" title="All 4 branches missed.">            if (override.containsKey(language) &amp;&amp; override.get(language).containsKey(s)) {</span>
+<span class="nc" id="L125">                var pattern = cleanArguments(override.get(language).get(s), &quot;{$1}&quot;);</span>
+<span class="nc" id="L126">                return new MessageFormat(pattern, locale);</span>
+            }
+<span class="nc" id="L128">            return messageSource.getMessageFormatFor(s, locale);</span>
+        }
+    }
+
+    static String cleanArguments(String translation, String replacement) {
+<span class="nc" id="L133">        return ARGUMENT_FINDER.matcher(translation).replaceAll(replacement);</span>
+    }
+
+    static Map&lt;String, String&gt; cleanTranslationsForFrontend(Map&lt;String, String&gt; translations) {
+<span class="nc" id="L137">        return translations.entrySet().stream()</span>
+<span class="nc" id="L138">            .map(entry -&gt; Pair.of(entry.getKey(), cleanArguments(entry.getValue(), &quot;{{$1}}&quot;).replaceAll(&quot;''&quot;, &quot;'&quot;)))</span>
+<span class="nc" id="L139">            .collect(Collectors.toMap(Pair::getKey, Pair::getValue));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

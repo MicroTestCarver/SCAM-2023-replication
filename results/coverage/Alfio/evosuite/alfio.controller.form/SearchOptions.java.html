@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SearchOptions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.controller.form</a> &gt; <span class="el_source">SearchOptions.java</span></div><h1>SearchOptions.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.controller.form;
+
+import lombok.Data;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
+import java.util.UUID;
+
+@Data
+<span class="nc" id="L28">@Log4j2</span>
+public class SearchOptions {
+    private String subscription;
+    private Integer organizer;
+    private String organizerSlug;
+    private List&lt;String&gt; tags;
+
+    public static SearchOptions empty() {
+<span class="nc" id="L36">        return new SearchOptions();</span>
+    }
+
+    public boolean isEmpty() {
+<span class="nc bnc" id="L40" title="All 4 branches missed.">        return StringUtils.isEmpty(subscription)</span>
+<span class="nc bnc" id="L41" title="All 4 branches missed.">            &amp;&amp; (organizer == null || organizer == 0 || StringUtils.isEmpty(organizerSlug))</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">            &amp;&amp; CollectionUtils.isEmpty(tags);</span>
+    }
+
+    public UUID getSubscriptionCodeUUIDOrNull() {
+        try {
+<span class="nc bnc" id="L47" title="All 2 branches missed.">            if(StringUtils.isEmpty(subscription)) {</span>
+<span class="nc" id="L48">                return null;</span>
+            }
+<span class="nc" id="L50">            return UUID.fromString(subscription);</span>
+<span class="nc" id="L51">        } catch (Exception e) {</span>
+<span class="nc" id="L52">            log.warn(&quot;invalid UUID received: {}&quot;, subscription);</span>
+<span class="nc" id="L53">            return null;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

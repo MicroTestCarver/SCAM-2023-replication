@@ -1,0 +1,10 @@
+<alfio.model.DynamicFieldTemplate>
+  <id>7</id>
+  <name>gender</name>
+  <type>select</type>
+  <restrictedValues>
+    <string>F</string>
+    <string>M</string>
+    <string>X</string>
+  </restrictedValues>
+</alfio.model.DynamicFieldTemplate>

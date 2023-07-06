@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Transaction.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model.transaction</a> &gt; <span class="el_source">Transaction.java</span></div><h1>Transaction.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model.transaction;
+
+import alfio.model.support.JSONData;
+import alfio.util.MonetaryUtil;
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import lombok.Getter;
+
+import java.time.ZonedDateTime;
+import java.util.Map;
+import java.util.Optional;
+
+@Getter
+public class Transaction {
+
+<span class="nc" id="L31">    public enum Status {</span>
+<span class="nc" id="L32">        PENDING,</span>
+<span class="nc" id="L33">        OFFLINE_MATCHING_PAYMENT_FOUND,</span>
+<span class="nc" id="L34">        OFFLINE_PENDING_REVIEW,</span>
+<span class="nc" id="L35">        OFFLINE_DISABLE_MATCH,</span>
+<span class="nc" id="L36">        COMPLETE,</span>
+<span class="nc" id="L37">        FAILED,</span>
+<span class="nc" id="L38">        CANCELLED,</span>
+<span class="nc" id="L39">        INVALID</span>
+    }
+
+    private final int id;
+    private final String transactionId;
+    private final String paymentId;
+    private final String reservationId;
+    private final ZonedDateTime timestamp;
+    private final int priceInCents;
+    private final String currency;
+    private final String description;
+    private final PaymentProxy paymentProxy;
+    private final long platformFee;
+    private final long gatewayFee;
+    private final Status status;
+    private final Map&lt;String, String&gt; metadata;
+
+
+    public Transaction(@Column(&quot;id&quot;) int id,
+                       @Column(&quot;gtw_tx_id&quot;) String transactionId,
+                       @Column(&quot;gtw_payment_id&quot;) String paymentId,
+                       @Column(&quot;reservation_id&quot;) String reservationId,
+                       @Column(&quot;t_timestamp&quot;) ZonedDateTime timestamp,
+                       @Column(&quot;price_cts&quot;) int priceInCents,
+                       @Column(&quot;currency&quot;) String currency,
+                       @Column(&quot;description&quot;) String description,
+                       @Column(&quot;payment_proxy&quot;) String paymentProxy,
+                       @Column(&quot;plat_fee&quot;) long platformFee,
+                       @Column(&quot;gtw_fee&quot;) long gatewayFee,
+                       @Column(&quot;status&quot;) Status status,
+<span class="nc" id="L69">                       @Column(&quot;metadata&quot;) @JSONData Map&lt;String, String&gt; metadata) {</span>
+<span class="nc" id="L70">        this.id = id;</span>
+<span class="nc" id="L71">        this.transactionId = transactionId;</span>
+<span class="nc" id="L72">        this.paymentId = paymentId;</span>
+<span class="nc" id="L73">        this.reservationId = reservationId;</span>
+<span class="nc" id="L74">        this.timestamp = timestamp;</span>
+<span class="nc" id="L75">        this.priceInCents = priceInCents;</span>
+<span class="nc" id="L76">        this.currency = currency;</span>
+<span class="nc" id="L77">        this.description = description;</span>
+<span class="nc" id="L78">        this.paymentProxy = PaymentProxy.valueOf(paymentProxy);</span>
+<span class="nc" id="L79">        this.platformFee = platformFee;</span>
+<span class="nc" id="L80">        this.gatewayFee = gatewayFee;</span>
+<span class="nc" id="L81">        this.status = status;</span>
+<span class="nc" id="L82">        this.metadata = Optional.ofNullable(metadata).orElse(Map.of());</span>
+<span class="nc" id="L83">    }</span>
+
+    public boolean isComplete() {
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        return status == Status.COMPLETE;</span>
+    }
+
+    public boolean isPotentialMatch() {
+<span class="nc bnc" id="L90" title="All 4 branches missed.">        return status == Status.OFFLINE_MATCHING_PAYMENT_FOUND</span>
+            || status == Status.OFFLINE_PENDING_REVIEW;
+    }
+
+    public String getFormattedAmount() {
+<span class="nc" id="L95">        return MonetaryUtil.formatCents(priceInCents, currency);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

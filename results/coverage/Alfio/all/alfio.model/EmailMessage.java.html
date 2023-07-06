@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmailMessage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">EmailMessage.java</span></div><h1>EmailMessage.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import alfio.model.PurchaseContext.PurchaseContextType;
+import alfio.util.Json;
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import com.google.gson.reflect.TypeToken;
+import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@Getter
+public class EmailMessage implements Comparable&lt;EmailMessage&gt; {
+
+<span class="fc" id="L37">    public enum Status {</span>
+<span class="fc" id="L38">        WAITING, RETRY, IN_PROCESS, SENT, ERROR</span>
+    }
+    
+    private final int id;
+    private final Integer eventId;
+    private final UUID subscriptionDescriptorId;
+    private final Status status;
+    private final String recipient;
+    private final List&lt;String&gt; cc;
+    private final String subject;
+    private final String message;
+    private final String htmlMessage;
+    private final String attachments;
+    private final String checksum;
+    private final ZonedDateTime requestTimestamp;
+    private final ZonedDateTime sentTimestamp;
+    private final int attempts;
+    private final int organizationId;
+
+    public EmailMessage(@Column(&quot;id&quot;) int id,
+                        @Column(&quot;event_id&quot;) Integer eventId,
+                        @Column(&quot;subscription_descriptor_id_fk&quot;) UUID subscriptionDescriptorId,
+                        @Column(&quot;status&quot;) String status,
+                        @Column(&quot;recipient&quot;) String recipient,
+                        @Column(&quot;subject&quot;) String subject,
+                        @Column(&quot;message&quot;) String message,
+                        @Column(&quot;html_message&quot;) String htmlMessage,
+                        @Column(&quot;attachments&quot;) String attachments,
+                        @Column(&quot;checksum&quot;) String checksum,
+                        @Column(&quot;request_ts&quot;) ZonedDateTime requestTimestamp,
+                        @Column(&quot;sent_ts&quot;) ZonedDateTime sentTimestamp,
+                        @Column(&quot;attempts&quot;) int attempts,
+                        @Column(&quot;email_cc&quot;) String emailCC,
+<span class="fc" id="L71">                        @Column(&quot;organization_id_fk&quot;) int organizationId) {</span>
+<span class="fc" id="L72">        this.id = id;</span>
+<span class="fc" id="L73">        this.eventId = eventId;</span>
+<span class="fc" id="L74">        this.subscriptionDescriptorId = subscriptionDescriptorId;</span>
+<span class="fc" id="L75">        this.requestTimestamp = requestTimestamp;</span>
+<span class="fc" id="L76">        this.sentTimestamp = sentTimestamp;</span>
+<span class="fc" id="L77">        this.status = Status.valueOf(status);</span>
+<span class="fc" id="L78">        this.recipient = recipient;</span>
+<span class="fc" id="L79">        this.subject = subject;</span>
+<span class="fc" id="L80">        this.message = message;</span>
+<span class="fc" id="L81">        this.htmlMessage = htmlMessage;</span>
+<span class="fc" id="L82">        this.attachments = attachments;</span>
+<span class="fc" id="L83">        this.checksum = checksum;</span>
+<span class="fc" id="L84">        this.attempts = attempts;</span>
+<span class="fc" id="L85">        this.organizationId = organizationId;</span>
+
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        if(StringUtils.isNotBlank(emailCC)) {</span>
+<span class="fc" id="L88">            this.cc = Json.GSON.fromJson(emailCC, new TypeToken&lt;List&lt;String&gt;&gt;(){}.getType());</span>
+        } else {
+<span class="fc" id="L90">            this.cc = new ArrayList&lt;&gt;();</span>
+        }
+<span class="fc" id="L92">    }</span>
+
+    public PurchaseContextType getPurchaseContextType() {
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        return eventId != null ? PurchaseContextType.event : PurchaseContextType.subscription;</span>
+    }
+
+    @Override
+    public int compareTo(EmailMessage o) {
+<span class="nc" id="L100">        return new CompareToBuilder()</span>
+<span class="nc" id="L101">            .append(eventId, o.eventId)</span>
+<span class="nc" id="L102">            .append(subscriptionDescriptorId, o.subscriptionDescriptorId)</span>
+<span class="nc" id="L103">            .append(checksum, o.checksum)</span>
+<span class="nc" id="L104">            .build();</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        if(!(obj instanceof EmailMessage)) {</span>
+<span class="nc" id="L110">            return false;</span>
+        }
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        if(obj == this) {</span>
+<span class="nc" id="L113">            return true;</span>
+        }
+<span class="nc" id="L115">        EmailMessage other = (EmailMessage)obj;</span>
+<span class="nc" id="L116">        return new EqualsBuilder()</span>
+<span class="nc" id="L117">            .append(eventId, other.eventId)</span>
+<span class="nc" id="L118">            .append(subscriptionDescriptorId, other.subscriptionDescriptorId)</span>
+<span class="nc" id="L119">            .append(checksum, other.checksum)</span>
+<span class="nc" id="L120">            .isEquals();</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L125">        return new HashCodeBuilder().append(eventId).append(subscriptionDescriptorId).append(checksum).toHashCode();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

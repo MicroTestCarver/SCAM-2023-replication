@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SubscriptionDescriptor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model.subscription</a> &gt; <span class="el_source">SubscriptionDescriptor.java</span></div><h1>SubscriptionDescriptor.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model.subscription;
+
+import alfio.manager.system.ConfigurationLevel;
+import alfio.model.ContentLanguage;
+import alfio.model.Event;
+import alfio.model.PriceContainer.VatStatus;
+import alfio.model.PurchaseContext;
+import alfio.model.support.Array;
+import alfio.model.support.JSONData;
+import alfio.model.transaction.PaymentProxy;
+import alfio.util.ClockProvider;
+import alfio.util.LocaleUtil;
+import alfio.util.MustacheCustomTag;
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
+
+import java.math.BigDecimal;
+import java.time.Clock;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.Objects.requireNonNullElseGet;
+
+@Getter
+public class SubscriptionDescriptor implements PurchaseContext {
+
+<span class="fc" id="L49">    public enum SubscriptionUsageType {</span>
+<span class="fc" id="L50">        ONCE_PER_EVENT, UNLIMITED</span>
+    }
+
+<span class="fc" id="L53">    public enum SubscriptionTimeUnit {</span>
+<span class="fc" id="L54">        DAYS(ChronoUnit.DAYS), MONTHS(ChronoUnit.MONTHS), YEARS(ChronoUnit.YEARS);</span>
+
+        private final TemporalUnit temporalUnit;
+
+<span class="fc" id="L58">        SubscriptionTimeUnit(TemporalUnit temporalUnit) {</span>
+<span class="fc" id="L59">            this.temporalUnit = temporalUnit;</span>
+<span class="fc" id="L60">        }</span>
+
+        public TemporalUnit getTemporalUnit() {
+<span class="nc" id="L63">            return temporalUnit;</span>
+        }
+    }
+
+<span class="fc" id="L67">    public enum SubscriptionValidityType {</span>
+<span class="fc" id="L68">        STANDARD, CUSTOM, NOT_SET</span>
+    }
+
+    private final UUID id;
+    private final Map&lt;String, String&gt; title;
+    private final Map&lt;String, String&gt; description;
+    private final int maxAvailable;
+    private final ZonedDateTime creation;
+    private final ZonedDateTime onSaleFrom;
+    private final ZonedDateTime onSaleTo;
+    private final int price;
+    private final BigDecimal vat;
+    private final VatStatus vatStatus;
+    private final String currency;
+    private final boolean isPublic;
+    private final int organizationId;
+
+    private final int maxEntries;
+    private final SubscriptionValidityType validityType;
+    private final SubscriptionTimeUnit validityTimeUnit;
+    private final Integer validityUnits;
+    private final ZonedDateTime validityFrom;
+    private final ZonedDateTime validityTo;
+    private final SubscriptionUsageType usageType;
+
+    private final String termsAndConditionsUrl;
+    private final String privacyPolicyUrl;
+    private final String fileBlobId;
+    private final List&lt;PaymentProxy&gt; paymentProxies;
+    private final String privateKey;
+    private final String timeZone;
+    private final boolean supportsTicketsGeneration;
+
+    public SubscriptionDescriptor(@Column(&quot;id&quot;) UUID id,
+                                  @Column(&quot;title&quot;) @JSONData Map&lt;String, String&gt; title,
+                                  @Column(&quot;description&quot;) @JSONData Map&lt;String, String&gt; description,
+                                  @Column(&quot;max_available&quot;) int maxAvailable,
+                                  @Column(&quot;creation_ts&quot;) ZonedDateTime creation,
+                                  @Column(&quot;on_sale_from&quot;) ZonedDateTime onSaleFrom,
+                                  @Column(&quot;on_sale_to&quot;) ZonedDateTime onSaleTo,
+                                  @Column(&quot;price_cts&quot;) int price,
+                                  @Column(&quot;vat&quot;) BigDecimal vat,
+                                  @Column(&quot;vat_status&quot;) VatStatus vatStatus,
+                                  @Column(&quot;currency&quot;) String currency,
+                                  @Column(&quot;is_public&quot;) boolean isPublic,
+                                  @Column(&quot;organization_id_fk&quot;) int organizationId,
+
+                                  @Column(&quot;max_entries&quot;) int maxEntries,
+                                  @Column(&quot;validity_type&quot;) SubscriptionValidityType validityType,
+                                  @Column(&quot;validity_time_unit&quot;) SubscriptionTimeUnit validityTimeUnit,
+                                  @Column(&quot;validity_units&quot;) Integer validityUnits,
+                                  @Column(&quot;validity_from&quot;) ZonedDateTime validityFrom,
+                                  @Column(&quot;validity_to&quot;) ZonedDateTime validityTo,
+                                  @Column(&quot;usage_type&quot;) SubscriptionUsageType usageType,
+
+                                  @Column(&quot;terms_conditions_url&quot;) String termsAndConditionsUrl,
+                                  @Column(&quot;privacy_policy_url&quot;) String privacyPolicyUrl,
+                                  @Column(&quot;file_blob_id_fk&quot;) String fileBlobId,
+                                  @Column(&quot;allowed_payment_proxies&quot;) @Array List&lt;String&gt; paymentProxies,
+                                  @Column(&quot;private_key&quot;) String privateKey,
+                                  @Column(&quot;time_zone&quot;) String timeZone,
+<span class="fc" id="L129">                                  @Column(&quot;supports_tickets_generation&quot;) Boolean supportsTicketsGeneration) {</span>
+<span class="fc" id="L130">        var zoneId = ZoneId.of(timeZone);</span>
+<span class="fc" id="L131">        this.id = id;</span>
+<span class="fc" id="L132">        this.title = title;</span>
+<span class="fc" id="L133">        this.description = description;</span>
+<span class="fc" id="L134">        this.maxAvailable = maxAvailable;</span>
+<span class="fc" id="L135">        this.creation = creation;</span>
+<span class="fc" id="L136">        this.timeZone = timeZone;</span>
+<span class="fc" id="L137">        this.onSaleFrom = LocaleUtil.atZone(onSaleFrom, zoneId);</span>
+<span class="fc" id="L138">        this.onSaleTo = LocaleUtil.atZone(onSaleTo, zoneId);</span>
+<span class="fc" id="L139">        this.price = price;</span>
+<span class="fc" id="L140">        this.vat = vat;</span>
+<span class="fc" id="L141">        this.vatStatus = vatStatus;</span>
+<span class="fc" id="L142">        this.currency = currency;</span>
+<span class="fc" id="L143">        this.isPublic = isPublic;</span>
+<span class="fc" id="L144">        this.organizationId = organizationId;</span>
+
+<span class="fc" id="L146">        this.maxEntries = maxEntries;</span>
+<span class="fc" id="L147">        this.validityType = validityType;</span>
+<span class="fc" id="L148">        this.validityTimeUnit = validityTimeUnit;</span>
+<span class="fc" id="L149">        this.validityUnits = validityUnits;</span>
+<span class="fc" id="L150">        this.validityFrom = LocaleUtil.atZone(validityFrom, zoneId);</span>
+<span class="fc" id="L151">        this.validityTo = LocaleUtil.atZone(validityTo, zoneId);</span>
+<span class="fc" id="L152">        this.usageType = usageType;</span>
+
+<span class="fc" id="L154">        this.termsAndConditionsUrl = termsAndConditionsUrl;</span>
+<span class="fc" id="L155">        this.privacyPolicyUrl = privacyPolicyUrl;</span>
+<span class="fc" id="L156">        this.fileBlobId = fileBlobId;</span>
+<span class="fc" id="L157">        this.paymentProxies = paymentProxies.stream().map(PaymentProxy::valueOf).collect(Collectors.toList());</span>
+
+<span class="fc" id="L159">        this.privateKey = privateKey;</span>
+<span class="fc" id="L160">        this.supportsTicketsGeneration = Boolean.TRUE.equals(supportsTicketsGeneration);</span>
+<span class="fc" id="L161">    }</span>
+
+    @Override
+    public List&lt;ContentLanguage&gt; getContentLanguages() {
+<span class="fc" id="L165">        var languages = title.keySet();</span>
+<span class="fc" id="L166">        return ContentLanguage.ALL_LANGUAGES.stream()</span>
+<span class="fc" id="L167">            .filter(l -&gt; languages.contains(l.getLanguage()))</span>
+<span class="fc" id="L168">            .collect(Collectors.toList());</span>
+    }
+
+    @JsonIgnore
+    @Override
+    public ConfigurationLevel getConfigurationLevel() {
+<span class="nc" id="L174">        return ConfigurationLevel.organization(organizationId);</span>
+    }
+
+    @Override
+    public List&lt;PaymentProxy&gt; getAllowedPaymentProxies() {
+<span class="nc" id="L179">        return getPaymentProxies();</span>
+    }
+
+    @Override
+    public String getPrivacyPolicyLinkOrNull() {
+<span class="nc" id="L184">        return StringUtils.trimToNull(privacyPolicyUrl);</span>
+    }
+
+    @Override
+    public String getPublicIdentifier() {
+<span class="fc" id="L189">        return getId().toString();</span>
+    }
+
+    @JsonIgnore
+    @Override
+    public PurchaseContextType getType() {
+<span class="fc" id="L195">        return PurchaseContextType.subscription;</span>
+    }
+
+    @JsonIgnore
+    @Override
+    public ZoneId getZoneId() {
+<span class="nc" id="L201">        return ZoneId.of(timeZone);</span>
+    }
+
+    @Override
+    public String getDisplayName() {
+<span class="nc" id="L206">        return title.keySet().stream().findFirst().map(title::get).orElse(&quot;Subscription&quot;); //FIXME</span>
+    }
+
+    @JsonIgnore
+    @Override
+    public Optional&lt;Event&gt; event() {
+<span class="fc" id="L212">        return Optional.empty();</span>
+    }
+
+    @JsonIgnore
+    @Override
+    public String getPrivateKey() {
+<span class="nc" id="L218">        return privateKey;</span>
+    }
+
+    @Override
+    public ZonedDateTime getBegin() {
+<span class="nc bnc" id="L223" title="All 2 branches missed.">        return validityFrom != null ? validityFrom : ZonedDateTime.now(ClockProvider.clock()).plusMonths(2);</span>
+    }
+
+    @JsonIgnore
+    public boolean isUnlimitedAccess() {
+<span class="nc bnc" id="L228" title="All 2 branches missed.">        return maxEntries == -1;</span>
+    }
+
+    @Override
+    public boolean isFreeOfCharge() {
+<span class="nc" id="L233">        return false;</span>
+    }
+
+    public String getLocalizedTitle(Locale locale) {
+<span class="fc" id="L237">        var fallbackLocale = title.keySet().stream().findFirst().orElse(&quot;en&quot;);</span>
+<span class="fc" id="L238">        return MustacheCustomTag.renderToTextCommonmark(title.getOrDefault(locale.toLanguageTag(), fallbackLocale));</span>
+    }
+
+    public Map&lt;String, String&gt; getTitleAsText() {
+<span class="nc" id="L242">        return renderTextCommonMark(title);</span>
+    }
+
+    public Map&lt;String, String&gt; getDescriptionAsText() {
+<span class="nc" id="L246">        return renderTextCommonMark(description);</span>
+    }
+
+    public boolean withinSalePeriod(Clock clock) {
+<span class="nc" id="L250">        var now = now(clock);</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">        return requireNonNullElseGet(onSaleFrom, () -&gt; now.minusHours(1)).isBefore(now)</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">            &amp;&amp; requireNonNullElseGet(onSaleTo, () -&gt; now.plusHours(1)).isAfter(now);</span>
+    }
+
+    private Map&lt;String, String&gt; renderTextCommonMark(Map&lt;String, String&gt; original) {
+<span class="nc" id="L256">        return original.entrySet().stream()</span>
+<span class="nc" id="L257">            .map(entry -&gt; Map.entry(entry.getKey(), MustacheCustomTag.renderToTextCommonmark(entry.getValue())))</span>
+<span class="nc" id="L258">            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

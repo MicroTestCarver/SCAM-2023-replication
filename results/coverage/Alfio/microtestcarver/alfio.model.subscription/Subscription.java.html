@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Subscription.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model.subscription</a> &gt; <span class="el_source">Subscription.java</span></div><h1>Subscription.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model.subscription;
+
+import alfio.model.AllocationStatus;
+import alfio.model.TimeZoneInfo;
+import alfio.util.ClockProvider;
+import alfio.util.PinGenerator;
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import org.springframework.validation.BindingResult;
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
+import java.util.UUID;
+
+import static alfio.util.LocaleUtil.atZone;
+
+@Getter
+public class Subscription implements TimeZoneInfo {
+
+<span class="nc" id="L39">    private static final DateTimeFormatter VALIDITY_FORMATTER = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm&quot;);</span>
+    private final UUID id;
+    private final String firstName;
+    private final String lastName;
+    private final String email;
+    private final UUID subscriptionDescriptorId;
+    private final String reservationId;
+    private final int organizationId;
+    private final ZonedDateTime creationTime;
+    private final ZonedDateTime updateTime;
+    private final int srcPriceCts;
+    private final int discountCts;
+    private final String currency;
+    private final AllocationStatus status;
+    private final int maxEntries;
+    private final ZonedDateTime validityFrom;
+    private final ZonedDateTime validityTo;
+    private final ZonedDateTime confirmationTimestamp;
+    private final ZoneId zoneId;
+
+    public static final int PIN_LENGTH = 8;
+
+
+    public Subscription(@Column(&quot;id&quot;) UUID id,
+                        @Column(&quot;first_name&quot;) String firstName,
+                        @Column(&quot;last_name&quot;) String lastName,
+                        @Column(&quot;email_address&quot;) String email,
+                        @Column(&quot;subscription_descriptor_fk&quot;) UUID subscriptionDescriptorId,
+                        @Column(&quot;reservation_id_fk&quot;) String reservationId,
+                        @Column(&quot;organization_id_fk&quot;) int organizationId,
+                        @Column(&quot;creation_ts&quot;) ZonedDateTime creationTime,
+                        @Column(&quot;update_ts&quot;) ZonedDateTime updateTime,
+                        @Column(&quot;src_price_cts&quot;) int srcPriceCts,
+                        @Column(&quot;discount_cts&quot;) int discountCts,
+                        @Column(&quot;currency&quot;) String currency,
+                        @Column(&quot;status&quot;) AllocationStatus status,
+                        @Column(&quot;max_entries&quot;) int maxEntries,
+                        @Column(&quot;validity_from&quot;) ZonedDateTime validityFrom,
+                        @Column(&quot;validity_to&quot;) ZonedDateTime validityTo,
+                        @Column(&quot;confirmation_ts&quot;) ZonedDateTime confirmationTimestamp,
+<span class="nc" id="L79">                        @Column(&quot;time_zone&quot;) String timeZone) {</span>
+<span class="nc" id="L80">        this.id = id;</span>
+<span class="nc" id="L81">        this.firstName = firstName;</span>
+<span class="nc" id="L82">        this.lastName = lastName;</span>
+<span class="nc" id="L83">        this.email = email;</span>
+<span class="nc" id="L84">        this.subscriptionDescriptorId = subscriptionDescriptorId;</span>
+<span class="nc" id="L85">        this.reservationId = reservationId;</span>
+<span class="nc" id="L86">        this.organizationId = organizationId;</span>
+<span class="nc" id="L87">        this.creationTime = creationTime;</span>
+<span class="nc" id="L88">        this.updateTime = updateTime;</span>
+<span class="nc" id="L89">        this.srcPriceCts = srcPriceCts;</span>
+<span class="nc" id="L90">        this.discountCts = discountCts;</span>
+<span class="nc" id="L91">        this.currency = currency;</span>
+<span class="nc" id="L92">        this.status = status;</span>
+<span class="nc" id="L93">        this.maxEntries = maxEntries;</span>
+<span class="nc" id="L94">        var zoneId = ZoneId.of(timeZone);</span>
+<span class="nc" id="L95">        this.zoneId = zoneId;</span>
+<span class="nc" id="L96">        this.validityFrom = atZone(validityFrom, zoneId);</span>
+<span class="nc" id="L97">        this.validityTo = atZone(validityTo, zoneId);</span>
+<span class="nc" id="L98">        this.confirmationTimestamp = atZone(confirmationTimestamp, zoneId);</span>
+<span class="nc" id="L99">    }</span>
+
+    public boolean isValid(Optional&lt;BindingResult&gt; bindingResult) {
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        if (status != AllocationStatus.ACQUIRED) {</span>
+<span class="nc" id="L103">            reject(bindingResult, &quot;subscription.not.acquired&quot;);</span>
+<span class="nc" id="L104">            return false;</span>
+        }
+<span class="nc" id="L106">        var now = now(ClockProvider.clock());</span>
+<span class="nc bnc" id="L107" title="All 4 branches missed.">        if(validityFrom != null &amp;&amp; validityFrom.isAfter(now)) {</span>
+<span class="nc" id="L108">            reject(bindingResult, &quot;subscription.not.valid&quot;);</span>
+<span class="nc" id="L109">            return false;</span>
+<span class="nc bnc" id="L110" title="All 4 branches missed.">        } else if(validityTo != null &amp;&amp; validityTo.isBefore(now)) {</span>
+<span class="nc" id="L111">            reject(bindingResult, &quot;subscription.expired&quot;);</span>
+<span class="nc" id="L112">            return false;</span>
+        }
+<span class="nc" id="L114">        return true;</span>
+    }
+
+    private static void reject(Optional&lt;BindingResult&gt; bindingResult, String errorCode) {
+<span class="nc" id="L118">        bindingResult.ifPresent(b -&gt; b.reject(errorCode));</span>
+<span class="nc" id="L119">    }</span>
+
+    public boolean isValid() {
+<span class="nc" id="L122">        return isValid(Optional.empty());</span>
+    }
+
+    public String getPin() {
+<span class="nc" id="L126">        return PinGenerator.uuidToPin(id.toString(), PIN_LENGTH);</span>
+    }
+
+    @JsonIgnore
+    public ZoneId getZoneId() {
+<span class="nc" id="L131">        return zoneId;</span>
+    }
+
+    public String getFormattedValidityTo() {
+<span class="nc bnc" id="L135" title="All 2 branches missed.">        if(validityTo == null) {</span>
+<span class="nc" id="L136">            return null;</span>
+        }
+<span class="nc" id="L138">        return validityTo.format(VALIDITY_FORMATTER);</span>
+    }
+
+    public String getFormattedValidityFrom() {
+<span class="nc bnc" id="L142" title="All 2 branches missed.">        if(validityFrom == null) {</span>
+<span class="nc" id="L143">            return null;</span>
+        }
+<span class="nc" id="L145">        return validityFrom.format(VALIDITY_FORMATTER);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

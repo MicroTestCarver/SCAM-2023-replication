@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ApiControllerExceptionHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.controller.api</a> &gt; <span class="el_source">ApiControllerExceptionHandler.java</span></div><h1>ApiControllerExceptionHandler.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.controller.api;
+
+import alfio.controller.api.v2.user.support.ReservationAccessDenied;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageConversionException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import javax.servlet.http.HttpServletRequest;
+
+@ControllerAdvice(basePackages = {
+    &quot;alfio.controller.api.admin&quot;,
+    &quot;alfio.controller.api.support&quot;,
+    &quot;alfio.controller.api.v1&quot;,
+    &quot;alfio.controller.api.v2&quot;})
+<span class="fc" id="L36">@Log4j2</span>
+<span class="fc" id="L37">public class ApiControllerExceptionHandler {</span>
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public String exception(Exception ex) {
+<span class="nc" id="L43">        log.error(&quot;unexpected exception&quot;, ex);</span>
+<span class="nc" id="L44">        return &quot;unexpected exception&quot;;</span>
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    @ResponseBody
+    public String requestNotSupported(HttpRequestMethodNotSupportedException ex, HttpServletRequest request) {
+<span class="nc" id="L51">        log.warn(&quot;Request method {} not allowed for request {}&quot;, request.getMethod(), request.getRequestURI());</span>
+<span class="nc" id="L52">        return &quot;method not supported&quot;;</span>
+    }
+
+    @ExceptionHandler(HttpMessageConversionException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public String badRequest(HttpMessageConversionException e) {
+<span class="nc" id="L59">        log.error(&quot;message conversion exception&quot;, e);</span>
+<span class="nc" id="L60">        return &quot;bad request&quot;;</span>
+    }
+
+    @ExceptionHandler(ReservationAccessDenied.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public String notAuthorized(ReservationAccessDenied rad) {
+<span class="nc" id="L67">        log.trace(&quot;intercepted ReservationAccessDenied&quot;, rad);</span>
+<span class="nc" id="L68">        return &quot;Access to this reservation has been denied&quot;;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,17 @@
+<pl.altkom.asc.lab.micronaut.poc.policy.service.api.v1.queries.getpolicydetails.GetPolicyDetailsQueryResult>
+  <policy>
+    <number>780d39eb-115f-4c3d-8c72-7ab5cefe0dca</number>
+    <dateFrom>2023-05-17</dateFrom>
+    <dateTo>2023-05-31</dateTo>
+    <policyHolder>Amir jackson</policyHolder>
+    <totalPremium>300.00</totalPremium>
+    <productCode>FAI</productCode>
+    <accountNumber>a6fb1630-b99c-4c1f-945c-f99ab9c03232</accountNumber>
+    <covers>
+      <string>C4 - 120.00</string>
+      <string>C3 - 90.00</string>
+      <string>C1 - 30.00</string>
+      <string>C2 - 60.00</string>
+    </covers>
+  </policy>
+</pl.altkom.asc.lab.micronaut.poc.policy.service.api.v1.queries.getpolicydetails.GetPolicyDetailsQueryResult>

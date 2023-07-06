@@ -1,0 +1,12 @@
+<alfio.model.DynamicFieldTemplate>
+  <id>8</id>
+  <name>tShirtSize</name>
+  <type>select</type>
+  <restrictedValues>
+    <string>SMALL</string>
+    <string>MEDIUM</string>
+    <string>LARGE</string>
+    <string>X-LARGE</string>
+    <string>2X-LARGE</string>
+  </restrictedValues>
+</alfio.model.DynamicFieldTemplate>

@@ -1,0 +1,82 @@
+<pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList>
+  <basePriceCalculationRules class="org.hibernate.collection.internal.PersistentBag">
+    <isTempSession>false</isTempSession>
+    <initialized>true</initialized>
+    <owner class="pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff">
+      <id>6</id>
+      <code>FAI</code>
+      <basePriceCalculationRules class="org.hibernate.collection.internal.PersistentBag" reference="../.."/>
+      <discountMarkupRules class="org.hibernate.collection.internal.PersistentBag">
+        <isTempSession>false</isTempSession>
+        <initialized>true</initialized>
+        <owner class="pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff" reference="../.."/>
+        <cachedSize>-1</cachedSize>
+        <role>pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff.discountMarkupRules</role>
+        <key class="long">6</key>
+        <dirty>false</dirty>
+        <elementRemoved>false</elementRemoved>
+        <storedSnapshot class="list">
+          <pl.altkom.asc.lab.micronaut.poc.pricing.domain.PercentMarkupRule>
+            <id>7</id>
+            <tariff reference="../../../.."/>
+            <applyIfFormula>FLOOD == &apos;YES&apos;</applyIfFormula>
+            <paramValue>1.50</paramValue>
+          </pl.altkom.asc.lab.micronaut.poc.pricing.domain.PercentMarkupRule>
+          <pl.altkom.asc.lab.micronaut.poc.pricing.domain.PercentMarkupRule>
+            <id>8</id>
+            <tariff reference="../../../.."/>
+            <applyIfFormula>NUM_OF_CLAIM &gt; 2</applyIfFormula>
+            <paramValue>2.00</paramValue>
+          </pl.altkom.asc.lab.micronaut.poc.pricing.domain.PercentMarkupRule>
+        </storedSnapshot>
+        <allowLoadOutsideTransaction>false</allowLoadOutsideTransaction>
+        <bag>
+          <pl.altkom.asc.lab.micronaut.poc.pricing.domain.PercentMarkupRule reference="../../storedSnapshot/pl.altkom.asc.lab.micronaut.poc.pricing.domain.PercentMarkupRule"/>
+          <pl.altkom.asc.lab.micronaut.poc.pricing.domain.PercentMarkupRule reference="../../storedSnapshot/pl.altkom.asc.lab.micronaut.poc.pricing.domain.PercentMarkupRule[2]"/>
+        </bag>
+      </discountMarkupRules>
+    </owner>
+    <cachedSize>-1</cachedSize>
+    <role>pl.altkom.asc.lab.micronaut.poc.pricing.domain.Tariff.basePriceCalculationRules</role>
+    <key class="long">6</key>
+    <dirty>false</dirty>
+    <elementRemoved>false</elementRemoved>
+    <storedSnapshot class="list">
+      <pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+        <coverCode>C1</coverCode>
+        <basePriceFormula>10B</basePriceFormula>
+      </pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+      <pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+        <coverCode>C2</coverCode>
+        <basePriceFormula>20B</basePriceFormula>
+      </pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+      <pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+        <coverCode>C3</coverCode>
+        <basePriceFormula>30B</basePriceFormula>
+      </pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+      <pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+        <coverCode>C4</coverCode>
+        <basePriceFormula>40B</basePriceFormula>
+      </pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+    </storedSnapshot>
+    <allowLoadOutsideTransaction>false</allowLoadOutsideTransaction>
+    <bag>
+      <pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+        <coverCode>C1</coverCode>
+        <basePriceFormula>10B</basePriceFormula>
+      </pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+      <pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+        <coverCode>C2</coverCode>
+        <basePriceFormula>20B</basePriceFormula>
+      </pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+      <pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+        <coverCode>C3</coverCode>
+        <basePriceFormula>30B</basePriceFormula>
+      </pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+      <pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+        <coverCode>C4</coverCode>
+        <basePriceFormula>40B</basePriceFormula>
+      </pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRule>
+    </bag>
+  </basePriceCalculationRules>
+</pl.altkom.asc.lab.micronaut.poc.pricing.domain.BasePremiumCalculationRuleList>

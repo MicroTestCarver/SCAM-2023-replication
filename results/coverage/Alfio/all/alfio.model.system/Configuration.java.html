@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Configuration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model.system</a> &gt; <span class="el_source">Configuration.java</span></div><h1>Configuration.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model.system;
+
+import alfio.model.EventAndOrganizationId;
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import java.util.function.Function;
+
+@Getter
+public class Configuration implements Comparable&lt;Configuration&gt; {
+
+    private final int id;
+    private final String key;
+    private final String value;
+    private final String description;
+    private final ConfigurationKeys configurationKey;
+    private final ConfigurationPathLevel configurationPathLevel;
+    private final boolean basic;
+    private final boolean internal;
+
+
+    public Configuration(@Column(&quot;id&quot;) int id,
+                         @Column(&quot;c_key&quot;) String key,
+                         @Column(&quot;c_value&quot;) String value,
+<span class="fc" id="L45">                         @Column(&quot;configuration_path_level&quot;) ConfigurationPathLevel configurationPathLevel) {</span>
+<span class="fc" id="L46">        this.id = id;</span>
+<span class="fc" id="L47">        this.key = key;</span>
+<span class="fc" id="L48">        this.value = value;</span>
+<span class="fc" id="L49">        this.configurationKey = ConfigurationKeys.safeValueOf(key);</span>
+<span class="fc" id="L50">        this.description = configurationKey.getDescription();</span>
+<span class="fc" id="L51">        this.configurationPathLevel = configurationPathLevel;</span>
+<span class="fc" id="L52">        this.basic = this.configurationKey.isBasic();</span>
+<span class="fc" id="L53">        this.internal = this.configurationKey.isInternal();</span>
+<span class="fc" id="L54">    }</span>
+
+    public ComponentType getComponentType() {
+<span class="nc" id="L57">        return configurationKey.getComponentType();</span>
+    }
+
+    @Override
+    public int compareTo(Configuration o) {
+<span class="fc" id="L62">        return new CompareToBuilder().append(configurationKey.ordinal(), o.configurationKey.ordinal()).toComparison();</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L68">            return false;</span>
+        }
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (obj == this) {</span>
+<span class="nc" id="L71">            return true;</span>
+        }
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        if (!(obj instanceof  Configuration)) {</span>
+<span class="nc" id="L74">            return false;</span>
+        }
+<span class="nc" id="L76">        Configuration o = (Configuration) obj;</span>
+<span class="nc" id="L77">        return new EqualsBuilder().append(configurationKey, o.configurationKey).append(configurationPathLevel, configurationPathLevel).isEquals();</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L82">        return new HashCodeBuilder().append(configurationKey).append(configurationPathLevel).toHashCode();</span>
+    }
+
+    @FunctionalInterface
+    public interface ConfigurationPath {
+        ConfigurationPathLevel pathLevel();
+    }
+
+    @EqualsAndHashCode
+<span class="fc" id="L91">    public static class SystemConfigurationPath implements  ConfigurationPath {</span>
+        @Override
+        public ConfigurationPathLevel pathLevel() {
+<span class="fc" id="L94">            return ConfigurationPathLevel.SYSTEM;</span>
+        }
+
+    }
+
+    @EqualsAndHashCode
+    @Getter
+    public static class OrganizationConfigurationPath implements ConfigurationPath {
+
+        private final int id;
+
+<span class="fc" id="L105">        private OrganizationConfigurationPath(int id) {</span>
+<span class="fc" id="L106">            this.id = id;</span>
+<span class="fc" id="L107">        }</span>
+
+        @Override
+        public ConfigurationPathLevel pathLevel() {
+<span class="fc" id="L111">            return ConfigurationPathLevel.ORGANIZATION;</span>
+        }
+
+    }
+
+    @EqualsAndHashCode
+    @Getter
+    public static class EventConfigurationPath implements ConfigurationPath {
+
+        private final int organizationId;
+        private final int id;
+
+<span class="fc" id="L123">        private EventConfigurationPath(int organizationId, int id) {</span>
+<span class="fc" id="L124">            this.organizationId = organizationId;</span>
+<span class="fc" id="L125">            this.id = id;</span>
+<span class="fc" id="L126">        }</span>
+
+
+        @Override
+        public ConfigurationPathLevel pathLevel() {
+<span class="fc" id="L131">            return ConfigurationPathLevel.EVENT;</span>
+        }
+
+    }
+
+    @EqualsAndHashCode
+    @Getter
+    public static class TicketCategoryConfigurationPath implements ConfigurationPath {
+
+        private final int organizationId;
+        private final int eventId;
+        private final int id;
+
+<span class="nc" id="L144">        private TicketCategoryConfigurationPath(int organizationId, int eventId, int id) {</span>
+<span class="nc" id="L145">            this.organizationId = organizationId;</span>
+<span class="nc" id="L146">            this.eventId = eventId;</span>
+<span class="nc" id="L147">            this.id = id;</span>
+<span class="nc" id="L148">        }</span>
+
+        @Override
+        public ConfigurationPathLevel pathLevel() {
+<span class="nc" id="L152">            return ConfigurationPathLevel.TICKET_CATEGORY;</span>
+        }
+
+    }
+
+    public static ConfigurationPath system() {
+<span class="fc" id="L158">        return new SystemConfigurationPath();</span>
+    }
+
+    private static ConfigurationPath organization(int id) {
+<span class="fc" id="L162">        return new OrganizationConfigurationPath(id);</span>
+    }
+
+    private static ConfigurationPath ticketCategory(int organizationId, int eventId, int id) {
+<span class="nc" id="L166">        return new TicketCategoryConfigurationPath(organizationId, eventId, id);</span>
+    }
+
+
+    //
+    @Getter
+    @EqualsAndHashCode
+    public static class ConfigurationPathKey {
+        private final ConfigurationPath path;
+        private final ConfigurationKeys key;
+
+<span class="fc" id="L177">        private ConfigurationPathKey(ConfigurationPath path, ConfigurationKeys key) {</span>
+<span class="fc" id="L178">            this.path = path;</span>
+<span class="fc" id="L179">            this.key = key;</span>
+<span class="fc" id="L180">        }</span>
+    }
+    //
+
+    private static ConfigurationPathKey getOrganizationConfiguration(int organizationId, ConfigurationKeys configurationKey) {
+<span class="fc" id="L185">        return new ConfigurationPathKey(organization(organizationId), configurationKey);</span>
+    }
+
+    private static ConfigurationPathKey getEventConfiguration(int organizationId, int eventId, ConfigurationKeys configurationKey) {
+<span class="fc" id="L189">        return new ConfigurationPathKey(new EventConfigurationPath(organizationId, eventId), configurationKey);</span>
+    }
+
+    private static ConfigurationPathKey getTicketCategoryConfiguration(int organizationId, int eventId, int ticketCategoryId, ConfigurationKeys configurationKey) {
+<span class="nc" id="L193">        return new ConfigurationPathKey(ticketCategory(organizationId, eventId, ticketCategoryId), configurationKey);</span>
+    }
+
+    public static ConfigurationPathKey from(int organizationId, ConfigurationKeys key) {
+<span class="fc" id="L197">        return getOrganizationConfiguration(organizationId, key);</span>
+    }
+
+    public static ConfigurationPathKey from(EventAndOrganizationId eventAndOrganizationId, ConfigurationKeys key) {
+<span class="fc" id="L201">        return getEventConfiguration(eventAndOrganizationId.getOrganizationId(), eventAndOrganizationId.getId(), key);</span>
+    }
+
+    public static Function&lt;ConfigurationKeys, ConfigurationPathKey&gt; from(EventAndOrganizationId e) {
+<span class="nc" id="L205">        return p -&gt; from(e, p);</span>
+    }
+
+    public static Function&lt;ConfigurationKeys, ConfigurationPathKey&gt; from(int organizationId) {
+<span class="nc" id="L209">        return p -&gt; from(organizationId, p);</span>
+    }
+
+    public static ConfigurationPathKey from(int organizationId, int eventId, int ticketCategoryId, ConfigurationKeys key) {
+<span class="nc" id="L213">        return getTicketCategoryConfiguration(organizationId, eventId, ticketCategoryId, key);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

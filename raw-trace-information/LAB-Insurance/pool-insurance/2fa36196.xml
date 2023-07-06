@@ -1,0 +1,10 @@
+<list>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+    <code>APT</code>
+    <label>Apartment</label>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+    <code>HOUSE</code>
+    <label>House</label>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+</list>

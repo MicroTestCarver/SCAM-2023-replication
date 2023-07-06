@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReservationWithPurchaseContext.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">ReservationWithPurchaseContext.java</span></div><h1>ReservationWithPurchaseContext.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import alfio.model.support.JSONData;
+import alfio.model.transaction.PaymentProxy;
+import alfio.util.Json;
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import com.fasterxml.jackson.core.type.TypeReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.math.BigDecimal;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import static alfio.util.LocaleUtil.atZone;
+import static alfio.util.MonetaryUtil.centsToUnit;
+
+@Getter
+public class ReservationWithPurchaseContext implements PriceContainer {
+    private final String id;
+    private final ZonedDateTime validity;
+    private final TicketReservation.TicketReservationStatus status;
+    private final ZonedDateTime purchaseContextStartDate;
+    private final ZonedDateTime purchaseContextEndDate;
+    private final ZonedDateTime confirmationTs;
+    private final ZonedDateTime registrationTs;
+    private final PaymentProxy paymentMethod;
+    private final String invoiceNumber;
+    private final PriceContainer.VatStatus vatStatus;
+    private final BigDecimal vatPercentage;
+    private final int srcPriceCts;
+    private final int finalPriceCts;
+    private final int vatCts;
+    private final int discountCts;
+    private final String currencyCode;
+
+    private final PurchaseContext.PurchaseContextType purchaseContextType;
+    private final String purchaseContextPublicIdentifier;
+    private final Map&lt;String, String&gt; purchaseContextTitle;
+    private final List&lt;PurchaseContextItem&gt; items;
+
+
+    public ReservationWithPurchaseContext(@Column(&quot;tr_id&quot;) String id,
+                                          @Column(&quot;tr_validity&quot;) ZonedDateTime validity,
+                                          @Column(&quot;tr_status&quot;) TicketReservation.TicketReservationStatus status,
+                                          @Column(&quot;tr_confirmation_ts&quot;) ZonedDateTime confirmationTs,
+                                          @Column(&quot;tr_registration_ts&quot;) ZonedDateTime registrationTs,
+                                          @Column(&quot;tr_payment_method&quot;) PaymentProxy paymentMethod,
+                                          @Column(&quot;tr_invoice_number&quot;) String invoiceNumber,
+                                          @Column(&quot;tr_vat_status&quot;) PriceContainer.VatStatus vatStatus,
+                                          @Column(&quot;tr_used_vat_percent&quot;) BigDecimal vatPercentage,
+                                          @Column(&quot;tr_src_price_cts&quot;) int srcPriceCts,
+                                          @Column(&quot;tr_final_price_cts&quot;) int finalPriceCts,
+                                          @Column(&quot;tr_vat_cts&quot;) int vatCts,
+                                          @Column(&quot;tr_discount_cts&quot;) int discountCts,
+                                          @Column(&quot;tr_currency_code&quot;) String currencyCode,
+                                          @Column(&quot;pc_type&quot;) PurchaseContext.PurchaseContextType purchaseContextType,
+                                          @Column(&quot;pc_public_identifier&quot;) String purchaseContextPublicIdentifier,
+                                          @Column(&quot;pc_title&quot;) @JSONData Map&lt;String, String&gt; purchaseContextTitle,
+                                          @Column(&quot;pc_time_zone&quot;) String purchaseContextTimezone,
+                                          @Column(&quot;pc_start_date&quot;) ZonedDateTime purchaseContextStartDate,
+                                          @Column(&quot;pc_end_date&quot;) ZonedDateTime purchaseContextEndDate,
+<span class="fc" id="L82">                                          @Column(&quot;pc_items&quot;) String itemsJson) {</span>
+<span class="fc" id="L83">        var zoneId = ZoneId.of(purchaseContextTimezone);</span>
+<span class="fc" id="L84">        this.id = id;</span>
+<span class="fc" id="L85">        this.validity = atZone(validity, zoneId);</span>
+<span class="fc" id="L86">        this.status = status;</span>
+<span class="fc" id="L87">        this.confirmationTs = atZone(confirmationTs, zoneId);</span>
+<span class="fc" id="L88">        this.registrationTs = atZone(registrationTs, zoneId);</span>
+<span class="fc" id="L89">        this.paymentMethod = paymentMethod;</span>
+<span class="fc" id="L90">        this.invoiceNumber = invoiceNumber;</span>
+<span class="fc" id="L91">        this.vatStatus = vatStatus;</span>
+<span class="fc" id="L92">        this.vatPercentage = vatPercentage;</span>
+<span class="fc" id="L93">        this.srcPriceCts = srcPriceCts;</span>
+<span class="fc" id="L94">        this.finalPriceCts = finalPriceCts;</span>
+<span class="fc" id="L95">        this.vatCts = vatCts;</span>
+<span class="fc" id="L96">        this.discountCts = discountCts;</span>
+<span class="fc" id="L97">        this.currencyCode = currencyCode;</span>
+<span class="fc" id="L98">        this.purchaseContextType = purchaseContextType;</span>
+<span class="fc" id="L99">        this.purchaseContextPublicIdentifier = purchaseContextPublicIdentifier;</span>
+<span class="fc" id="L100">        this.purchaseContextTitle = purchaseContextTitle;</span>
+<span class="fc" id="L101">        this.purchaseContextStartDate = atZone(purchaseContextStartDate, zoneId);</span>
+<span class="fc" id="L102">        this.purchaseContextEndDate = atZone(purchaseContextEndDate, zoneId);</span>
+<span class="fc" id="L103">        this.items = Json.fromJson(itemsJson, new TypeReference&lt;&gt;() {});</span>
+<span class="fc" id="L104">    }</span>
+
+    @Override
+    public Optional&lt;BigDecimal&gt; getOptionalVatPercentage() {
+<span class="nc" id="L108">        return Optional.ofNullable(vatPercentage);</span>
+    }
+
+    @Override
+    public BigDecimal getFinalPrice() {
+<span class="fc" id="L113">        return centsToUnit(finalPriceCts, currencyCode);</span>
+    }
+
+    @Override
+    public BigDecimal getVAT() {
+<span class="nc" id="L118">        return centsToUnit(vatCts, currencyCode);</span>
+    }
+
+    @Override
+    public BigDecimal getAppliedDiscount() {
+<span class="nc" id="L123">        return centsToUnit(discountCts, currencyCode);</span>
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public static class PurchaseContextItem {
+        private final String id;
+        private final String firstName;
+        private final String lastName;
+        private final Map&lt;String, String&gt; type;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

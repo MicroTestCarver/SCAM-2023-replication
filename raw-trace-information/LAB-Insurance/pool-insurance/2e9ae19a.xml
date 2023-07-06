@@ -1,0 +1,80 @@
+<pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.ProductDto>
+  <code>FAI</code>
+  <name>Happy farm</name>
+  <image>/static/farm.jpg</image>
+  <description>Farm insurance</description>
+  <covers>
+    <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+      <code>C1</code>
+      <name>Crops</name>
+      <description></description>
+      <optional>false</optional>
+      <sumInsured>200000</sumInsured>
+    </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+    <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+      <code>C2</code>
+      <name>Flood</name>
+      <description></description>
+      <optional>false</optional>
+      <sumInsured>100000</sumInsured>
+    </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+    <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+      <code>C3</code>
+      <name>Fire</name>
+      <description></description>
+      <optional>false</optional>
+      <sumInsured>50000</sumInsured>
+    </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+    <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+      <code>C4</code>
+      <name>Equipment</name>
+      <description></description>
+      <optional>true</optional>
+      <sumInsured>300000</sumInsured>
+    </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto>
+  </covers>
+  <questions>
+    <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto>
+      <code>TYP</code>
+      <index>1</index>
+      <text>Cultivation type</text>
+      <choices>
+        <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+          <code>ZB</code>
+          <label>Crop</label>
+        </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+        <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+          <code>KW</code>
+          <label>Vegetable</label>
+        </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+      </choices>
+    </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto>
+    <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto>
+      <code>AREA</code>
+      <index>2</index>
+      <text>Area</text>
+    </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto>
+    <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto>
+      <code>NUM_OF_CLAIM</code>
+      <index>3</index>
+      <text>Number of claims in last 5 years</text>
+    </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto>
+    <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto>
+      <code>FLOOD</code>
+      <index>4</index>
+      <text>Located in flood risk area</text>
+      <choices>
+        <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+          <code>YES</code>
+          <label>Yes</label>
+        </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+        <pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+          <code>NO</code>
+          <label>No</label>
+        </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>
+      </choices>
+    </pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto>
+  </questions>
+  <maxNumberOfInsured>1</maxNumberOfInsured>
+  <icon>apple</icon>
+</pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.ProductDto>

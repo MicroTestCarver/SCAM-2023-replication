@@ -1,0 +1,8 @@
+pygithub==1.55
+tqdm==4.64.0
+pandas==1.4.3
+gitpython==3.1.27
+lxml==4.9.1
+scipy==1.9.1
+numpy==1.23.0
+scikit-learn==1.1.2

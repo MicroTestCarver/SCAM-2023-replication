@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicketFieldConfigurationDescriptionAndValue.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">TicketFieldConfigurationDescriptionAndValue.java</span></div><h1>TicketFieldConfigurationDescriptionAndValue.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import alfio.util.Json;
+import com.fasterxml.jackson.core.type.TypeReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.Delegate;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Triple;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+@AllArgsConstructor
+public class TicketFieldConfigurationDescriptionAndValue {
+
+    @Delegate
+    private final TicketFieldConfiguration ticketFieldConfiguration;
+    @Delegate
+    private final TicketFieldDescription ticketFieldDescription;
+    private final int count;
+    private final String value;
+
+<span class="fc" id="L48">    private static final List&lt;String&gt; TEXT_FIELD_TYPES = List.of(</span>
+        &quot;text&quot;,
+        &quot;tel&quot;,
+        &quot;textarea&quot;,
+        &quot;vat:eu&quot;
+    );
+<span class="fc" id="L54">    private static final Pattern CHECKBOX_VALUES_PATTERN = Pattern.compile(&quot;\&quot;(.*?)\&quot;,?&quot;);</span>
+
+    public String getTranslatedValue() {
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        if(StringUtils.isBlank(value)) {</span>
+<span class="nc" id="L58">            return value;</span>
+        }
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        if(isSelectField()) {</span>
+<span class="nc" id="L61">            return ticketFieldDescription.getRestrictedValuesDescription().getOrDefault(value, &quot;MISSING_DESCRIPTION&quot;);</span>
+        }
+<span class="nc" id="L63">        return value;</span>
+    }
+
+    public List&lt;Triple&lt;String, String, Boolean&gt;&gt; getTranslatedRestrictedValue() {
+<span class="fc" id="L67">        Map&lt;String, String&gt; description = ticketFieldDescription.getRestrictedValuesDescription();</span>
+<span class="fc" id="L68">        return ticketFieldConfiguration.getRestrictedValues()</span>
+<span class="fc" id="L69">            .stream()</span>
+<span class="fc" id="L70">            .map(val -&gt; Triple.of(val, description.getOrDefault(val, &quot;MISSING_DESCRIPTION&quot;), isFieldValueEnabled(ticketFieldConfiguration, val)))</span>
+<span class="fc" id="L71">            .collect(Collectors.toList());</span>
+    }
+
+    public List&lt;TicketFieldValue&gt; getFields() {
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        if(count == 1) {</span>
+<span class="fc" id="L76">            return Collections.singletonList(new TicketFieldValue(0, 1, value, isAcceptingValues()));</span>
+        }
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        List&lt;String&gt; values = StringUtils.isBlank(value) ? Collections.emptyList() : Json.fromJson(value, new TypeReference&lt;&gt;() {});</span>
+<span class="nc" id="L79">        return IntStream.range(0, count)</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">            .mapToObj(i -&gt; new TicketFieldValue(i, i+1, i &lt; values.size() ? values.get(i) : &quot;&quot;, isAcceptingValues()))</span>
+<span class="nc" id="L81">            .collect(Collectors.toList());</span>
+
+    }
+
+    private boolean isText() {
+<span class="fc" id="L86">        return TEXT_FIELD_TYPES.contains(getType());</span>
+    }
+
+    public String getValueDescription() {
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if(isText()) {</span>
+<span class="fc" id="L91">            return value;</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        } else if(isCheckboxField()) {</span>
+<span class="fc" id="L93">            var matches = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L94">            var matcher = CHECKBOX_VALUES_PATTERN.matcher(value);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">            while(matcher.find()) {</span>
+<span class="fc" id="L96">                matches.add(matcher.group(1));</span>
+            }
+<span class="fc" id="L98">            var restrictedValues = getTranslatedRestrictedValue();</span>
+<span class="fc" id="L99">            return matches.stream()</span>
+<span class="fc" id="L100">                .map(v -&gt; findValueDescription(restrictedValues, v))</span>
+<span class="fc" id="L101">                .filter(StringUtils::isNotBlank)</span>
+<span class="fc" id="L102">                .collect(Collectors.joining(&quot;, &quot;));</span>
+        } else {
+<span class="fc" id="L104">            return findValueDescription(getTranslatedRestrictedValue(), value);</span>
+        }
+    }
+
+    private String findValueDescription(List&lt;Triple&lt;String, String, Boolean&gt;&gt; translateRestrictedValues,
+                                        String value) {
+<span class="fc" id="L110">        return translateRestrictedValues.stream()</span>
+<span class="fc" id="L111">            .filter(t -&gt; StringUtils.equals(t.getLeft(), value))</span>
+<span class="fc" id="L112">            .map(Triple::getMiddle)</span>
+<span class="fc" id="L113">            .findFirst()</span>
+<span class="fc" id="L114">            .orElse(&quot;&quot;);</span>
+    }
+
+    public String getValue() {
+<span class="fc" id="L118">        return value;</span>
+    }
+
+    private boolean isAcceptingValues() {
+<span class="pc bpc" id="L122" title="3 of 4 branches missed.">        return isEditable() || StringUtils.isBlank(value);</span>
+    }
+
+    public boolean isBeforeStandardFields() {
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        return getOrder() &lt; 0;</span>
+    }
+
+    private static boolean isFieldValueEnabled(TicketFieldConfiguration ticketFieldConfiguration, String value) {
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">        return !ticketFieldConfiguration.isSelectField()</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">            || CollectionUtils.isEmpty(ticketFieldConfiguration.getDisabledValues())</span>
+<span class="pc bnc" id="L132" title="All 2 branches missed.">            || !ticketFieldConfiguration.getDisabledValues().contains(value);</span>
+    }
+
+    @RequiredArgsConstructor
+    @Getter
+    public static class TicketFieldValue {
+        private final int fieldIndex;
+        private final int fieldCounter;
+        private final String fieldValue;
+        private final Boolean editable;
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

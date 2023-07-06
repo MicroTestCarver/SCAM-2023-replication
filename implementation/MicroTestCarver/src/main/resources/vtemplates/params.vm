@@ -1,0 +1,6 @@
+    private ${className} subject;
+
+#foreach($param in $params)
+    @Mock
+    private ${param.getShortType()} $param.key;
+#end

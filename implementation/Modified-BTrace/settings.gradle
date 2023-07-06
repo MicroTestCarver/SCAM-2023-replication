@@ -1,0 +1,72 @@
+rootProject.name = 'btrace-ng'
+
+// Find the directories containing a "build.gradle" file in the root directory
+// of the project. That is, every directory containing a "build.gradle" will
+// be automatically the subproject of this project.
+def subDirs = rootDir.listFiles(new FileFilter() {
+    boolean accept(File file) {
+        if (!file.isDirectory()) {
+            return false
+        }
+        if (file.name == 'buildSrc') {
+            return false
+        }
+        return new File(file, 'build.gradle').isFile()
+    }
+})
+
+subDirs.each { File dir ->
+    if (dir.name.startsWith("btrace-")) {
+        include dir.name
+    }
+    include "integration-tests"
+    include "benchmarks:agent-benchmark"
+    include "benchmarks:runtime-benchmarks"
+}
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            // Families...
+            version('asm', '9.4')
+            version('jmh', '1.36')
+            version('jmhGradlePlugin', '0.6.5')
+            version('slf4j', '1.7.36')
+            version('junit', '5.9.2')
+
+            // *** Gradle plugins ***
+            plugin ('spotless', 'com.diffplug.spotless').version('6.11.0')
+            plugin ('versioning', 'net.nemerosa.versioning').version('2.15.1')
+            plugin ('ospackage', 'com.netflix.nebula.ospackage').version('11.0.0')
+            plugin ('shadow', 'com.github.johnrengelman.shadow').version('7.1.2')
+            plugin ('sdkman-vendors', 'io.sdkman.vendors').version('3.0.0')
+
+            plugin ('jmh', 'me.champeau.jmh').versionRef('jmhGradlePlugin')
+
+            // *** Libraries ***
+
+            // https://mvnrepository.com/artifact/com.google.auto.service
+            library ('autoService', 'com.google.auto.service', 'auto-service').version('1.0.1')
+            // https://mvnrepository.com/artifact/org.jctools
+            library ('jctools', 'org.jctools', 'jctools-core').version('4.0.1')
+
+
+            // https://mvnrepository.com/artifact/org.slf4j
+            library ('slf4j',  'org.slf4j', 'slf4j-api').versionRef('slf4j')
+            library ('slf4j-simple',  'org.slf4j', 'slf4j-simple').versionRef('slf4j')
+
+            // https://mvnrepository.com/artifact/org.ow2.asm
+            library ('asm',  'org.ow2.asm', 'asm').versionRef('asm')
+            library ('asm-tree',  'org.ow2.asm', 'asm-tree').versionRef('asm')
+            library ('asm-util',  'org.ow2.asm', 'asm-util').versionRef('asm')
+
+            // https://mvnrepository.com/artifact/org.openjdk.jmh
+            library ('jmh', 'org.openjdk.jmh', 'jmh-core').versionRef('jmh')
+            library ('jmh-annprocess', 'org.openjdk.jmh', 'jmh-generator-annprocess').versionRef('jmh')
+
+            // https://mvnrepository.com/artifact/org.junit.jupiter
+            library ('junit', 'org.junit', 'junit-bom').versionRef('junit')
+            library ('junit-jupiter', 'org.junit.jupiter', 'junit-jupiter').versionRef('junit')
+        }
+    }
+}

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RevolutTransactionDescriptor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model.transaction.provider</a> &gt; <span class="el_source">RevolutTransactionDescriptor.java</span></div><h1>RevolutTransactionDescriptor.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model.transaction.provider;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+
+import java.math.BigDecimal;
+import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+@Getter
+public class RevolutTransactionDescriptor {
+
+    private final String id;
+    private final String type;
+    private final String requestId;
+    private final String state;
+    private final ZonedDateTime createdAt;
+    private final ZonedDateTime updatedAt;
+    private final ZonedDateTime completedAt;
+    private final String reference;
+    private final List&lt;TransactionLeg&gt; legs;
+
+    @JsonCreator
+    public RevolutTransactionDescriptor(@JsonProperty(&quot;id&quot;) String id,
+                                        @JsonProperty(&quot;type&quot;) String type,
+                                        @JsonProperty(&quot;request_id&quot;) String requestId,
+                                        @JsonProperty(&quot;state&quot;) String state,
+                                        @JsonProperty(&quot;created_at&quot;) ZonedDateTime createdAt,
+                                        @JsonProperty(&quot;updated_at&quot;) ZonedDateTime updatedAt,
+                                        @JsonProperty(&quot;completed_at&quot;) ZonedDateTime completedAt,
+                                        @JsonProperty(&quot;reference&quot;) String reference,
+<span class="nc" id="L51">                                        @JsonProperty(&quot;legs&quot;) List&lt;TransactionLeg&gt; legs) {</span>
+<span class="nc" id="L52">        this.id = id;</span>
+<span class="nc" id="L53">        this.type = type;</span>
+<span class="nc" id="L54">        this.requestId = requestId;</span>
+<span class="nc" id="L55">        this.state = state;</span>
+<span class="nc" id="L56">        this.createdAt = createdAt;</span>
+<span class="nc" id="L57">        this.updatedAt = updatedAt;</span>
+<span class="nc" id="L58">        this.completedAt = completedAt;</span>
+<span class="nc" id="L59">        this.reference = reference;</span>
+<span class="nc" id="L60">        this.legs = legs;</span>
+<span class="nc" id="L61">    }</span>
+
+    @Getter
+    public static class TransactionLeg {
+        private final String id;
+        private final String accountId;
+        private final String counterpartyAccountId;
+        private final String counterpartyType;
+        private final BigDecimal amount;
+        private final String currency;
+        private final BigDecimal balance;
+
+        @JsonCreator
+        public TransactionLeg(@JsonProperty(&quot;leg_id&quot;) String id,
+                              @JsonProperty(&quot;account_id&quot;) String accountId,
+                              @JsonProperty(&quot;counterparty&quot;) Counterparty counterparty,
+                              @JsonProperty(&quot;amount&quot;) BigDecimal amount,
+                              @JsonProperty(&quot;currency&quot;) String currency,
+<span class="nc" id="L79">                              @JsonProperty(&quot;balance&quot;) BigDecimal balance) {</span>
+<span class="nc" id="L80">            this.id = id;</span>
+<span class="nc" id="L81">            this.accountId = accountId;</span>
+<span class="nc" id="L82">            this.counterpartyAccountId = counterparty.id;</span>
+<span class="nc" id="L83">            this.counterpartyType = counterparty.type;</span>
+<span class="nc" id="L84">            this.amount = amount;</span>
+<span class="nc" id="L85">            this.currency = currency;</span>
+<span class="nc" id="L86">            this.balance = balance;</span>
+<span class="nc" id="L87">        }</span>
+    }
+
+    public BigDecimal getTransactionBalance() {
+<span class="nc" id="L91">        return legs.stream().map(TransactionLeg::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);</span>
+    }
+
+    public Map&lt;String, String&gt; getMetadata() {
+<span class="nc" id="L95">        return Map.of(</span>
+<span class="nc" id="L96">            &quot;counterpartyAccountId&quot;, Optional.ofNullable(legs.get(0).counterpartyAccountId).orElse(&quot;N/A&quot;),</span>
+<span class="nc" id="L97">            &quot;counterpartyType&quot;, Optional.ofNullable(legs.get(0).counterpartyType).orElse(&quot;N/A&quot;)</span>
+        );
+    }
+
+    private static class Counterparty {
+        private final String type;
+        private final String id;
+
+        @JsonCreator
+        public Counterparty(@JsonProperty(&quot;account_type&quot;) String type,
+<span class="nc" id="L107">                            @JsonProperty(&quot;account_id&quot;) String id) {</span>
+<span class="nc" id="L108">            this.type = type;</span>
+<span class="nc" id="L109">            this.id = id;</span>
+<span class="nc" id="L110">        }</span>
+    }
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

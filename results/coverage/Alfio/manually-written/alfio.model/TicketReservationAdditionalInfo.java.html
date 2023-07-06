@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicketReservationAdditionalInfo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">TicketReservationAdditionalInfo.java</span></div><h1>TicketReservationAdditionalInfo.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import alfio.model.support.JSONData;
+import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
+import lombok.Getter;
+
+import java.util.Objects;
+import java.util.Optional;
+
+@Getter
+public class TicketReservationAdditionalInfo {
+
+    private final String billingAddressCompany;
+    private final String billingAddressLine1;
+    private final String billingAddressLine2;
+    private final String billingAddressZip;
+    private final String billingAddressCity;
+    private final String billingAddressState;
+    private final String billingAddressCountry;
+    private final String vatNr;
+    private final Boolean validated;
+    private final Boolean skipVatNr;
+    private final Boolean addCompanyBillingDetails;
+    private final TicketReservationInvoicingAdditionalInfo invoicingAdditionalInfo;
+
+    public TicketReservationAdditionalInfo(@Column(&quot;billing_address_company&quot;) String billingAddressCompany,
+                                           @Column(&quot;billing_address_line1&quot;) String billingAddressLine1,
+                                           @Column(&quot;billing_address_line2&quot;) String billingAddressLine2,
+                                           @Column(&quot;billing_address_zip&quot;) String billingAddressZip,
+                                           @Column(&quot;billing_address_city&quot;) String billingAddressCity,
+                                           @Column(&quot;billing_address_state&quot;) String billingAddressState,
+                                           @Column(&quot;validated_for_overview&quot;) Boolean validated,
+                                           @Column(&quot;skip_vat_nr&quot;) Boolean skipVatNr,
+                                           @Column(&quot;add_company_billing_details&quot;) Boolean addCompanyBillingDetails,
+                                           @Column(&quot;invoicing_additional_information&quot;) @JSONData TicketReservationInvoicingAdditionalInfo invoicingAdditionalInformation,
+                                           @Column(&quot;vat_country&quot;) String vatCountry,
+<span class="fc" id="L53">                                           @Column(&quot;vat_nr&quot;) String vatNr) {</span>
+<span class="fc" id="L54">        this.billingAddressCompany = billingAddressCompany;</span>
+<span class="fc" id="L55">        this.billingAddressLine1 = billingAddressLine1;</span>
+<span class="fc" id="L56">        this.billingAddressLine2 = billingAddressLine2;</span>
+<span class="fc" id="L57">        this.billingAddressZip = billingAddressZip;</span>
+<span class="fc" id="L58">        this.billingAddressCity = billingAddressCity;</span>
+<span class="fc" id="L59">        this.billingAddressState = billingAddressState;</span>
+<span class="fc" id="L60">        this.addCompanyBillingDetails = addCompanyBillingDetails;</span>
+<span class="fc" id="L61">        this.validated = validated;</span>
+<span class="fc" id="L62">        this.skipVatNr = skipVatNr;</span>
+<span class="fc" id="L63">        this.invoicingAdditionalInfo = Objects.requireNonNullElseGet(invoicingAdditionalInformation, () -&gt; new TicketReservationInvoicingAdditionalInfo(null));</span>
+<span class="fc" id="L64">        this.billingAddressCountry = vatCountry;</span>
+<span class="fc" id="L65">        this.vatNr = vatNr;</span>
+<span class="fc" id="L66">    }</span>
+
+
+    public boolean hasBeenValidated() {
+<span class="fc" id="L70">        return Optional.ofNullable(validated).orElse(false);</span>
+    }
+
+    public boolean hasSkipVatNr() {
+<span class="nc" id="L74">        return Optional.ofNullable(skipVatNr).orElse(false);</span>
+    }
+
+    public BillingDetails getBillingDetails() {
+<span class="fc" id="L78">        return new BillingDetails(billingAddressCompany,</span>
+            billingAddressLine1,
+            billingAddressLine2,
+            billingAddressZip,
+            billingAddressCity,
+            billingAddressState,
+            billingAddressCountry,
+            vatNr,
+            invoicingAdditionalInfo);
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

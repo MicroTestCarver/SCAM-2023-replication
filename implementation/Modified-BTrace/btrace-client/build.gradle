@@ -1,0 +1,30 @@
+plugins {
+    alias(libs.plugins.versioning)
+}
+
+dependencies {
+    implementation libs.slf4j
+    implementation libs.asm
+    implementation libs.asm.tree
+    implementation libs.asm.util
+
+    implementation files("${JAVA_8_HOME}/lib/tools.jar")
+
+    implementation project(':btrace-core')
+    implementation project(':btrace-compiler')
+    implementation project(':btrace-instr')
+}
+
+jar {
+    manifest {
+        attributes(
+                'Built-By'       : System.properties['user.name'],
+                'Build-Timestamp': new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
+                'Build-Revision' : versioning.info.commit,
+                'Created-By'     : "Gradle ${gradle.gradleVersion}",
+                'Build-Jdk'      : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
+                'Build-OS'       : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}",
+                'Main-Class'     : "org.openjdk.btrace.client.Main"
+        )
+    }
+}

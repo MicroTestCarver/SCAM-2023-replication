@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PaymentProvider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model.transaction</a> &gt; <span class="el_source">PaymentProvider.java</span></div><h1>PaymentProvider.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model.transaction;
+
+import alfio.manager.payment.PaymentSpecification;
+import alfio.manager.support.PaymentResult;
+
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+
+public interface PaymentProvider {
+
+    Set&lt;PaymentMethod&gt; getSupportedPaymentMethods(PaymentContext paymentContext, TransactionRequest transactionRequest);
+
+    PaymentProxy getPaymentProxy();
+
+    boolean accept(PaymentMethod paymentMethod, PaymentContext context, TransactionRequest transactionRequest);
+
+    boolean accept(Transaction transaction);
+
+    PaymentMethod getPaymentMethodForTransaction(Transaction transaction);
+
+    boolean isActive(PaymentContext paymentContext);
+
+    default PaymentResult getToken(PaymentSpecification spec) {
+<span class="fc" id="L42">        return PaymentResult.initialized(UUID.randomUUID().toString());</span>
+    }
+
+    PaymentResult doPayment(PaymentSpecification spec);
+
+    default PaymentResult getTokenAndPay(PaymentSpecification spec) {
+<span class="fc" id="L48">        PaymentResult tokenResult = getToken(spec);</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        if(tokenResult.isInitialized()) {</span>
+<span class="fc" id="L50">            return doPayment(spec);</span>
+        }
+<span class="nc" id="L52">        return tokenResult;</span>
+    }
+
+    default Map&lt;String, ?&gt; getModelOptions(PaymentContext context) {
+<span class="nc" id="L56">        return Collections.emptyMap();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

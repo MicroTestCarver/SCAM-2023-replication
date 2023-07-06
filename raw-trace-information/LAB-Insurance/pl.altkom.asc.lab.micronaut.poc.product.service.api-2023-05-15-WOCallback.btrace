@@ -1,0 +1,3512 @@
+### BTrace Log: 15/05/2023, 14:16
+
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.$ChoiceDto$Introspection$$1 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.$ChoiceDto$Introspection$$0 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.$ChoiceQuestionDto$Introspection$$3 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.$ChoiceQuestionDto$Introspection$$2 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.$ChoiceQuestionDto$Introspection$$1 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.$ChoiceQuestionDto$Introspection$$0 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.$NumericQuestionDto$Introspection$$2 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.$NumericQuestionDto$Introspection$$1 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.$NumericQuestionDto$Introspection$$0 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.$CoverDto$Introspection$$4 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.$CoverDto$Introspection$$3 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.$CoverDto$Introspection$$2 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.$CoverDto$Introspection$$1 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.$CoverDto$Introspection$$0 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.$ProductDto$Introspection$$7 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.$ProductDto$Introspection$$6 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.$ProductDto$Introspection$$5 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.$ProductDto$Introspection$$4 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.$ProductDto$Introspection$$3 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.$ProductDto$Introspection$$2 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.$ProductDto$Introspection$$1 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.$ProductDto$Introspection$$0 (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.CoverDto (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.ProductDto (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.$NumericQuestionDto$IntrospectionRef (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.$ChoiceQuestionDto$IntrospectionRef (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.$ChoiceDto$IntrospectionRef (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.$DateQuestionDto$IntrospectionRef (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.$ProductDto$IntrospectionRef (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.QuestionDto (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.$QuestionDto$IntrospectionRef (null)
+[BTRACE WARN] Class verification failed: pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.$CoverDto$IntrospectionRef (null)
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#<init>(java.lang.String, java.lang.String):{
+Args: [{
+    hash: 1f254f79,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "ZB",
+}, {
+    hash: 523b1acc,
+    name: null,
+    type: java.lang.String,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Crop",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#<init>(java.lang.String, java.lang.String):{
+Args: [{
+    hash: 644e6d5a,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "KW",
+}, {
+    hash: 4141e54a,
+    name: null,
+    type: java.lang.String,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Vegetable",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto#<init>(java.lang.String, int, java.lang.String, java.util.List):{
+Args: [{
+    hash: 65ac858e,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "TYP",
+}, {
+    hash: 2b8957c4,
+    name: null,
+    type: java.lang.Integer,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 1,
+}, {
+    hash: 799ed8bb,
+    name: null,
+    type: java.lang.String,
+    index: 2,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Cultivation type",
+}, {
+    hash: 731a1b70,
+    name: null,
+    type: java.util.ArrayList,
+    index: 3,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@731a1b70,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: choices,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 65ac858e,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "TYP",
+}, {
+    hash: 2b8957c4,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@2b8957c4,
+}, {
+    hash: 799ed8bb,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Cultivation type",
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto#<init>(java.lang.String, int, java.lang.String):{
+Args: [{
+    hash: 6968ee6a,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "AREA",
+}, {
+    hash: 6f546d0c,
+    name: null,
+    type: java.lang.Integer,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 2,
+}, {
+    hash: 2ec2f82e,
+    name: null,
+    type: java.lang.String,
+    index: 2,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Area",
+}, ]
+
+Fields: [{
+    hash: 6968ee6a,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "AREA",
+}, {
+    hash: 6f546d0c,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@6f546d0c,
+}, {
+    hash: 2ec2f82e,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Area",
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto#<init>(java.lang.String, int, java.lang.String):{
+Args: [{
+    hash: 3b1cae5f,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NUM_OF_CLAIM",
+}, {
+    hash: 718ad15a,
+    name: null,
+    type: java.lang.Integer,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 3,
+}, {
+    hash: 1e0c939e,
+    name: null,
+    type: java.lang.String,
+    index: 2,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Number of claims in last 5 years",
+}, ]
+
+Fields: [{
+    hash: 3b1cae5f,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NUM_OF_CLAIM",
+}, {
+    hash: 718ad15a,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@718ad15a,
+}, {
+    hash: 1e0c939e,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Number of claims in last 5 years",
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#<init>(java.lang.String, java.lang.String):{
+Args: [{
+    hash: 48cf42ec,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "YES",
+}, {
+    hash: 3225a808,
+    name: null,
+    type: java.lang.String,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Yes",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#<init>(java.lang.String, java.lang.String):{
+Args: [{
+    hash: 6d3bd951,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NO",
+}, {
+    hash: 5f513e38,
+    name: null,
+    type: java.lang.String,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "No",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto#<init>(java.lang.String, int, java.lang.String, java.util.List):{
+Args: [{
+    hash: 6629e1c6,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FLOOD",
+}, {
+    hash: 55eb5d03,
+    name: null,
+    type: java.lang.Integer,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 4,
+}, {
+    hash: 39d1978,
+    name: null,
+    type: java.lang.String,
+    index: 2,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Located in flood risk area",
+}, {
+    hash: 1e6a5b11,
+    name: null,
+    type: java.util.ArrayList,
+    index: 3,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@1e6a5b11,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: choices,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 6629e1c6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FLOOD",
+}, {
+    hash: 55eb5d03,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@55eb5d03,
+}, {
+    hash: 39d1978,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Located in flood risk area",
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public java.util.List pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto#getChoices:{
+Args: []
+
+Fields: [{
+    hash: 731a1b70,
+    name: choices,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@731a1b70,
+}, {
+    hash: 65ac858e,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "TYP",
+}, {
+    hash: 2b8957c4,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@2b8957c4,
+}, {
+    hash: 799ed8bb,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Cultivation type",
+}, ]
+
+Return: {
+    hash: 731a1b70,
+    name: null,
+    type: java.util.ArrayList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@731a1b70,
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getCode:{
+Args: []
+
+Fields: [{
+    hash: 1f254f79,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "ZB",
+}, {
+    hash: 523b1acc,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Crop",
+}, ]
+
+Return: {
+    hash: 1f254f79,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "ZB",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getLabel:{
+Args: []
+
+Fields: [{
+    hash: 1f254f79,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "ZB",
+}, {
+    hash: 523b1acc,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Crop",
+}, ]
+
+Return: {
+    hash: 523b1acc,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Crop",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getCode:{
+Args: []
+
+Fields: [{
+    hash: 644e6d5a,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "KW",
+}, {
+    hash: 4141e54a,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Vegetable",
+}, ]
+
+Return: {
+    hash: 644e6d5a,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "KW",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getLabel:{
+Args: []
+
+Fields: [{
+    hash: 644e6d5a,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "KW",
+}, {
+    hash: 4141e54a,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Vegetable",
+}, ]
+
+Return: {
+    hash: 4141e54a,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Vegetable",
+}
+}:
+
+public java.util.List pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto#getChoices:{
+Args: []
+
+Fields: [{
+    hash: 1e6a5b11,
+    name: choices,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@1e6a5b11,
+}, {
+    hash: 6629e1c6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FLOOD",
+}, {
+    hash: 55eb5d03,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@55eb5d03,
+}, {
+    hash: 39d1978,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Located in flood risk area",
+}, ]
+
+Return: {
+    hash: 1e6a5b11,
+    name: null,
+    type: java.util.ArrayList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@1e6a5b11,
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getCode:{
+Args: []
+
+Fields: [{
+    hash: 48cf42ec,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "YES",
+}, {
+    hash: 3225a808,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Yes",
+}, ]
+
+Return: {
+    hash: 48cf42ec,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "YES",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getLabel:{
+Args: []
+
+Fields: [{
+    hash: 48cf42ec,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "YES",
+}, {
+    hash: 3225a808,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Yes",
+}, ]
+
+Return: {
+    hash: 3225a808,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Yes",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getCode:{
+Args: []
+
+Fields: [{
+    hash: 6d3bd951,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NO",
+}, {
+    hash: 5f513e38,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "No",
+}, ]
+
+Return: {
+    hash: 6d3bd951,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NO",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getLabel:{
+Args: []
+
+Fields: [{
+    hash: 6d3bd951,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NO",
+}, {
+    hash: 5f513e38,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "No",
+}, ]
+
+Return: {
+    hash: 5f513e38,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "No",
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto#<init>(java.lang.String, int, java.lang.String):{
+Args: [{
+    hash: 7755b5b3,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NUM_OF_CLAIM",
+}, {
+    hash: 718ad15a,
+    name: null,
+    type: java.lang.Integer,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 3,
+}, {
+    hash: 79924529,
+    name: null,
+    type: java.lang.String,
+    index: 2,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Number of claims in last 5 years",
+}, ]
+
+Fields: [{
+    hash: 7755b5b3,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NUM_OF_CLAIM",
+}, {
+    hash: 718ad15a,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@718ad15a,
+}, {
+    hash: 79924529,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Number of claims in last 5 years",
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#<init>(java.lang.String, java.lang.String):{
+Args: [{
+    hash: 628d8d99,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "ZB",
+}, {
+    hash: 95d37ec,
+    name: null,
+    type: java.lang.String,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Crop",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#<init>(java.lang.String, java.lang.String):{
+Args: [{
+    hash: 5880b05d,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "KW",
+}, {
+    hash: 566f1f91,
+    name: null,
+    type: java.lang.String,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Vegetable",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto#<init>(java.lang.String, int, java.lang.String, java.util.List):{
+Args: [{
+    hash: 191c653,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "TYP",
+}, {
+    hash: 2b8957c4,
+    name: null,
+    type: java.lang.Integer,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 1,
+}, {
+    hash: 5cce8c64,
+    name: null,
+    type: java.lang.String,
+    index: 2,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Cultivation type",
+}, {
+    hash: 727393fb,
+    name: null,
+    type: java.util.ArrayList,
+    index: 3,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@727393fb,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: choices,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 191c653,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "TYP",
+}, {
+    hash: 2b8957c4,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@2b8957c4,
+}, {
+    hash: 5cce8c64,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Cultivation type",
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto#<init>(java.lang.String, int, java.lang.String):{
+Args: [{
+    hash: 8ec0ea2,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "AREA",
+}, {
+    hash: 6f546d0c,
+    name: null,
+    type: java.lang.Integer,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 2,
+}, {
+    hash: 5a423117,
+    name: null,
+    type: java.lang.String,
+    index: 2,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Area",
+}, ]
+
+Fields: [{
+    hash: 8ec0ea2,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "AREA",
+}, {
+    hash: 6f546d0c,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@6f546d0c,
+}, {
+    hash: 5a423117,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Area",
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto#<init>(java.lang.String, int, java.lang.String):{
+Args: [{
+    hash: 38401fa6,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NUM_OF_CLAIM",
+}, {
+    hash: 718ad15a,
+    name: null,
+    type: java.lang.Integer,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 3,
+}, {
+    hash: 73c14b30,
+    name: null,
+    type: java.lang.String,
+    index: 2,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Number of claims in last 5 years",
+}, ]
+
+Fields: [{
+    hash: 38401fa6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NUM_OF_CLAIM",
+}, {
+    hash: 718ad15a,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@718ad15a,
+}, {
+    hash: 73c14b30,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Number of claims in last 5 years",
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#<init>(java.lang.String, java.lang.String):{
+Args: [{
+    hash: 5701ac2f,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "YES",
+}, {
+    hash: 2e60f534,
+    name: null,
+    type: java.lang.String,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Yes",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#<init>(java.lang.String, java.lang.String):{
+Args: [{
+    hash: 1c87e26e,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NO",
+}, {
+    hash: 46bd4505,
+    name: null,
+    type: java.lang.String,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "No",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto#<init>(java.lang.String, int, java.lang.String, java.util.List):{
+Args: [{
+    hash: 24cdd54,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FLOOD",
+}, {
+    hash: 55eb5d03,
+    name: null,
+    type: java.lang.Integer,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 4,
+}, {
+    hash: 217bcbe1,
+    name: null,
+    type: java.lang.String,
+    index: 2,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Located in flood risk area",
+}, {
+    hash: dc237a6,
+    name: null,
+    type: java.util.ArrayList,
+    index: 3,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@dc237a6,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: choices,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 24cdd54,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FLOOD",
+}, {
+    hash: 55eb5d03,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@55eb5d03,
+}, {
+    hash: 217bcbe1,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Located in flood risk area",
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#<init>(java.lang.String, java.lang.String):{
+Args: [{
+    hash: 798cf2b1,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "APT",
+}, {
+    hash: 3abe2bd0,
+    name: null,
+    type: java.lang.String,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Apartment",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#<init>(java.lang.String, java.lang.String):{
+Args: [{
+    hash: 402d0884,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "HOUSE",
+}, {
+    hash: 5e2a634a,
+    name: null,
+    type: java.lang.String,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "House",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto#<init>(java.lang.String, int, java.lang.String, java.util.List):{
+Args: [{
+    hash: 3e1f4de0,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "TYP",
+}, {
+    hash: 2b8957c4,
+    name: null,
+    type: java.lang.Integer,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 1,
+}, {
+    hash: 165e1b8f,
+    name: null,
+    type: java.lang.String,
+    index: 2,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Apartment / House",
+}, {
+    hash: 1b630a3d,
+    name: null,
+    type: java.util.ArrayList,
+    index: 3,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@1b630a3d,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: choices,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 3e1f4de0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "TYP",
+}, {
+    hash: 2b8957c4,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@2b8957c4,
+}, {
+    hash: 165e1b8f,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Apartment / House",
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto#<init>(java.lang.String, int, java.lang.String):{
+Args: [{
+    hash: 433bfe85,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "AREA",
+}, {
+    hash: 6f546d0c,
+    name: null,
+    type: java.lang.Integer,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 2,
+}, {
+    hash: 68a688db,
+    name: null,
+    type: java.lang.String,
+    index: 2,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Area",
+}, ]
+
+Fields: [{
+    hash: 433bfe85,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "AREA",
+}, {
+    hash: 6f546d0c,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@6f546d0c,
+}, {
+    hash: 68a688db,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Area",
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto#<init>(java.lang.String, int, java.lang.String):{
+Args: [{
+    hash: 44cbf79,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NUM_OF_CLAIM",
+}, {
+    hash: 718ad15a,
+    name: null,
+    type: java.lang.Integer,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 3,
+}, {
+    hash: 58700f7b,
+    name: null,
+    type: java.lang.String,
+    index: 2,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Number of claims in last 5 years",
+}, ]
+
+Fields: [{
+    hash: 44cbf79,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NUM_OF_CLAIM",
+}, {
+    hash: 718ad15a,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@718ad15a,
+}, {
+    hash: 58700f7b,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Number of claims in last 5 years",
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#<init>(java.lang.String, java.lang.String):{
+Args: [{
+    hash: 3190e67b,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "YES",
+}, {
+    hash: 69c32ce5,
+    name: null,
+    type: java.lang.String,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Yes",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#<init>(java.lang.String, java.lang.String):{
+Args: [{
+    hash: 1204ee2e,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NO",
+}, {
+    hash: 2491612b,
+    name: null,
+    type: java.lang.String,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "No",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto#<init>(java.lang.String, int, java.lang.String, java.util.List):{
+Args: [{
+    hash: 237df9c6,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FLOOD",
+}, {
+    hash: 55eb5d03,
+    name: null,
+    type: java.lang.Integer,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 4,
+}, {
+    hash: 16bd1619,
+    name: null,
+    type: java.lang.String,
+    index: 2,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Located in flood risk area",
+}, {
+    hash: 390aa5dc,
+    name: null,
+    type: java.util.ArrayList,
+    index: 3,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@390aa5dc,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: choices,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 237df9c6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FLOOD",
+}, {
+    hash: 55eb5d03,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@55eb5d03,
+}, {
+    hash: 16bd1619,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Located in flood risk area",
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#<init>(java.lang.String, java.lang.String):{
+Args: [{
+    hash: 2a807e8e,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "EUR",
+}, {
+    hash: 40be7fe9,
+    name: null,
+    type: java.lang.String,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Europe",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#<init>(java.lang.String, java.lang.String):{
+Args: [{
+    hash: 45d60317,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "WORLD",
+}, {
+    hash: 6c0b712d,
+    name: null,
+    type: java.lang.String,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "World",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#<init>(java.lang.String, java.lang.String):{
+Args: [{
+    hash: 9bbcc01,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "PL",
+}, {
+    hash: 7c80a89a,
+    name: null,
+    type: java.lang.String,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Poland",
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 0,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto#<init>(java.lang.String, int, java.lang.String, java.util.List):{
+Args: [{
+    hash: 5c0885b0,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "DESTINATION",
+}, {
+    hash: 2b8957c4,
+    name: null,
+    type: java.lang.Integer,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 1,
+}, {
+    hash: b8491f4,
+    name: null,
+    type: java.lang.String,
+    index: 2,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Destination",
+}, {
+    hash: 72392c66,
+    name: null,
+    type: java.util.ArrayList,
+    index: 3,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@72392c66,
+}, ]
+
+Fields: [{
+    hash: 0,
+    name: choices,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: null,
+}, {
+    hash: 5c0885b0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "DESTINATION",
+}, {
+    hash: 2b8957c4,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@2b8957c4,
+}, {
+    hash: b8491f4,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Destination",
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto#<init>(java.lang.String, int, java.lang.String):{
+Args: [{
+    hash: 7fb7c33e,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NUM_OF_ADULTS",
+}, {
+    hash: 6f546d0c,
+    name: null,
+    type: java.lang.Integer,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 2,
+}, {
+    hash: 5c6a23f5,
+    name: null,
+    type: java.lang.String,
+    index: 2,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Number of adults",
+}, ]
+
+Fields: [{
+    hash: 7fb7c33e,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NUM_OF_ADULTS",
+}, {
+    hash: 6f546d0c,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@6f546d0c,
+}, {
+    hash: 5c6a23f5,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Number of adults",
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public void pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.NumericQuestionDto#<init>(java.lang.String, int, java.lang.String):{
+Args: [{
+    hash: 6b61834d,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NUM_OF_CHILDREN",
+}, {
+    hash: 718ad15a,
+    name: null,
+    type: java.lang.Integer,
+    index: 1,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: 3,
+}, {
+    hash: 6699705f,
+    name: null,
+    type: java.lang.String,
+    index: 2,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Number of children",
+}, ]
+
+Fields: [{
+    hash: 6b61834d,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NUM_OF_CHILDREN",
+}, {
+    hash: 718ad15a,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@718ad15a,
+}, {
+    hash: 6699705f,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Number of children",
+}, ]
+
+Return: {
+    hash: 5d761c3f,
+    name: null,
+    type: org.openjdk.btrace.core.types.AnyType$1,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: org.openjdk.btrace.core.types.AnyType$1@5d761c3f,
+}
+}:
+
+public java.util.List pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto#getChoices:{
+Args: []
+
+Fields: [{
+    hash: 727393fb,
+    name: choices,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@727393fb,
+}, {
+    hash: 191c653,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "TYP",
+}, {
+    hash: 2b8957c4,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@2b8957c4,
+}, {
+    hash: 5cce8c64,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Cultivation type",
+}, ]
+
+Return: {
+    hash: 727393fb,
+    name: null,
+    type: java.util.ArrayList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@727393fb,
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getCode:{
+Args: []
+
+Fields: [{
+    hash: 628d8d99,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "ZB",
+}, {
+    hash: 95d37ec,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Crop",
+}, ]
+
+Return: {
+    hash: 628d8d99,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "ZB",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getLabel:{
+Args: []
+
+Fields: [{
+    hash: 628d8d99,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "ZB",
+}, {
+    hash: 95d37ec,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Crop",
+}, ]
+
+Return: {
+    hash: 95d37ec,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Crop",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getCode:{
+Args: []
+
+Fields: [{
+    hash: 5880b05d,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "KW",
+}, {
+    hash: 566f1f91,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Vegetable",
+}, ]
+
+Return: {
+    hash: 5880b05d,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "KW",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getLabel:{
+Args: []
+
+Fields: [{
+    hash: 5880b05d,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "KW",
+}, {
+    hash: 566f1f91,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Vegetable",
+}, ]
+
+Return: {
+    hash: 566f1f91,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Vegetable",
+}
+}:
+
+public java.util.List pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto#getChoices:{
+Args: []
+
+Fields: [{
+    hash: dc237a6,
+    name: choices,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@dc237a6,
+}, {
+    hash: 24cdd54,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FLOOD",
+}, {
+    hash: 55eb5d03,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@55eb5d03,
+}, {
+    hash: 217bcbe1,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Located in flood risk area",
+}, ]
+
+Return: {
+    hash: dc237a6,
+    name: null,
+    type: java.util.ArrayList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@dc237a6,
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getCode:{
+Args: []
+
+Fields: [{
+    hash: 5701ac2f,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "YES",
+}, {
+    hash: 2e60f534,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Yes",
+}, ]
+
+Return: {
+    hash: 5701ac2f,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "YES",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getLabel:{
+Args: []
+
+Fields: [{
+    hash: 5701ac2f,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "YES",
+}, {
+    hash: 2e60f534,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Yes",
+}, ]
+
+Return: {
+    hash: 2e60f534,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Yes",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getCode:{
+Args: []
+
+Fields: [{
+    hash: 1c87e26e,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NO",
+}, {
+    hash: 46bd4505,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "No",
+}, ]
+
+Return: {
+    hash: 1c87e26e,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NO",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getLabel:{
+Args: []
+
+Fields: [{
+    hash: 1c87e26e,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NO",
+}, {
+    hash: 46bd4505,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "No",
+}, ]
+
+Return: {
+    hash: 46bd4505,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "No",
+}
+}:
+
+public java.util.List pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto#getChoices:{
+Args: []
+
+Fields: [{
+    hash: 1b630a3d,
+    name: choices,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@1b630a3d,
+}, {
+    hash: 3e1f4de0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "TYP",
+}, {
+    hash: 2b8957c4,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@2b8957c4,
+}, {
+    hash: 165e1b8f,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Apartment / House",
+}, ]
+
+Return: {
+    hash: 1b630a3d,
+    name: null,
+    type: java.util.ArrayList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@1b630a3d,
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getCode:{
+Args: []
+
+Fields: [{
+    hash: 798cf2b1,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "APT",
+}, {
+    hash: 3abe2bd0,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Apartment",
+}, ]
+
+Return: {
+    hash: 798cf2b1,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "APT",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getLabel:{
+Args: []
+
+Fields: [{
+    hash: 798cf2b1,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "APT",
+}, {
+    hash: 3abe2bd0,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Apartment",
+}, ]
+
+Return: {
+    hash: 3abe2bd0,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Apartment",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getCode:{
+Args: []
+
+Fields: [{
+    hash: 402d0884,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "HOUSE",
+}, {
+    hash: 5e2a634a,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "House",
+}, ]
+
+Return: {
+    hash: 402d0884,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "HOUSE",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getLabel:{
+Args: []
+
+Fields: [{
+    hash: 402d0884,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "HOUSE",
+}, {
+    hash: 5e2a634a,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "House",
+}, ]
+
+Return: {
+    hash: 5e2a634a,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "House",
+}
+}:
+
+public java.util.List pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto#getChoices:{
+Args: []
+
+Fields: [{
+    hash: 390aa5dc,
+    name: choices,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@390aa5dc,
+}, {
+    hash: 237df9c6,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "FLOOD",
+}, {
+    hash: 55eb5d03,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@55eb5d03,
+}, {
+    hash: 16bd1619,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Located in flood risk area",
+}, ]
+
+Return: {
+    hash: 390aa5dc,
+    name: null,
+    type: java.util.ArrayList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@390aa5dc,
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getCode:{
+Args: []
+
+Fields: [{
+    hash: 3190e67b,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "YES",
+}, {
+    hash: 69c32ce5,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Yes",
+}, ]
+
+Return: {
+    hash: 3190e67b,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "YES",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getLabel:{
+Args: []
+
+Fields: [{
+    hash: 3190e67b,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "YES",
+}, {
+    hash: 69c32ce5,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Yes",
+}, ]
+
+Return: {
+    hash: 69c32ce5,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Yes",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getCode:{
+Args: []
+
+Fields: [{
+    hash: 1204ee2e,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NO",
+}, {
+    hash: 2491612b,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "No",
+}, ]
+
+Return: {
+    hash: 1204ee2e,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NO",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getLabel:{
+Args: []
+
+Fields: [{
+    hash: 1204ee2e,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "NO",
+}, {
+    hash: 2491612b,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "No",
+}, ]
+
+Return: {
+    hash: 2491612b,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "No",
+}
+}:
+
+public java.util.List pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceQuestionDto#getChoices:{
+Args: []
+
+Fields: [{
+    hash: 72392c66,
+    name: choices,
+    type: java.util.List<pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto>,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@72392c66,
+}, {
+    hash: 5c0885b0,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "DESTINATION",
+}, {
+    hash: 2b8957c4,
+    name: index,
+    type: int,
+    index: 0,
+    serialized: true,
+    isPrimitive: true,
+    isInterface: false,
+    object: java.lang.Integer@2b8957c4,
+}, {
+    hash: b8491f4,
+    name: text,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Destination",
+}, ]
+
+Return: {
+    hash: 72392c66,
+    name: null,
+    type: java.util.ArrayList,
+    index: 0,
+    serialized: true,
+    isPrimitive: false,
+    isInterface: true,
+    object: java.util.ArrayList@72392c66,
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getCode:{
+Args: []
+
+Fields: [{
+    hash: 2a807e8e,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "EUR",
+}, {
+    hash: 40be7fe9,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Europe",
+}, ]
+
+Return: {
+    hash: 2a807e8e,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "EUR",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getLabel:{
+Args: []
+
+Fields: [{
+    hash: 2a807e8e,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "EUR",
+}, {
+    hash: 40be7fe9,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Europe",
+}, ]
+
+Return: {
+    hash: 40be7fe9,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Europe",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getCode:{
+Args: []
+
+Fields: [{
+    hash: 45d60317,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "WORLD",
+}, {
+    hash: 6c0b712d,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "World",
+}, ]
+
+Return: {
+    hash: 45d60317,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "WORLD",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getLabel:{
+Args: []
+
+Fields: [{
+    hash: 45d60317,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "WORLD",
+}, {
+    hash: 6c0b712d,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "World",
+}, ]
+
+Return: {
+    hash: 6c0b712d,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "World",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getCode:{
+Args: []
+
+Fields: [{
+    hash: 9bbcc01,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "PL",
+}, {
+    hash: 7c80a89a,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Poland",
+}, ]
+
+Return: {
+    hash: 9bbcc01,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "PL",
+}
+}:
+
+public java.lang.String pl.altkom.asc.lab.micronaut.poc.product.service.api.v1.questions.ChoiceDto#getLabel:{
+Args: []
+
+Fields: [{
+    hash: 9bbcc01,
+    name: code,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "PL",
+}, {
+    hash: 7c80a89a,
+    name: label,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Poland",
+}, ]
+
+Return: {
+    hash: 7c80a89a,
+    name: null,
+    type: java.lang.String,
+    index: 0,
+    serialized: false,
+    isPrimitive: false,
+    isInterface: true,
+    object: "Poland",
+}
+}:
+

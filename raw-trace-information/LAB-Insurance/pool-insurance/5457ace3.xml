@@ -1,0 +1,10 @@
+<list>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+    <code>YES</code>
+    <label>Yes</label>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+  <pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+    <code>NO</code>
+    <label>No</label>
+  </pl.altkom.asc.lab.micronaut.poc.product.service.domain.Choice>
+</list>

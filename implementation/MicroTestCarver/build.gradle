@@ -1,0 +1,45 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'info.picocli:picocli:4.6.3'
+    implementation 'fr.inria.gforge.spoon:spoon-core:10.2.0'
+    implementation 'com.thoughtworks.xstream:xstream:1.4.18'
+    implementation 'org.codehaus.jettison:jettison:1.4.1'
+
+//    Projects:
+//    implementation files('libs/broadleaf-framework-6.2.5-SNAPSHOT-jar-with-dependencies')
+    implementation files('libs/spring-testing-0.0.1-SNAPSHOT-all.jar')
+    implementation files('libs/alfio-2.0-M5-SNAPSHOT-all.jar')
+    implementation files('libs/spring-petclinic-2.7.3-all.jar')
+    implementation files('libs/spring-petclinic-rest-2.6.2-jar-with-dependencies.jar')
+    implementation files('libs/product-service-1.0-jar-with-dependencies.jar')
+    implementation files('libs/pricing-service-1.0-jar-with-dependencies.jar')
+
+    implementation files('libs/btrace-client.jar')
+    implementation 'org.apache.velocity:velocity-engine-core:2.3'
+    annotationProcessor 'info.picocli:picocli-codegen:4.6.3'
+
+    testImplementation('com.github.tomakehurst:wiremock-jre8:2.31.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    //    implementation group: 'io.btrace', name: 'btrace-client', version: '2.2.2'
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
+compileJava {
+    options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
+}

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ContentLanguage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">alfio</a> &gt; <a href="index.source.html" class="el_package">alfio.model</a> &gt; <span class="el_source">ContentLanguage.java</span></div><h1>ContentLanguage.java</h1><pre class="source lang-java linenums">/**
+ * This file is part of alf.io.
+ *
+ * alf.io is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * alf.io is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with alf.io.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+package alfio.model;
+
+import alfio.util.LocaleUtil;
+import lombok.EqualsAndHashCode;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+
+@EqualsAndHashCode
+public class ContentLanguage {
+
+    public static final int ENGLISH_IDENTIFIER = 0b00010;
+<span class="fc" id="L30">    public static final ContentLanguage ITALIAN = new ContentLanguage(Locale.ITALIAN, 0b00001, Locale.ITALIAN);</span>
+<span class="fc" id="L31">    public static final ContentLanguage ENGLISH = new ContentLanguage(Locale.ENGLISH, ENGLISH_IDENTIFIER, Locale.ENGLISH);</span>
+<span class="fc" id="L32">    public static final ContentLanguage GERMAN = new ContentLanguage(Locale.GERMAN,   0b00100, Locale.GERMAN);</span>
+<span class="fc" id="L33">    public static final ContentLanguage DUTCH = new ContentLanguage(LocaleUtil.forLanguageTag(&quot;nl&quot;), 0b01000, LocaleUtil.forLanguageTag(&quot;nl&quot;));</span>
+<span class="fc" id="L34">    public static final ContentLanguage FRENCH = new ContentLanguage(Locale.FRENCH,0b10000, Locale.FRENCH);</span>
+<span class="fc" id="L35">    public static final ContentLanguage ROMANIAN = new ContentLanguage(LocaleUtil.forLanguageTag(&quot;ro&quot;),0b100000, LocaleUtil.forLanguageTag(&quot;ro&quot;));</span>
+<span class="fc" id="L36">    public static final ContentLanguage PORTUGUESE = new ContentLanguage(LocaleUtil.forLanguageTag(&quot;pt&quot;),0b1000000, LocaleUtil.forLanguageTag(&quot;pt&quot;));</span>
+<span class="fc" id="L37">    public static final ContentLanguage TURKISH = new ContentLanguage(LocaleUtil.forLanguageTag(&quot;tr&quot;),0b10000000, LocaleUtil.forLanguageTag(&quot;tr&quot;));</span>
+<span class="fc" id="L38">    public static final ContentLanguage SPANISH = new ContentLanguage(LocaleUtil.forLanguageTag(&quot;es&quot;),0b100000000, LocaleUtil.forLanguageTag(&quot;es&quot;));</span>
+<span class="fc" id="L39">    public static final ContentLanguage POLISH = new ContentLanguage(LocaleUtil.forLanguageTag(&quot;pl&quot;),0b1000000000, LocaleUtil.forLanguageTag(&quot;pl&quot;));</span>
+<span class="fc" id="L40">    public static final ContentLanguage DANISH = new ContentLanguage(LocaleUtil.forLanguageTag(&quot;da&quot;),0b10000000000, LocaleUtil.forLanguageTag(&quot;da&quot;));</span>
+<span class="fc" id="L41">    public static final ContentLanguage BULGARIAN = new ContentLanguage(LocaleUtil.forLanguageTag(&quot;bg&quot;),0b100000000000, LocaleUtil.forLanguageTag(&quot;bg&quot;));</span>
+<span class="fc" id="L42">    public static final ContentLanguage SWEDISH = new ContentLanguage(LocaleUtil.forLanguageTag(&quot;sv&quot;),0b1000000000000, LocaleUtil.forLanguageTag(&quot;sv&quot;));</span>
+
+<span class="fc" id="L44">    public static final List&lt;ContentLanguage&gt; ALL_LANGUAGES = List.of(ENGLISH, SPANISH, ITALIAN, GERMAN, DUTCH, FRENCH, ROMANIAN, PORTUGUESE, TURKISH, POLISH, DANISH, BULGARIAN, SWEDISH);</span>
+<span class="fc" id="L45">    public static final int ALL_LANGUAGES_IDENTIFIER = ALL_LANGUAGES.stream().mapToInt(ContentLanguage::getValue).reduce(0, (a,b) -&gt; a|b);</span>
+
+    public static List&lt;ContentLanguage&gt; findAllFor(int bitMask) {
+<span class="fc" id="L48">        return ALL_LANGUAGES.stream()</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">            .filter(cl -&gt; (cl.getValue() &amp; bitMask) == cl.getValue())</span>
+<span class="fc" id="L50">            .collect(Collectors.toList());</span>
+    }
+
+    private final Locale locale;
+    private final int value;
+    private final Locale displayLocale;
+
+<span class="fc" id="L57">    private ContentLanguage(Locale locale, int value, Locale displayLocale) {</span>
+<span class="fc" id="L58">        this.locale = locale;</span>
+<span class="fc" id="L59">        this.value = value;</span>
+<span class="fc" id="L60">        this.displayLocale = displayLocale;</span>
+<span class="fc" id="L61">    }</span>
+
+    public String getLanguage() {
+<span class="fc" id="L64">        return locale.getLanguage();</span>
+    }
+
+    public String getDisplayLanguage() {
+<span class="fc" id="L68">        return locale.getDisplayLanguage(displayLocale);</span>
+    }
+
+    public Locale getLocale() {
+<span class="fc" id="L72">        return locale;</span>
+    }
+
+    public int getValue() {
+<span class="fc" id="L76">        return value;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

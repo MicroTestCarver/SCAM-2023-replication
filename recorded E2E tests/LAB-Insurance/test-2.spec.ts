@@ -1,0 +1,36 @@
+import { test, expect } from '@playwright/test';
+
+test('test', async ({ page }) => {
+  await page.goto('http://localhost:8080/');
+  await page.goto('http://localhost:8080/#/');
+  await page.getByRole('link', { name: 'Products' }).click();
+  await page.getByPlaceholder('Enter username').click();
+  await page.getByPlaceholder('Enter username').fill('admin');
+  await page.getByPlaceholder('Enter username').press('Tab');
+  await page.getByPlaceholder('Enter password').fill('admin');
+  await page.getByPlaceholder('Enter password').press('Enter');
+  await page.getByRole('button', { name: 'Login' }).click();
+  await page.getByRole('link', { name: 'Products' }).click();
+  await page.getByRole('article').filter({ hasText: 'Happy Driver Car insurance #RiskSum insured1Assistance Buy' }).getByRole('button', { name: 'Buy' }).click();
+  await page.getByPlaceholder('Policy from').fill('2023-05-19');
+  await page.getByPlaceholder('Policy from').press('Tab');
+  await page.getByPlaceholder('Policy to').fill('2023-05-30');
+  await page.locator('[id="__BVID__32"]').click();
+  await page.locator('[id="__BVID__32"]').fill('1');
+  await page.getByPlaceholder('Policy to').fill('2023-09-01');
+  await page.getByRole('button', { name: 'Calculate price' }).click();
+  await page.getByPlaceholder('Policy from').fill('2023-08-01');
+  await page.getByRole('button', { name: 'Calculate price' }).click();
+  await page.getByRole('button', { name: 'Calculate price' }).click();
+  await page.getByRole('button', { name: 'Buy' }).click();
+  await page.getByPlaceholder('Enter first name').click();
+  await page.getByPlaceholder('Enter first name').fill('Peter');
+  await page.getByPlaceholder('Enter first name').press('Tab');
+  await page.getByPlaceholder('Enter last name').fill('Jackson');
+  await page.getByPlaceholder('Enter last name').press('Tab');
+  await page.getByPlaceholder('Enter tax id').fill('1374');
+  await page.getByRole('button', { name: 'Confirm' }).click();
+  await page.locator('#main-container div').filter({ hasText: 'From:' }).nth(3).click();
+  await page.locator('#main-container div').filter({ hasText: 'Total premium: EUR' }).nth(3).click();
+  await page.getByRole('link', { name: 'Policies' }).click();
+});
